@@ -4,72 +4,74 @@ using UnityEngine;
 
 public class StatBarManager : MonoBehaviour
 {
-    public const int maxValueBar = 240;
+    private const int maxValueBar = 240;
 
-    public int currentHealth;
-    public int currentHunger;
-    public int currentWater;
+    public float currentHealth;
+    public float currentHunger;
+    public float currentWater;
 
     public RectTransform healthBar;
     public RectTransform hungerBar;
     public RectTransform waterBar;
 
-    public float calculatedCurrentStatPercentage;
+    private float calculatedCurrentStatPercentage;
+
+    public void Awake()
+    {
+        SetupHuds();
+    }
+
+    public void SetupHuds()
+    {
+        UpdateBar(healthBar, currentHealth);
+        UpdateBar(hungerBar, currentHunger);
+        UpdateBar(waterBar, currentWater);
+    }
 
     public void UpdateHealth(int valueChange)
     {
         currentHealth += valueChange;
-        if (currentHealth - valueChange >= 0)
-        {
-            currentHealth = 0;
-            return;
-        }
-        if (currentHealth - valueChange <= 100)
-        {
-            currentHealth = 100;
-            return;
-        }
 
-        UpdateBar(healthBar);
+        MaxMinValueChecker(ref currentHealth, valueChange);
+
+        UpdateBar(healthBar, currentHealth);
     }
 
     public void UpdateHunger(int valueChange)
     {
         currentHunger += valueChange;
-        if (currentHunger - valueChange >= 0)
-        {
-            currentHunger = 0;
-            return;
-        }
-        if (currentHunger - valueChange <= 100)
-        {
-            currentHunger = 100;
-            return;
-        }
 
-        UpdateBar(hungerBar);
+        MaxMinValueChecker(ref currentHunger, valueChange);
+
+        UpdateBar(hungerBar, currentHunger);
     }
 
     public void UpdateWater(int valueChange)
     {
         currentWater += valueChange;
-        if (currentWater - valueChange >= 0)
-        {
-            currentWater = 0;
-            return;
-        }
-        if (currentWater - valueChange <= 100)
-        {
-            currentWater = 100;
-            return;
-        }
 
-        UpdateBar(waterBar);
+        MaxMinValueChecker(ref currentWater, valueChange);
+
+        UpdateBar(waterBar, currentWater);
     }
 
-    public void UpdateBar(RectTransform currentBar)
+    public void MaxMinValueChecker(ref float currentStat, int valueChange)
     {
-        calculatedCurrentStatPercentage = maxValueBar / 100;
-        RectTransformExtensions.SetLeft(currentBar, currentWater);
+        if (currentStat - valueChange >= 0)
+        {
+            currentStat = 0;
+            return;
+        }
+        if (currentStat - valueChange <= 100)
+        {
+            currentStat = 100;
+            return;
+        }
+    }
+
+    public void UpdateBar(RectTransform currentBar, float currentStat)
+    {
+        calculatedCurrentStatPercentage = maxValueBar - (maxValueBar / 100 * currentStat);
+        RectTransformExtensions.SetRight(currentBar, calculatedCurrentStatPercentage);
     }
 }
