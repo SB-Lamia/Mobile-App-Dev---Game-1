@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEditor.DeviceSimulation;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
     public const float PlayerSpeed = 3f;
+    public GameObject popupMenu;
+
     private GameObject CurrentCityMovement;
     private bool isMoving = false;
+    private GameObject touchedObject;
+    private bool popupMenuOpen = false;
+
+    private bool isIncreasingScale = true;
+    private Transform cityBorderBlinker;
 
     // Update is called once per frame
     void Update()
@@ -35,20 +43,27 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (hit.collider != null)
                 {
-                    GameObject touchedObject = hit.transform.gameObject;
-
-                    CheckObjectTouched(touchedObject);
+                    touchedObject = hit.transform.gameObject;
+                    
+                    if(popupMenuOpen == false)
+                    {
+                        CheckObjectTouched();
+                    }
+                    else
+                    {
+                        Debug.Log("Error: Menu Already Opened.");
+                    }
                 }
             }
         }
     }
 
-    private void CheckObjectTouched(GameObject touchedGameobject)
+    private void CheckObjectTouched()
     {
-        switch (touchedGameobject.name)
+        switch (touchedObject.name)
         {
-            case "City":
-                TriggerMovement(touchedGameobject);
+            case "City(Clone)":
+                askPlayerIfMoving();
                 break;
             default:
                 Debug.Log("Nothing Touched");
@@ -56,9 +71,62 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void TriggerMovement(GameObject touchedGameObject)
+    private void askPlayerIfMoving()
     {
-        CurrentCityMovement = touchedGameObject;
+        popupMenu.SetActive(true);
+        popupMenuOpen = true;
+        cityBorderBlinker = touchedObject.transform.GetChild(1).transform;
+        StartCoroutine("cityBlinker");
+    }
+
+    public void playerConfirmedMovementYes()
+    {
+        TriggerMovement();
+        popupMenu.SetActive(false);
+        popupMenuOpen = false;
+    }
+
+    public void playerConfirmedMovementNo()
+    {
+        StopCoroutine("cityBlinker");
+        touchedObject = null;
+        popupMenu.SetActive(false);
+        popupMenuOpen = false;
+    }
+
+    private IEnumerator cityBlinker()
+    {
+        while (true)
+        {
+            Vector3 newScale;
+
+            if (isIncreasingScale == true)
+            {
+                newScale = new Vector3(cityBorderBlinker.localScale.x + 0.05f, cityBorderBlinker.localScale.y + 0.05f, 1);
+            }
+            else
+            {
+                newScale = new Vector3(cityBorderBlinker.localScale.x - 0.05f, cityBorderBlinker.localScale.y - 0.05f, 1);
+            }
+
+            cityBorderBlinker.localScale = newScale;
+
+            if (cityBorderBlinker.localScale.x >= 1.2f)
+            {
+                isIncreasingScale = false;
+            }
+            else if (cityBorderBlinker.localScale.x <= 1.15f)
+            {
+                isIncreasingScale = true;
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private void TriggerMovement()
+    {
+        CurrentCityMovement = touchedObject;
         isMoving = true;
     }
 
@@ -70,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
         {
             CurrentCityMovement = null;
             isMoving = false;
+            StopCoroutine("cityBlinker");
         }
     }
 }
