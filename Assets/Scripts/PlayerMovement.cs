@@ -82,6 +82,8 @@ public class PlayerMovement : MonoBehaviour
     public void playerConfirmedMovementYes()
     {
         TriggerMovement();
+        CityManager.instance.currentCity = touchedObject;
+        CityManager.instance.openCityButton.interactable = false;
         popupMenu.SetActive(false);
         popupMenuOpen = false;
     }
@@ -139,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
             CurrentCityMovement = null;
             isMoving = false;
             StopCoroutine("cityBlinker");
+            CityManager.instance.openCityButton.interactable = true;
         }
     }
 }

@@ -13,12 +13,6 @@ public class InventoryUIManager : MonoBehaviour
         inventoryMenu.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void InventoryControl()
     {
         if (GameManager.instance.isPaused)
@@ -34,10 +28,7 @@ public class InventoryUIManager : MonoBehaviour
     public void Resume()
     {
         inventoryMenu.gameObject.SetActive(false);
-        foreach (GameObject hud in disabledHud)
-        {
-            hud.SetActive(true);
-        }
+        GameManager.instance.ToggleDefaultHud(true);
         Time.timeScale = 1.0f;
         GameManager.instance.isPaused = false;
     }
@@ -45,10 +36,7 @@ public class InventoryUIManager : MonoBehaviour
     public void Pause()
     {
         inventoryMenu.gameObject.SetActive(true);
-        foreach(GameObject hud in disabledHud)
-        {
-            hud.SetActive(false);
-        }
+        GameManager.instance.ToggleDefaultHud(false);
         Time.timeScale = 0.0f;
         GameManager.instance.isPaused = true;
         GameManager.instance.DisplayItems();

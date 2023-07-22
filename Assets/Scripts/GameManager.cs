@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public bool isPaused;
 
+    public List<GameObject> disabledHud;
+
     public GameObject[] slots;
 
     //public Dictionary<Item, int> itemDict = new Dictionary<Item, int>();
@@ -83,5 +85,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    public void ToggleDefaultHud(bool toggleState)
+    {
+        foreach (GameObject hud in disabledHud)
+        {
+            hud.SetActive(toggleState);
+        }
+    }
 }

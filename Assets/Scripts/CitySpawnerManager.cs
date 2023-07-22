@@ -45,6 +45,7 @@ public class CitySpawnerManager : MonoBehaviour
                 placedBoxes.Add(new Vector2(xPos, yPos));
                 GameObject newCity = Instantiate(City, new Vector2(xPos, yPos), Quaternion.identity);
                 newCity.transform.parent = parentCity.transform;
+                newCity.GetComponent<City>().GenerateRandomCity();
             }
             count++;
         }

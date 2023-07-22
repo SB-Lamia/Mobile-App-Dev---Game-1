@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 503860226983833205}
   - component: {fileID: 2042630742131341064}
+  - component: {fileID: 7777823707545816261}
   m_Layer: 0
   m_Name: City
   m_TagString: Untagged
@@ -50,6 +51,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &7777823707545816261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503860226983833207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d05f16b83dc7d144a1549669d52fc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cityEvents: 
+  currentDanger: 0
 --- !u!1 &1426789073742290548
 GameObject:
   m_ObjectHideFlags: 0
