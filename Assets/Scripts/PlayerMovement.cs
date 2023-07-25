@@ -4,6 +4,7 @@ using UnityEditor.DeviceSimulation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isIncreasingScale = true;
     private Transform cityBorderBlinker;
+
+    private bool firstMovement = true;
+
+    private float movementCost;
 
     // Update is called once per frame
     void Update()
@@ -76,12 +81,24 @@ public class PlayerMovement : MonoBehaviour
         popupMenu.SetActive(true);
         popupMenuOpen = true;
         cityBorderBlinker = touchedObject.transform.GetChild(1).transform;
+        if (firstMovement)
+        {
+            firstMovement = false;
+            movementCost = -15;
+        }
+        else
+        {
+            movementCost = (Vector2.Distance(CityManager.instance.currentCity.transform.position, touchedObject.transform.position) / 2) * -1;
+        }
+        popupMenu.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Food / Water Cost: " + Mathf.Round(movementCost * -1);
         StartCoroutine("cityBlinker");
     }
 
     public void playerConfirmedMovementYes()
     {
         TriggerMovement();
+        StatBarManager.instance.UpdateHunger(movementCost);
+        StatBarManager.instance.UpdateWater(movementCost);
         CityManager.instance.currentCity = touchedObject;
         CityManager.instance.openCityButton.interactable = false;
         popupMenu.SetActive(false);

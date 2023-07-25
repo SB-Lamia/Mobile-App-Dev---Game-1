@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class StatBarManager : MonoBehaviour
 {
-    private const int maxValueBar = 240;
+    private const int maxValueBar = 200;
+
+    public static StatBarManager instance;
 
     public float currentHealth;
     public float currentHunger;
@@ -14,63 +17,80 @@ public class StatBarManager : MonoBehaviour
     public RectTransform hungerBar;
     public RectTransform waterBar;
 
+    public TextMeshProUGUI healthStatText;
+    public TextMeshProUGUI hungerStatText;
+    public TextMeshProUGUI waterStatText;
+
     private float calculatedCurrentStatPercentage;
 
     public void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            if (instance != this)
+            {
+
+            }
+        }
         SetupHuds();
     }
 
     public void SetupHuds()
     {
-        UpdateBar(healthBar, currentHealth);
-        UpdateBar(hungerBar, currentHunger);
-        UpdateBar(waterBar, currentWater);
+        UpdateBar(healthBar, currentHealth, healthStatText);
+        UpdateBar(hungerBar, currentHunger, hungerStatText);
+        UpdateBar(waterBar, currentWater, waterStatText);
     }
 
-    public void UpdateHealth(int valueChange)
+    public void UpdateHealth(float valueChange)
     {
         currentHealth += valueChange;
 
         MaxMinValueChecker(ref currentHealth, valueChange);
 
-        UpdateBar(healthBar, currentHealth);
+        UpdateBar(healthBar, currentHealth, healthStatText);
     }
 
-    public void UpdateHunger(int valueChange)
+    public void UpdateHunger(float valueChange)
     {
         currentHunger += valueChange;
 
         MaxMinValueChecker(ref currentHunger, valueChange);
 
-        UpdateBar(hungerBar, currentHunger);
+        UpdateBar(hungerBar, currentHunger, hungerStatText);
     }
 
-    public void UpdateWater(int valueChange)
+    public void UpdateWater(float valueChange)
     {
         currentWater += valueChange;
 
         MaxMinValueChecker(ref currentWater, valueChange);
 
-        UpdateBar(waterBar, currentWater);
+        UpdateBar(waterBar, currentWater, waterStatText);
     }
 
-    public void MaxMinValueChecker(ref float currentStat, int valueChange)
+    public void MaxMinValueChecker(ref float currentStat, float valueChange)
     {
-        if (currentStat - valueChange >= 0)
+        if (currentStat <= 0)
         {
             currentStat = 0;
             return;
         }
-        if (currentStat - valueChange <= 100)
+        if (currentStat >= 100)
         {
             currentStat = 100;
             return;
         }
     }
 
-    public void UpdateBar(RectTransform currentBar, float currentStat)
+    public void UpdateBar(RectTransform currentBar, float currentStat, TextMeshProUGUI currentTextStat)
     {
+        Debug.Log(maxValueBar);
+        currentTextStat.text = Mathf.Round(currentStat) + " / 100";
         calculatedCurrentStatPercentage = maxValueBar - (maxValueBar / 100 * currentStat);
         RectTransformExtensions.SetRight(currentBar, calculatedCurrentStatPercentage);
     }
