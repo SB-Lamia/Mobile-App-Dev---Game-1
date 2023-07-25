@@ -16,6 +16,8 @@ public class CityManager : MonoBehaviour
 
     public static CityManager instance;
 
+    public List<GameObject> crossedOutLocation;
+
     private void Awake()
     {
         if (instance == null)
@@ -37,7 +39,19 @@ public class CityManager : MonoBehaviour
     {
         for (int i = 0; i < locationMaxCount; i++)
         {
-            locations.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = locationImages[currentCity.GetComponent<City>().cityEvents[i]];;
+            locations.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = locationImages[currentCity.GetComponent<City>().cityEvents[i]];
+            if (currentCity.GetComponent<City>().eventCount > i)
+            {
+                crossedOutLocation[i].SetActive(true);
+            }
+        }
+    }
+
+    public void CloseVisualCity()
+    {
+        foreach(GameObject cross in crossedOutLocation)
+        {
+            cross.SetActive(false);
         }
     }
 
@@ -47,6 +61,7 @@ public class CityManager : MonoBehaviour
         GameManager.instance.ToggleDefaultHud(true);
         Time.timeScale = 1.0f;
         GameManager.instance.isPaused = false;
+        CloseVisualCity();
     }
 
     public void Pause()

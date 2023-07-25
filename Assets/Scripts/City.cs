@@ -7,6 +7,7 @@ public class City : MonoBehaviour
     public int[] cityEvents;
     public int currentDanger;
     public int eventCount;
+    public const int MaximumEventCount = 5;
 
     private void Awake()
     {
@@ -16,7 +17,7 @@ public class City : MonoBehaviour
 
     public void GenerateRandomCity()
     {
-        cityEvents = new int[5];
+        cityEvents = new int[MaximumEventCount];
         for (int i = 0; i < cityEvents.Length; i++)
         {
             cityEvents[i] = Random.Range(0, 1);
@@ -25,23 +26,32 @@ public class City : MonoBehaviour
 
     public void TriggerNextExplore()
     {
-        switch (cityEvents[eventCount])
+        if (eventCount < MaximumEventCount)
         {
-            case 0:
-                TriggerLootingEvent();
-                break;
-            case 1:
-                TriggerEnemyEvent();
-                break;
-            case 2:
-                TriggerSpecialEvent();
-                break;
-            default:
-                Debug.Log("Not a valid City Event, please check city: " + this.gameObject.name + ". With the event number: " + cityEvents[eventCount]);
-                break;
+            switch (cityEvents[eventCount])
+            {
+                case 0:
+                    TriggerLootingEvent();
+                    break;
+                case 1:
+                    TriggerEnemyEvent();
+                    break;
+                case 2:
+                    TriggerSpecialEvent();
+                    break;
+                default:
+                    Debug.Log("Not a valid City Event, please check city: " + this.gameObject.name + ". With the event number: " + cityEvents[eventCount]);
+                    break;
+            }
+
+            eventCount++;
+        }
+        else
+        {
+            Debug.Log("Error: Maximum amount of events triggered. please check city: " + this.gameObject.name + ". With the event number: " + cityEvents[eventCount]);
         }
 
-        eventCount++;
+        CityManager.instance.SetupVisualCity();
     }
 
     public void TriggerLootingEvent()
