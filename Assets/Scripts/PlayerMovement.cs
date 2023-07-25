@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEditor.DeviceSimulation;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
 using TMPro;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour,
+    IPointerDownHandler, IPointerEnterHandler
 {
     public const float PlayerSpeed = 3f;
     public GameObject popupMenu;
@@ -23,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
 
     private float movementCost;
 
-    // Update is called once per frame
     void Update()
     {
         if (isMoving)
@@ -32,32 +31,60 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            CheckToMove();
+            //CheckToMove();
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Debug.Log(eventData);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log(eventData);
+        Vector2 touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+
+        RaycastHit2D hit = Physics2D.Raycast(touchPosWorld, Camera.main.transform.forward);
+
+        if (hit.collider != null && hit.collider.CompareTag("City"))
+        {
+            touchedObject = hit.transform.gameObject;
+
+            if (GameManager.instance.isPaused == false)
+            {
+                CheckObjectTouched();
+            }
+            else
+            {
+                Debug.Log("Error: Menu Already Opened.");
+            }
+        }
+        //}
     }
 
     private void CheckToMove()
     {
-        if (Input.touchCount == 1 && Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began)
+        if (Input.touchCount == 1 &&
+            Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began &&
+            !EventSystem.current.IsPointerOverGameObject())
         {
+            Debug.Log(EventSystem.current.IsPointerOverGameObject());
             Vector2 touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 
             RaycastHit2D hit = Physics2D.Raycast(touchPosWorld, Camera.main.transform.forward);
 
-            if (hit.collider != null)
+            if (hit.collider != null && hit.collider.CompareTag("City"))
             {
-                if (hit.collider != null)
+                touchedObject = hit.transform.gameObject;
+
+                if (GameManager.instance.isPaused == false)
                 {
-                    touchedObject = hit.transform.gameObject;
-                    
-                    if(popupMenuOpen == false)
-                    {
-                        CheckObjectTouched();
-                    }
-                    else
-                    {
-                        Debug.Log("Error: Menu Already Opened.");
-                    }
+                    CheckObjectTouched();
+                }
+                else
+                {
+                    Debug.Log("Error: Menu Already Opened.");
                 }
             }
         }
@@ -153,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float step = PlayerSpeed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, CurrentCityMovement.transform.position, step);
-        if(transform.position == CurrentCityMovement.transform.position)
+        if (transform.position == CurrentCityMovement.transform.position)
         {
             CurrentCityMovement = null;
             isMoving = false;
@@ -161,4 +188,5 @@ public class PlayerMovement : MonoBehaviour
             CityManager.instance.openCityButton.interactable = true;
         }
     }
+
 }

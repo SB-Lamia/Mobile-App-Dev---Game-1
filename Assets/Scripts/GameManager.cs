@@ -35,11 +35,8 @@ public class GameManager : MonoBehaviour
 
     public void DisplayItems()
     {
-        Debug.Log("DisplayItems");
         for (int i = 0; i < items.Count; i++)
         {
-            Debug.Log(items[i]);
-            Debug.Log(itemNumbers[i]);
             slots[i].transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1);
             slots[i].transform.GetChild(0).GetComponent<Image>().sprite = items[i].itemSprite;
 
