@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b1529f30af4b5c4695fb6fc37a7f787, type: 3}
-  m_Name: Bread
+  m_Name: M1911_Handgun
   m_EditorClassIdentifier: 
-  itemName: Bread
-  itemDesc: A loaf of stale bread to consume with any meal.
-  itemSprite: {fileID: 1632986486, guid: 7faa05e8a1c826b40a09adaba469838c, type: 3}
-  isStackable: 1
-  rarity: Uncommon
+  itemName: M1911 Handgun
+  itemDesc: A classic semi-automatic pistol chambered in .45 ACP, known for its reliability
+    and stopping power.
+  itemSprite: {fileID: 21300000, guid: 6bd8fcb037e10104bb1065fbffc38c09, type: 3}
+  isStackable: 0
+  rarity: Rare

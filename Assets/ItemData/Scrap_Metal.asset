@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b1529f30af4b5c4695fb6fc37a7f787, type: 3}
-  m_Name: Bread
+  m_Name: Scrap_Metal
   m_EditorClassIdentifier: 
-  itemName: Bread
-  itemDesc: A loaf of stale bread to consume with any meal.
-  itemSprite: {fileID: 1632986486, guid: 7faa05e8a1c826b40a09adaba469838c, type: 3}
+  itemName: Scrap Metal
+  itemDesc: Pieces of salvaged metal, useful for crafting and repairs.
+  itemSprite: {fileID: 848757869, guid: 7faa05e8a1c826b40a09adaba469838c, type: 3}
   isStackable: 1
-  rarity: Uncommon
+  rarity: Common

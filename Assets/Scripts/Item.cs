@@ -9,4 +9,7 @@ public class Item : ScriptableObject
     public string itemDesc;
 
     public Sprite itemSprite;
+
+    public bool isStackable;
+    public string rarity;
 }

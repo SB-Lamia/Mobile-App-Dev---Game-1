@@ -61,7 +61,15 @@ public class GameManager : MonoBehaviour
             {
                 if(newItem == items[i])
                 {
-                    itemNumbers[i]++;
+                    if (items[i].isStackable == true)
+                    {
+                        itemNumbers[i]++;
+                    }
+                    else
+                    {
+                        items.Add(newItem);
+                        itemNumbers.Add(1);
+                    }
                 }
             }
         }

@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b1529f30af4b5c4695fb6fc37a7f787, type: 3}
-  m_Name: Bread
+  m_Name: Remington_870_Shotgun
   m_EditorClassIdentifier: 
-  itemName: Bread
-  itemDesc: A loaf of stale bread to consume with any meal.
-  itemSprite: {fileID: 1632986486, guid: 7faa05e8a1c826b40a09adaba469838c, type: 3}
-  isStackable: 1
-  rarity: Uncommon
+  itemName: Remington 870 Shotgun
+  itemDesc: A reliable pump-action shotgun, versatile for close combat with different
+    shell types available.
+  itemSprite: {fileID: 21300000, guid: c9d07d6bb1b3b474b8a966f05f56a39a, type: 3}
+  isStackable: 0
+  rarity: Legendary

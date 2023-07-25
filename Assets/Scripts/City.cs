@@ -21,4 +21,19 @@ public class City : MonoBehaviour
         }
     }
 
+    public void triggerLootingEvent()
+    {
+
+    }
+
+    public void triggerEnemyEvent()
+    {
+
+    }
+
+    public void triggerSpecialEvent()
+    {
+
+    }
+
 }

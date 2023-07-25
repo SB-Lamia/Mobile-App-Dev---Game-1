@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b1529f30af4b5c4695fb6fc37a7f787, type: 3}
-  m_Name: Bread
+  m_Name: Steel_Machete
   m_EditorClassIdentifier: 
-  itemName: Bread
-  itemDesc: A loaf of stale bread to consume with any meal.
-  itemSprite: {fileID: 1632986486, guid: 7faa05e8a1c826b40a09adaba469838c, type: 3}
-  isStackable: 1
-  rarity: Uncommon
+  itemName: Steel Machete
+  itemDesc: A sharp and versatile machete, suitable for melee combat.
+  itemSprite: {fileID: 21300000, guid: d5a13c3358191d64388c51aba3be3cc3, type: 3}
+  isStackable: 0
+  rarity: Epic
