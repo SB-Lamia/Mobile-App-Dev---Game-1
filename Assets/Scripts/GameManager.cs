@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void AddItem(Item newItem)
+    public void AddItem(Item newItem)
     {
         if (!items.Contains(newItem))
         {
@@ -74,7 +74,17 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    private void RemoveItem(Item oldItem)
+
+    public void AddItemMultiple(List<Item> newItems)
+    {
+        foreach(Item newItem in newItems)
+        {
+            AddItem(newItem);
+        }
+    }
+
+
+    public void RemoveItem(Item oldItem)
     {
         if (items.Contains(oldItem))
         {

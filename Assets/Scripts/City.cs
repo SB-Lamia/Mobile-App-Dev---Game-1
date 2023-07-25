@@ -21,19 +21,24 @@ public class City : MonoBehaviour
         }
     }
 
+    public void TriggerNextExplore()
+    {
+        //To Be Implemented
+    }
+
     public void triggerLootingEvent()
     {
-
+        //To Be Implemented
     }
 
     public void triggerEnemyEvent()
     {
-
+        //To Be Implemented;
     }
 
     public void triggerSpecialEvent()
     {
-
+        //To Be Implemented
     }
 
 }
