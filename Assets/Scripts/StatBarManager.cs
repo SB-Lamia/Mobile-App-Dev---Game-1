@@ -89,7 +89,6 @@ public class StatBarManager : MonoBehaviour
 
     public void UpdateBar(RectTransform currentBar, float currentStat, TextMeshProUGUI currentTextStat)
     {
-        Debug.Log(maxValueBar);
         currentTextStat.text = Mathf.Round(currentStat) + " / 100";
         calculatedCurrentStatPercentage = maxValueBar - (maxValueBar / 100 * currentStat);
         RectTransformExtensions.SetRight(currentBar, calculatedCurrentStatPercentage);

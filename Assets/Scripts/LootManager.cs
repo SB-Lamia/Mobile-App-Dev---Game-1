@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class LootManager : MonoBehaviour
 {
@@ -24,6 +26,11 @@ public class LootManager : MonoBehaviour
     public List<Item> legendarys = new List<Item>();
 
     public static LootManager instance;
+
+    public GameObject LootUIElement;
+    public GameObject LootVisualPrefab;
+    public List<Item> recentlyAddedItems = new List<Item>();
+
 
     void Awake()
     {
@@ -67,6 +74,7 @@ public class LootManager : MonoBehaviour
 
     public void PickRarity(string rarity)
     {
+        recentlyAddedItems = new List<Item>();
         switch (rarity)
         {
             case "Common":
@@ -98,6 +106,52 @@ public class LootManager : MonoBehaviour
         {
             randomNewItem = rarityItemList[Random.Range(0, rarityItemList.Count)];
             GameManager.instance.AddItem(randomNewItem);
+            recentlyAddedItems.Add(randomNewItem);
+        }
+
+        ShowUserLoot();
+    }
+
+    private void ShowUserLoot()
+    {
+        bool checkIfDuplicate;
+        int getVisualItemCount = 0;
+        LootUIElement.SetActive(true);
+        for (int i = 0; i < recentlyAddedItems.Count; i++)
+        {
+            checkIfDuplicate = true;
+            int children = LootUIElement.transform.GetChild(0).transform.childCount;
+            for (int k = 0; k > children; k++)
+            {
+                Debug.Log("Entered Loop. K = " + k + " I = " + i);
+                if(LootUIElement.transform.GetChild(k).GetComponentInChildren<Image>().sprite == recentlyAddedItems[i].itemSprite)
+                {
+                    Debug.Log("Item Adding Number: " + i + "Item Increased: " + recentlyAddedItems[i].itemName);
+                    getVisualItemCount = int.Parse(LootUIElement.transform.GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text);
+                    LootUIElement.transform.GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text = getVisualItemCount++.ToString();
+                    checkIfDuplicate = false;
+                }
+            }
+            if (checkIfDuplicate)
+            {
+                Debug.Log("Item Adding Number: " + i + " Item Added: " + recentlyAddedItems[i].itemName);
+                GameObject lootVisualGameObject = Instantiate(LootVisualPrefab);
+
+                lootVisualGameObject.GetComponentInChildren<Image>().sprite = recentlyAddedItems[i].itemSprite;
+                lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = "1";
+                lootVisualGameObject.transform.SetParent(LootUIElement.transform.GetChild(0).transform);
+            }
+        }
+    }
+
+    public void CloseUserLootVisual()
+    {
+        LootUIElement.SetActive(false);
+        int children = LootUIElement.transform.GetChild(0).transform.childCount;
+        for (int i = 0; i < children; i++)
+        {
+            Debug.Log("GameObjectDestroyed");
+            Destroy(LootUIElement.transform.GetChild(0).transform.GetChild(i).gameObject);
         }
     }
 }
