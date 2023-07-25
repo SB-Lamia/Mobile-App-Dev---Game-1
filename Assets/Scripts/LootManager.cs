@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class LootManager : MonoBehaviour
 {
     public List<Item> allItems;
@@ -121,15 +122,17 @@ public class LootManager : MonoBehaviour
         {
             checkIfDuplicate = true;
             int children = LootUIElement.transform.GetChild(0).transform.childCount;
-            for (int k = 0; k > children; k++)
+            Debug.Log(children);
+            for (int k = 0; k < children; k++)
             {
-                Debug.Log("Entered Loop. K = " + k + " I = " + i);
-                if(LootUIElement.transform.GetChild(k).GetComponentInChildren<Image>().sprite == recentlyAddedItems[i].itemSprite)
+                if(LootUIElement.transform.GetChild(0).GetChild(k).GetComponentInChildren<Image>().sprite.name == recentlyAddedItems[i].itemSprite.name)
                 {
-                    Debug.Log("Item Adding Number: " + i + "Item Increased: " + recentlyAddedItems[i].itemName);
-                    getVisualItemCount = int.Parse(LootUIElement.transform.GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text);
-                    LootUIElement.transform.GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text = getVisualItemCount++.ToString();
+                    int.TryParse(LootUIElement.transform.GetChild(0).GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text, out getVisualItemCount);
+                    getVisualItemCount++;
+                    LootUIElement.transform.GetChild(0).GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text = getVisualItemCount.ToString();
                     checkIfDuplicate = false;
+
+                    Debug.Log("Item Adding Number: " + i + "Item Increased: " + recentlyAddedItems[i].itemName + ". To Value: " + getVisualItemCount++);
                 }
             }
             if (checkIfDuplicate)
@@ -150,7 +153,6 @@ public class LootManager : MonoBehaviour
         int children = LootUIElement.transform.GetChild(0).transform.childCount;
         for (int i = 0; i < children; i++)
         {
-            Debug.Log("GameObjectDestroyed");
             Destroy(LootUIElement.transform.GetChild(0).transform.GetChild(i).gameObject);
         }
     }
