@@ -540,6 +540,7 @@ Transform:
   - {fileID: 2106988301}
   - {fileID: 1190561741}
   - {fileID: 196135182}
+  - {fileID: 269512426}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -956,7 +957,7 @@ GameObject:
   - component: {fileID: 196135182}
   - component: {fileID: 196135183}
   m_Layer: 0
-  m_Name: CityUIManager
+  m_Name: CityManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1344,6 +1345,64 @@ RectTransform:
   m_AnchoredPosition: {x: 263, y: 91}
   m_SizeDelta: {x: 240, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &269512425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 269512426}
+  - component: {fileID: 269512427}
+  m_Layer: 0
+  m_Name: LootManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &269512426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269512425}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 115.994385, y: 23.220215, z: 5.673487}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 144310431}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &269512427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269512425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d04bca24557a894ba3a07c4b08ac3ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allItems:
+  - {fileID: 11400000, guid: 5a284303d7ecd4d498cf32a7b9f7a8a0, type: 2}
+  - {fileID: 11400000, guid: 1a1fef5f4c66c6445a11777cbb5902e7, type: 2}
+  - {fileID: 11400000, guid: 8c40f9c630dd02544b05644b63fe1e18, type: 2}
+  - {fileID: 11400000, guid: 9ca75f86d92dab247b788e5a7578e096, type: 2}
+  - {fileID: 11400000, guid: f92c3e0e1db69694e97fe016fd930ee5, type: 2}
+  - {fileID: 11400000, guid: eae97c5723a369042a6589ea6fab6788, type: 2}
+  - {fileID: 11400000, guid: e3b073d2dc832954a9ced080c253dbdc, type: 2}
+  - {fileID: 11400000, guid: 43942cfb6089e8743af841052cdb3344, type: 2}
+  commons: []
+  uncommons: []
+  rares: []
+  epics: []
+  legendarys: []
 --- !u!1 &285959454
 GameObject:
   m_ObjectHideFlags: 0
@@ -5909,7 +5968,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1079919469}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 196135183}
+        m_TargetAssemblyTypeName: CityManager, Assembly-CSharp
+        m_MethodName: TriggerCityEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1079919469
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,9 +23,23 @@ public class LootManager : MonoBehaviour
     public List<Item> epics = new List<Item>();
     public List<Item> legendarys = new List<Item>();
 
+    public static LootManager instance;
+
     void Awake()
     {
-        foreach(Item item in allItems)
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            if (instance != this)
+            {
+
+            }
+        }
+
+        foreach (Item item in allItems)
         {
             switch (item.rarity)
             {

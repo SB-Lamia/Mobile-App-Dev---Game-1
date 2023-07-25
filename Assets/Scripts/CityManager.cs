@@ -57,4 +57,9 @@ public class CityManager : MonoBehaviour
         GameManager.instance.isPaused = true;
         SetupVisualCity();
     }
+
+    public void TriggerCityEvent()
+    {
+        currentCity.GetComponent<City>().TriggerNextExplore();
+    }
 }

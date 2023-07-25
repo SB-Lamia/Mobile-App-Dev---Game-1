@@ -6,10 +6,12 @@ public class City : MonoBehaviour
 {
     public int[] cityEvents;
     public int currentDanger;
+    public int eventCount;
 
     private void Awake()
     {
         currentDanger = 0;
+        eventCount = 0;
     }
 
     public void GenerateRandomCity()
@@ -17,26 +19,44 @@ public class City : MonoBehaviour
         cityEvents = new int[5];
         for (int i = 0; i < cityEvents.Length; i++)
         {
-            cityEvents[i] = Random.Range(0, 3);
+            cityEvents[i] = Random.Range(0, 1);
         }
     }
 
     public void TriggerNextExplore()
     {
-        //To Be Implemented
+        switch (cityEvents[eventCount])
+        {
+            case 0:
+                TriggerLootingEvent();
+                break;
+            case 1:
+                TriggerEnemyEvent();
+                break;
+            case 2:
+                TriggerSpecialEvent();
+                break;
+            default:
+                Debug.Log("Not a valid City Event, please check city: " + this.gameObject.name + ". With the event number: " + cityEvents[eventCount]);
+                break;
+        }
+
+        eventCount++;
     }
 
-    public void triggerLootingEvent()
+    public void TriggerLootingEvent()
     {
-        //To Be Implemented
+        //Implement UI features that shows what items are added.
+
+        LootManager.instance.PickRarity("Common");
     }
 
-    public void triggerEnemyEvent()
+    public void TriggerEnemyEvent()
     {
         //To Be Implemented;
     }
 
-    public void triggerSpecialEvent()
+    public void TriggerSpecialEvent()
     {
         //To Be Implemented
     }
