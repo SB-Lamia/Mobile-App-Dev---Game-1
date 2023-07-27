@@ -139,10 +139,11 @@ public class LootManager : MonoBehaviour
             {
                 Debug.Log("Item Adding Number: " + i + " Item Added: " + recentlyAddedItems[i].itemName);
                 GameObject lootVisualGameObject = Instantiate(LootVisualPrefab);
-
+                
                 lootVisualGameObject.GetComponentInChildren<Image>().sprite = recentlyAddedItems[i].itemSprite;
                 lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = "1";
                 lootVisualGameObject.transform.SetParent(LootUIElement.transform.GetChild(0).transform);
+                lootVisualGameObject.transform.localScale = new Vector3(1, 1, 1);
             }
         }
     }
