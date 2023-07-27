@@ -51,10 +51,9 @@ public class PlayerMovement : MonoBehaviour
 
             if (hit.collider != null)
             {
-                Debug.Log(hit.transform.gameObject.name);
                 if (hit.transform.gameObject.layer == layerUI)
                 {
-                    Debug.Log("Hit UI Element. Do not trigger GameObjects");
+                    //Do Nothing
                 }
                 else if (hit.collider.CompareTag("City"))
                 {
@@ -81,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
                 askPlayerIfMoving();
                 break;
             default:
-                Debug.Log("Nothing Touched");
                 break;
         }
     }

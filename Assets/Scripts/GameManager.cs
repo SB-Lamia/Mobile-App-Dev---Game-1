@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] slots;
 
+    public GameObject parentSlots;
+
     //public Dictionary<Item, int> itemDict = new Dictionary<Item, int>();
 
     public List<Item> items = new List<Item>();
@@ -35,6 +37,13 @@ public class GameManager : MonoBehaviour
 
     public void DisplayItems()
     {
+
+        Debug.Log(parentSlots.transform.childCount);
+        slots = new GameObject[parentSlots.transform.childCount];
+        slots = GrabSlots();
+        Debug.Log(slots.Length);
+
+
         for (int i = 0; i < items.Count; i++)
         {
             slots[i].transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1);
@@ -43,6 +52,20 @@ public class GameManager : MonoBehaviour
             slots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 1);
             slots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemNumbers[i].ToString();
         }
+    }
+
+    public GameObject[] GrabSlots()
+    {
+        Debug.Log("Grabbing Slots");
+        GameObject[] slotsHolder = new GameObject[parentSlots.transform.childCount];
+
+        int children = parentSlots.transform.childCount;
+        for (int i = 0; i < children; ++i)
+        {
+            slotsHolder[i] = parentSlots.transform.GetChild(i).gameObject;
+        }
+
+        return slotsHolder;
     }
 
     public void AddItem(Item newItem)
