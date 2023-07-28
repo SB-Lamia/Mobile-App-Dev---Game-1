@@ -70,9 +70,6 @@ public class LootManager : MonoBehaviour
 
         int maxLootCount = baseNumberOfNewLoot + Mathf.FloorToInt(currentLuck / 20);
 
-        Debug.Log("Bonus Luck Loot: " + Mathf.FloorToInt(currentLuck / 20));
-        Debug.Log("Current Loot Obtaining: " + maxLootCount);
-
         for (int i = 0; i < maxLootCount; i++)
         {
 

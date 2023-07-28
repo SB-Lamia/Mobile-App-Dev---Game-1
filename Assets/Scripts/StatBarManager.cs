@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class StatBarManager : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class StatBarManager : MonoBehaviour
     public TextMeshProUGUI waterStatText;
 
     private float calculatedCurrentStatPercentage;
+
+    public Image xpBar;
+    public TextMeshProUGUI levelText;
+
 
     public void Awake()
     {
@@ -44,6 +49,8 @@ public class StatBarManager : MonoBehaviour
         UpdateBar(healthBar, currentHealth, healthStatText);
         UpdateBar(hungerBar, currentHunger, hungerStatText);
         UpdateBar(waterBar, currentWater, waterStatText);
+
+        UpdateXPBar();
     }
 
     public void UpdateHealth(float valueChange)
@@ -92,5 +99,14 @@ public class StatBarManager : MonoBehaviour
         currentTextStat.text = Mathf.Round(currentStat) + " / 100";
         calculatedCurrentStatPercentage = maxValueBar - (maxValueBar / 100 * currentStat);
         RectTransformExtensions.SetRight(currentBar, calculatedCurrentStatPercentage);
+    }
+
+    public void UpdateXPBar()
+    {
+        float currentXPPercentage = (float)PlayerStatManager.instance.Experience / (float)PlayerStatManager.instance.currentXPNeeded;
+
+        xpBar.fillAmount = currentXPPercentage;
+
+        levelText.text = PlayerStatManager.instance.Level.ToString();
     }
 }
