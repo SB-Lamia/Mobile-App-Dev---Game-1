@@ -8,17 +8,6 @@ using TMPro;
 public class LootManager : MonoBehaviour
 {
     public List<Item> allItems;
-    public const int MinCommon = 5;
-    public const int MinUncommon = 3;
-    public const int MinRare = 1;
-    public const int MinEpic = 1;
-    public const int MinLegendary = 1;
-
-    public const int MaxCommon = 10;
-    public const int MaxUncommon = 5;
-    public const int MaxRare = 3;
-    public const int MaxEpic = 2;
-    public const int MaxLegendary = 1;
 
     public List<Item> commons = new List<Item>();
     public List<Item> uncommons = new List<Item>();
@@ -73,44 +62,54 @@ public class LootManager : MonoBehaviour
         }
     }
 
-    public void PickRarity(string rarity)
+    public void LuckCalculationRarity(int baseNumberOfNewLoot)
     {
         recentlyAddedItems = new List<Item>();
-        switch (rarity)
-        {
-            case "Common":
-                GiveItem(commons, MinCommon, MaxCommon);
-                break;
-            case "Uncommon":
-                GiveItem(uncommons, MinUncommon, MaxUncommon);
-                break;
-            case "Rare":
-                GiveItem(rares, MinRare, MaxRare);
-                break;
-            case "Epic":
-                GiveItem(epics, MinEpic, MaxEpic);
-                break;
-            case "Legendary":
-                GiveItem(legendarys, MinLegendary, MaxLegendary);
-                break;
-            default:
-                Debug.Log("Error: invalid rarity please check rarity inputed: " + rarity);
-                break;
-        }
-    }
 
-    private void GiveItem(List<Item> rarityItemList, int minAmmount, int maxAmmount)
-    {
-        Item randomNewItem;
-        int givingItemAmmount = Random.Range(minAmmount, maxAmmount + 1);
-        for(int i = 0; i < givingItemAmmount; i++)
+        int currentLuck = PlayerStatManager.instance.Luck;
+
+        int maxLootCount = baseNumberOfNewLoot + Mathf.FloorToInt(currentLuck / 20);
+
+        Debug.Log("Bonus Luck Loot: " + Mathf.FloorToInt(currentLuck / 20));
+        Debug.Log("Current Loot Obtaining: " + maxLootCount);
+
+        for (int i = 0; i < maxLootCount; i++)
         {
-            randomNewItem = rarityItemList[Random.Range(0, rarityItemList.Count)];
-            GameManager.instance.AddItem(randomNewItem);
-            recentlyAddedItems.Add(randomNewItem);
+
+            int luckPercentage = Random.Range(0, currentLuck);
+
+            switch (luckPercentage)
+            {
+                case <= 20:
+                    GiveItem(commons);
+                    break;
+                case >= 21 and <= 40:
+                    GiveItem(uncommons);
+                    break;
+                case >= 41 and <= 60:
+                    GiveItem(rares);
+                    break;
+                case >= 61 and <= 80:
+                    GiveItem(epics);
+                    break;
+                case >= 81 and <= 100:
+                    GiveItem(legendarys);
+                    break;
+                default:
+                    Debug.Log("Error: invalid rarity please check luck percentage inputed: " + luckPercentage);
+                    break;
+            }
         }
 
         ShowUserLoot();
+    }
+
+    private void GiveItem(List<Item> rarityItemList)
+    {
+        Item randomNewItem;
+        randomNewItem = rarityItemList[Random.Range(0, rarityItemList.Count)];
+        GameManager.instance.AddItem(randomNewItem);
+        recentlyAddedItems.Add(randomNewItem);
     }
 
     private void ShowUserLoot()
@@ -118,11 +117,11 @@ public class LootManager : MonoBehaviour
         bool checkIfDuplicate;
         int getVisualItemCount = 0;
         LootUIElement.SetActive(true);
+
         for (int i = 0; i < recentlyAddedItems.Count; i++)
         {
             checkIfDuplicate = true;
             int children = LootUIElement.transform.GetChild(0).transform.childCount;
-            Debug.Log(children);
             for (int k = 0; k < children; k++)
             {
                 if(LootUIElement.transform.GetChild(0).GetChild(k).GetComponentInChildren<Image>().sprite.name == recentlyAddedItems[i].itemSprite.name)
@@ -131,13 +130,10 @@ public class LootManager : MonoBehaviour
                     getVisualItemCount++;
                     LootUIElement.transform.GetChild(0).GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text = getVisualItemCount.ToString();
                     checkIfDuplicate = false;
-
-                    Debug.Log("Item Adding Number: " + i + "Item Increased: " + recentlyAddedItems[i].itemName + ". To Value: " + getVisualItemCount++);
                 }
             }
             if (checkIfDuplicate)
             {
-                Debug.Log("Item Adding Number: " + i + " Item Added: " + recentlyAddedItems[i].itemName);
                 GameObject lootVisualGameObject = Instantiate(LootVisualPrefab);
                 
                 lootVisualGameObject.GetComponentInChildren<Image>().sprite = recentlyAddedItems[i].itemSprite;

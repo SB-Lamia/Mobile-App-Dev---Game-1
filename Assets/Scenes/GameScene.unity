@@ -719,8 +719,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5728f6e6f5c20349bd273a3ebf6d84c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 7
-  cols: 5
+  rows: 8
+  cols: 8
   inputFieldPrefab: {fileID: 3305408256403065959, guid: 080741da0720ff249a73f971a565e59f, type: 3}
 --- !u!114 &232627783
 MonoBehaviour:
@@ -2987,6 +2987,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 589219311}
+  - component: {fileID: 589219312}
   m_Layer: 0
   m_Name: PlayerStatManager
   m_TagString: Untagged
@@ -3009,6 +3010,26 @@ Transform:
   m_Father: {fileID: 144310431}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &589219312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589219310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b1669fb74f2a98449c0d31570d858e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 0
+  Experience: 0
+  Endurance: 0
+  Agility: 0
+  Charisma: 0
+  Perception: 0
+  Intelligence: 0
+  Luck: 0
 --- !u!1 &643878271
 GameObject:
   m_ObjectHideFlags: 0
@@ -3161,7 +3182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &699836109
 RectTransform:
   m_ObjectHideFlags: 0

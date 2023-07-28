@@ -56,9 +56,7 @@ public class City : MonoBehaviour
 
     public void TriggerLootingEvent()
     {
-        //Implement UI features that shows what items are added.
-
-        LootManager.instance.PickRarity("Common");
+        LootManager.instance.LuckCalculationRarity(3);
     }
 
     public void TriggerEnemyEvent()
