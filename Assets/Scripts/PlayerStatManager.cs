@@ -23,6 +23,8 @@ public class PlayerStatManager : MonoBehaviour
     public int currentXPNeeded;
     public int overFlowXP;
 
+    public int PointsToAssign;
+
 
     void Awake()
     {
