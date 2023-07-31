@@ -43,7 +43,6 @@ public class PlayerStatManager : MonoBehaviour
         currentXPNeeded = 20;
         PointsToAssign = 10;
         SetupStarterStats(1, 5, 5, 5, 5, 5, 5);
-        StatUpgraderUIManager.instance.OpenStatUpgradeMenu();
     }
 
     public void SetupStarterStats(

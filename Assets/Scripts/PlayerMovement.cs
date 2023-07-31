@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     private float movementCost;
     private int layerUI;
 
+    public GameObject backgroundScroller;
+
     private void Awake()
     {
         layerUI = LayerMask.NameToLayer("UI");
@@ -111,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
         CityManager.instance.openCityButton.interactable = false;
         popupMenu.SetActive(false);
         popupMenuOpen = false;
+        backgroundScroller.GetComponent<Scroller>().isScrolling = true;
     }
 
     public void playerConfirmedMovementNo()
@@ -167,6 +170,7 @@ public class PlayerMovement : MonoBehaviour
             isMoving = false;
             StopCoroutine("cityBlinker");
             CityManager.instance.openCityButton.interactable = true;
+            backgroundScroller.GetComponent<Scroller>().isScrolling = false;
         }
     }
 

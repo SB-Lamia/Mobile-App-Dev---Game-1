@@ -41,6 +41,7 @@ public class StatUpgraderUIManager : MonoBehaviour
 
             }
         }
+        OpenStatUpgradeMenu();
     }
 
     public void OpenStatUpgradeMenu()
@@ -101,8 +102,10 @@ public class StatUpgraderUIManager : MonoBehaviour
 
     public void BringUpDescription()
     {
-        GameObject statGameObject = EventSystem.current.currentSelectedGameObject;
-        switch (statGameObject.transform.parent.parent.gameObject.name)
+        Debug.Log("Description Script");
+;        GameObject statGameObject = EventSystem.current.currentSelectedGameObject;
+        Debug.Log(statGameObject.transform.parent.gameObject.name);
+        switch (statGameObject.transform.parent.gameObject.name)
         {
             case "Endurance":
                 descriptionStat.text = statDescriptions[0];
@@ -153,20 +156,20 @@ public class StatUpgraderUIManager : MonoBehaviour
         }
         if ((PlayerStatManager.instance.PointsToAssign > 0) &&
             (getVisualItemCount < 100) &&
-            (getVisualItemCount > 5) &&
+            (getVisualItemCount >= 5) &&
             (getVisualItemCount >= currentStatValue))
         {
             if (statPointChangeChecker == true)
             {
-                statPointChange++;
+                statPointChange = 1;
             }
             else if (statPointChangeChecker == false)
             {
-                statPointChange--;
+                statPointChange = -1;
             }
             getVisualItemCount += valueChange;
-            PlayerStatManager.instance.PointsToAssign += valueChange;
-            PointsToAssign.text = statPointChange.ToString();
+            PlayerStatManager.instance.PointsToAssign += statPointChange;
+            PointsToAssign.text = PlayerStatManager.instance.PointsToAssign.ToString();
             statGameObject.transform.parent.GetChild(2).GetComponent<TextMeshProUGUI>().text = getVisualItemCount.ToString();
         }
     }
