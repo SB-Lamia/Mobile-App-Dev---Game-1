@@ -8,6 +8,9 @@ public class StatUpgraderUIManager : MonoBehaviour
 {
     public GameObject statUpgraderUI;
 
+    [SerializeField]
+    private string[] statDescriptions;
+
     private int getVisualItemCount;
 
     public TextMeshProUGUI EnduranceUI;
@@ -19,6 +22,27 @@ public class StatUpgraderUIManager : MonoBehaviour
 
     public TextMeshProUGUI PointsToAssign;
 
+    public static StatUpgraderUIManager instance;
+
+    public int statPointChange;
+
+    public TextMeshProUGUI descriptionStat;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            if (instance != this)
+            {
+
+            }
+        }
+    }
+
     public void OpenStatUpgradeMenu()
     {
         statUpgraderUI.SetActive(true);
@@ -29,12 +53,29 @@ public class StatUpgraderUIManager : MonoBehaviour
         AgilityUI.text = PlayerStatManager.instance.Agility.ToString();
         IntelligenceUI.text = PlayerStatManager.instance.Intelligence.ToString();
 
+        statPointChange = PlayerStatManager.instance.PointsToAssign;
+
+        PointsToAssign.text = PlayerStatManager.instance.PointsToAssign.ToString();
+
         PointsToAssign.text = PlayerStatManager.instance.PointsToAssign.ToString();
     }
 
     public void SaveStats()
     {
-
+        Debug.Log("SavingStats");
+        int tempNum;
+        int.TryParse(EnduranceUI.text, out tempNum);
+        PlayerStatManager.instance.Endurance = tempNum;
+        int.TryParse(LuckUI.text, out tempNum);
+        PlayerStatManager.instance.Luck = tempNum;
+        int.TryParse(PerceptionUI.text, out tempNum);
+        PlayerStatManager.instance.Perception = tempNum;
+        int.TryParse(CharismaUI.text, out tempNum);
+        PlayerStatManager.instance.Charisma = tempNum;
+        int.TryParse(AgilityUI.text, out tempNum);
+        PlayerStatManager.instance.Agility = tempNum;
+        int.TryParse(IntelligenceUI.text, out tempNum);
+        PlayerStatManager.instance.Intelligence = tempNum;
     }
 
     public void CloseStatUpgradeMenu()
@@ -42,27 +83,91 @@ public class StatUpgraderUIManager : MonoBehaviour
         statUpgraderUI.SetActive(false);
     }
 
+    public void CloseAndSaveStats()
+    {
+        SaveStats();
+        CloseStatUpgradeMenu();
+    }
+
     public void TemporaryStatIncrease()
     {
-        TemporaryChangeStat(1);
+        TemporaryChangeStat(1, false);
     }
 
     public void TemporaryStatDecrease()
     {
-        TemporaryChangeStat(-1);
+        TemporaryChangeStat(-1, true);
     }
 
-    public void TemporaryChangeStat(int valueChange)
+    public void BringUpDescription()
     {
         GameObject statGameObject = EventSystem.current.currentSelectedGameObject;
-        int.TryParse(statGameObject.transform.parent.GetChild(4).GetComponent<TextMeshProUGUI>().text, out getVisualItemCount);
+        switch (statGameObject.transform.parent.parent.gameObject.name)
+        {
+            case "Endurance":
+                descriptionStat.text = statDescriptions[0];
+                break;
+            case "Agility":
+                descriptionStat.text = statDescriptions[5];
+                break;
+            case "Intelligence":
+                descriptionStat.text = statDescriptions[4];
+                break;
+            case "Perception":
+                descriptionStat.text = statDescriptions[1];
+                break;
+            case "Luck":
+                descriptionStat.text = statDescriptions[3];
+                break;
+            case "Charisma":
+                descriptionStat.text = statDescriptions[2];
+                break;
+        }
+    }
+
+    public void TemporaryChangeStat(int valueChange, bool statPointChangeChecker)
+    {
+        GameObject statGameObject = EventSystem.current.currentSelectedGameObject;
+        int.TryParse(statGameObject.transform.parent.GetChild(2).GetComponent<TextMeshProUGUI>().text, out getVisualItemCount);
+        int currentStatValue = 0;
+        switch (statGameObject.transform.parent.parent.gameObject.name)
+        {
+            case "Endurance":
+                currentStatValue = PlayerStatManager.instance.Endurance;
+                break;
+            case "Agility":
+                currentStatValue = PlayerStatManager.instance.Agility;
+                break;
+            case "Intelligence":
+                currentStatValue = PlayerStatManager.instance.Intelligence;
+                break;
+            case "Perception":
+                currentStatValue = PlayerStatManager.instance.Perception;
+                break;
+            case "Luck":
+                currentStatValue = PlayerStatManager.instance.Luck;
+                break;
+            case "Charisma":
+                currentStatValue = PlayerStatManager.instance.Charisma;
+                break;
+        }
         if ((PlayerStatManager.instance.PointsToAssign > 0) &&
             (getVisualItemCount < 100) &&
-            (getVisualItemCount > 0))
+            (getVisualItemCount > 5) &&
+            (getVisualItemCount >= currentStatValue))
         {
+            if (statPointChangeChecker == true)
+            {
+                statPointChange++;
+            }
+            else if (statPointChangeChecker == false)
+            {
+                statPointChange--;
+            }
             getVisualItemCount += valueChange;
             PlayerStatManager.instance.PointsToAssign += valueChange;
-            statGameObject.transform.parent.GetChild(4).GetComponent<TextMeshProUGUI>().text = getVisualItemCount.ToString();
+            PointsToAssign.text = statPointChange.ToString();
+            statGameObject.transform.parent.GetChild(2).GetComponent<TextMeshProUGUI>().text = getVisualItemCount.ToString();
         }
     }
 }

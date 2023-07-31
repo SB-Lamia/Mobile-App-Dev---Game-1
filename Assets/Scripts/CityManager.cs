@@ -18,6 +18,8 @@ public class CityManager : MonoBehaviour
 
     public List<GameObject> crossedOutLocation;
 
+    public Sprite unknownLocation;
+
     private void Awake()
     {
         if (instance == null)
@@ -39,9 +41,17 @@ public class CityManager : MonoBehaviour
     {
         for (int i = 0; i < locationMaxCount; i++)
         {
-            locations.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = locationImages[currentCity.GetComponent<City>().cityEvents[i]];
+            if (PlayerStatManager.instance.Perception > i * 20)
+            {
+                locations.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = locationImages[currentCity.GetComponent<City>().cityEvents[i]];
+            }
+            else
+            {
+                locations.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = unknownLocation;
+            }
             if (currentCity.GetComponent<City>().eventCount > i)
             {
+                locations.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = locationImages[currentCity.GetComponent<City>().cityEvents[i]];
                 crossedOutLocation[i].SetActive(true);
             }
         }

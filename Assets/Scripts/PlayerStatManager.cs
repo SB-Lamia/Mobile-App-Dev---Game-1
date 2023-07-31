@@ -39,9 +39,11 @@ public class PlayerStatManager : MonoBehaviour
 
             }
         }
-        SetupStarterStats(1, 10, 10, 10, 10, 10, 10);
-        Experience = 10;
+        Experience = 5;
         currentXPNeeded = 20;
+        PointsToAssign = 10;
+        SetupStarterStats(1, 5, 5, 5, 5, 5, 5);
+        StatUpgraderUIManager.instance.OpenStatUpgradeMenu();
     }
 
     public void SetupStarterStats(
@@ -67,12 +69,13 @@ public class PlayerStatManager : MonoBehaviour
         if (Level < 100)
         {
             Level++;
+            PlayerStatManager.instance.PointsToAssign += (5 + Level);
         }
     }
 
     public void IncreaseEXP(int increaseAmmount)
     {
-        Experience += increaseAmmount;
+        Experience += Mathf.RoundToInt(increaseAmmount * (1 + (Intelligence / 100)));
 
         if (Experience >= currentXPNeeded)
         {
@@ -81,8 +84,6 @@ public class PlayerStatManager : MonoBehaviour
             Experience = 0 + overFlowXP;
             currentXPNeeded = Mathf.RoundToInt((float)currentXPNeeded * 1.5f);
         }
-
-        
 
         StatBarManager.instance.UpdateXPBar();
     }
