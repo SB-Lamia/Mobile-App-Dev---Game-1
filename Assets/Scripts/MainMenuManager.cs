@@ -7,12 +7,14 @@ public class MainMenuManager : MonoBehaviour
 {
     public void NewGameButton()
     {
+        CheckIfNewGame.newGame = true;
         SceneManager.LoadScene("GameScene");
     }
 
     public void LoadGameButton()
     {
-
+        CheckIfNewGame.newGame = false;
+        SceneManager.LoadScene("GameScene");
     }
 
     public void SettingsButton()

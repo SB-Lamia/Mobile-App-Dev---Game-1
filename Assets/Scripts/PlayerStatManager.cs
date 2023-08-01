@@ -39,14 +39,13 @@ public class PlayerStatManager : MonoBehaviour
 
             }
         }
-        Experience = 5;
-        currentXPNeeded = 20;
-        PointsToAssign = 10;
-        SetupStarterStats(1, 5, 5, 5, 5, 5, 5);
     }
 
     public void SetupStarterStats(
         int defaultLevel,
+        int defaultExpereience,
+        int defaultPointsToAssign,
+        int defaultXPNeeded,
         int defaultEndurance,
         int defaultAgility,
         int defaultCharisma,
@@ -55,6 +54,9 @@ public class PlayerStatManager : MonoBehaviour
         int defaultIntelligence)
     {
         Level = defaultLevel;
+        Experience = defaultExpereience;
+        PointsToAssign = defaultPointsToAssign;
+        currentXPNeeded = defaultXPNeeded;
         Endurance = defaultEndurance;
         Agility = defaultAgility;
         Charisma = defaultCharisma;

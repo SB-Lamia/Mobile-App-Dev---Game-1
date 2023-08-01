@@ -41,6 +41,16 @@ public class StatBarManager : MonoBehaviour
 
             }
         }
+    }
+
+    public void SetupBaseStats(
+        float defaultHunger,
+        float defaultWater,
+        float defaultHealth)
+    {
+        currentHealth = defaultHealth;
+        currentHunger = defaultHunger;
+        currentWater = defaultWater;
         SetupHuds();
     }
 

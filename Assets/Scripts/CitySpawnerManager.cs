@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CitySpawnerManager : MonoBehaviour
 {
     public GameObject City;
     public GameObject parentCity;
+    public List<GameObject> cityGenerated;
+    public static CitySpawnerManager instance;
 
     void Awake()
     {
-        PlaceBoxes(2000, 20000);
+        if (instance == null)
+        {
+            instance = this;
+        }
+        cityGenerated = new List<GameObject>();
     }
 
-    void PlaceBoxes(int numberOfBoxes, int maxTries)
+    public void NewCityLoad(int numberOfBoxes, int maxTries)
     {
         float minXPos = -500;
         float maxXPos = 500;
@@ -46,8 +53,21 @@ public class CitySpawnerManager : MonoBehaviour
                 GameObject newCity = Instantiate(City, new Vector2(xPos, yPos), Quaternion.identity);
                 newCity.transform.parent = parentCity.transform;
                 newCity.GetComponent<City>().GenerateRandomCity();
+                cityGenerated.Add(newCity);
             }
             count++;
+        }
+    }
+
+    public void ReplaceCityLoad(List<CityStorageInformation> CityData)
+    {
+        foreach(CityStorageInformation cityData in CityData)
+        {
+            GameObject newCity = Instantiate(City, new Vector2(cityData.xPosition, cityData.yPosition), Quaternion.identity);
+            newCity.transform.parent = parentCity.transform;
+            newCity.GetComponent<City>().cityEvents = cityData.cityEvents;
+            newCity.GetComponent<City>().eventCount = cityData.cityEventCount;
+            cityGenerated.Add(newCity);
         }
     }
 }

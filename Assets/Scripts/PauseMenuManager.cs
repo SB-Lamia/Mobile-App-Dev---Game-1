@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
 {
@@ -9,12 +10,12 @@ public class PauseMenuManager : MonoBehaviour
 
     public void SaveGame()
     {
-        //To Be Implemented
+        SaveLoadManager.instance.Save();
     }
 
     public void LoadGame()
     {
-        //To Be Implemented
+        SaveLoadManager.instance.Load();
     }
 
     public void Credits()
@@ -24,7 +25,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        //To Be Implemented
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void ResumeGame()
