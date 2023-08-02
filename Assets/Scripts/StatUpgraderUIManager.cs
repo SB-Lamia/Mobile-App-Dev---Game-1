@@ -41,7 +41,6 @@ public class StatUpgraderUIManager : MonoBehaviour
 
             }
         }
-        OpenStatUpgradeMenu();
     }
 
     public void OpenStatUpgradeMenu()

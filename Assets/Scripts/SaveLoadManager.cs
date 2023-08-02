@@ -58,6 +58,10 @@ public class SaveLoadManager : MonoBehaviour
         //City Locations
         state.cityList = new List<CityStorageInformation>();
 
+        //Saving Inventory System
+        state.items = GameManager.instance.items;
+        state.itemNumbers = GameManager.instance.itemNumbers;
+
         foreach (GameObject city in CitySpawnerManager.instance.cityGenerated)
         {
             state.cityList.Add(new CityStorageInformation()
@@ -74,7 +78,7 @@ public class SaveLoadManager : MonoBehaviour
 
     public void Load()
     {
-        if (PlayerPrefs.HasKey("save") && ResetInUnityEditor != true)
+        if (PlayerPrefs.HasKey("save"))
         {
             state = Helper.Deserialize<SaveState>(PlayerPrefs.GetString("save"));
 
@@ -90,12 +94,16 @@ public class SaveLoadManager : MonoBehaviour
                 state.Perception,
                 state.Luck,
                 state.Intelligence);
+
             StatBarManager.instance.SetupBaseStats(
                 state.currentHunger,
                 state.currentWater,
                 state.currentHealth
                 );
             GameObject.Find("Player").transform.position = new Vector2(state.playerPosition.x, state.playerPosition.y);
+            
+            GameManager.instance.items = state.items;
+            GameManager.instance.itemNumbers = state.itemNumbers;
         }
         else
         {
@@ -111,5 +119,6 @@ public class SaveLoadManager : MonoBehaviour
         PlayerStatManager.instance.SetupStarterStats(1, 5, 10, 20, 5, 5, 5, 5, 5, 5);
         CitySpawnerManager.instance.NewCityLoad(2000, 20000);
         StatBarManager.instance.SetupBaseStats(100.0f, 100.0f, 100.0f);
+        StatUpgraderUIManager.instance.OpenStatUpgradeMenu();
     }
 }
