@@ -21,6 +21,8 @@ public class LootManager : MonoBehaviour
     public GameObject LootVisualPrefab;
     public List<Item> recentlyAddedItems = new List<Item>();
 
+    private int rowCount;
+
 
     void Awake()
     {
@@ -111,6 +113,7 @@ public class LootManager : MonoBehaviour
 
     private void ShowUserLoot()
     {
+        rowCount = 0;
         bool checkIfDuplicate;
         int getVisualItemCount = 0;
         LootUIElement.SetActive(true);
