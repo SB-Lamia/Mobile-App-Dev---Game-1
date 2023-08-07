@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public const float PlayerSpeed = 3f;
     public GameObject popupMenu;
+    public Vector2 touchPositionBackground;
 
     private GameObject CurrentCityMovement;
     private bool isMoving = false;
@@ -99,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
         {
             movementCost = (Vector2.Distance(CityManager.instance.currentCity.transform.position, touchedObject.transform.position) / 2) * -1;
         }
+        touchPositionBackground = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
         popupMenu.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Food / Water Cost: " + Mathf.Round(movementCost * -1);
         StartCoroutine("cityBlinker");
     }
@@ -113,7 +115,29 @@ public class PlayerMovement : MonoBehaviour
         CityManager.instance.openCityButton.interactable = false;
         popupMenu.SetActive(false);
         popupMenuOpen = false;
+        SetupBackgroundScroler();
+        
+    }
+
+    public void SetupBackgroundScroler()
+    {
         backgroundScroller.GetComponent<Scroller>().isScrolling = true;
+        if (touchPositionBackground.x > this.transform.position.x)
+        {
+            backgroundScroller.GetComponent<Scroller>().xPosition = 0.1f;
+        }
+        else if (touchPositionBackground.x < this.transform.position.x)
+        {
+            backgroundScroller.GetComponent<Scroller>().xPosition = -0.1f;
+        }
+        if (touchPositionBackground.y > this.transform.position.y)
+        {
+            backgroundScroller.GetComponent<Scroller>().yPosition = 0.1f;
+        }
+        else if (touchPositionBackground.y < this.transform.position.y)
+        {
+            backgroundScroller.GetComponent<Scroller>().yPosition = -0.1f;
+        }
     }
 
     public void playerConfirmedMovementNo()
