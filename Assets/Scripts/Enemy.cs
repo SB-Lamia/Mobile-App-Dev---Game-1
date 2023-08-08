@@ -11,6 +11,21 @@ public class Enemy : ScriptableObject
     public float currentHealth;
     public float currentAttack;
     public float currentDefense;
+    public int averageEnemyLevelEncounter;
+
+    public EnemyState currentEnemyState;
+
+    public float lastDamageDealt;
+
+    public enum EnemyState
+    {
+        PreparedToAction,
+        DecidingAttack,
+        ChangingUserStats,
+        UserFeedback,
+        ResolvingBattlePhase,
+        Idle
+    }
 
     void Awake()
     {
@@ -18,5 +33,22 @@ public class Enemy : ScriptableObject
         currentAttack = currentAttack * (1 + (PlayerStatManager.instance.Level / 10));
         currentDefense  = currentDefense * (1 + (PlayerStatManager.instance.Level / 10));
         currentHealth = startingHealth;
+
+        currentEnemyState = EnemyState.Idle;
+    }
+
+    public void DealDamageToPlayer()
+    {
+
+    }
+
+    public void ActivateSpecialAbility()
+    {
+
+    }
+
+    public void Defend()
+    {
+
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
@@ -7,12 +8,16 @@ public class BattleManager : MonoBehaviour
     //Hud GameObjects
     public GameObject dialoguePrefab;
     public GameObject dialogueHud;
+    public GameObject currentDialogueGameObject;
     public GameObject defaultHud;
     public GameObject attackHud;
     public GameObject itemsHud;
     public GameObject escapeHud;
     public GameObject skillsHud;
     public List<GameObject> allHuds = new List<GameObject>();
+
+    public bool playerTurn;
+
 
     //Enemy Scripts
     public List<Enemy> enemies = new List<Enemy>();
@@ -25,7 +30,46 @@ public class BattleManager : MonoBehaviour
         allHuds.Add(escapeHud);
         allHuds.Add(skillsHud);
         allHuds.Add(dialogueHud);
+
+        playerTurn = true;
     }
+
+    // Player Enemy Swapper
+
+    private void Update()
+    {
+        if (playerTurn)
+        {
+            //Check PlayerAction
+        }
+        else if (!playerTurn)
+        {
+            for (int i = 0; i > enemies.Count; i += 0) 
+            {
+                switch (enemies[i].currentEnemyState)
+                {
+                    case Enemy.EnemyState.PreparedToAction:
+                        enemies[i].currentEnemyState = Enemy.EnemyState.DecidingAttack;
+                        break;
+                    case Enemy.EnemyState.DecidingAttack:
+                        DecideEnemyAttack(enemies[i]);
+                        break;
+                    case Enemy.EnemyState.ChangingUserStats:
+                        break;
+                    case Enemy.EnemyState.UserFeedback:
+                        break;
+                    case Enemy.EnemyState.ResolvingBattlePhase:
+                        break;
+                    case Enemy.EnemyState.Idle:
+                        enemies[i].currentEnemyState = Enemy.EnemyState.PreparedToAction; 
+                        i++;
+                        break;
+                }
+            }
+        }
+    }
+
+    // PLAYER INPUTS / SCRIPTS
 
     public void EnableCertainHud(string hudEnableOption)
     {
@@ -86,5 +130,41 @@ public class BattleManager : MonoBehaviour
         //have a chance to escape
         //percentage
     }
+
+
+    // ENEMY INPUTS / SCRIPTS
+
+    public void DecideEnemyAttack(Enemy currentEnemy)
+    {
+        //Attack
+        //SpecialAbility
+        //Defend
+
+        switch(Random.Range(0, 3))
+        {
+            case 0:
+                currentEnemy.DealDamageToPlayer();
+                break;
+            case 1:
+                currentEnemy.ActivateSpecialAbility();
+                break;
+            case 2:
+                currentEnemy.Defend();
+                break;
+            default:
+                Debug.Log("Enemy broke");
+                break;
+        }
+    }
+
+    //decide enemy action
+
+    //do enemy action
+
+    //change user stats
+
+    //tell user what they did
+
+    //pass it to player
 
 }

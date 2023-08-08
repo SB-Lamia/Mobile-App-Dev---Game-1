@@ -18,3 +18,4 @@ MonoBehaviour:
   currentHealth: 0
   currentAttack: 5
   currentDefense: 2
+  averageEnemyLevelEncounter: 5

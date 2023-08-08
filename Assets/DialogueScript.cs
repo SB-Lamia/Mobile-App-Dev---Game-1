@@ -13,7 +13,8 @@ public class DialogueScript : MonoBehaviour
     private bool startTyping = false;
     private bool canSkip = false;
     private bool endDialogue = false;
-    public bool canTouch = false;
+    private bool canTouch = false;
+    public bool dialogueEnded = false;
 
     //Call this method to start the dialogue typing
     public void ResetString(string text)
@@ -29,7 +30,7 @@ public class DialogueScript : MonoBehaviour
         Typing();
         if (endDialogue && canSkip)
         {
-            Destroy(this.gameObject);
+            dialogueEnded = true;
         }
     }
 

@@ -7366,12 +7366,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialoguePrefab: {fileID: 431369061630165516, guid: fa951aca2c65d79478c8cebd0b21eb64, type: 3}
   dialogueHud: {fileID: 0}
+  currentDialogueGameObject: {fileID: 0}
   defaultHud: {fileID: 1814635166}
   attackHud: {fileID: 615408265}
   itemsHud: {fileID: 1072087705}
   escapeHud: {fileID: 487738373}
   skillsHud: {fileID: 494437426}
   allHuds: []
+  playerTurn: 0
   enemies: []
 --- !u!1 &559389441
 GameObject:
@@ -13764,7 +13766,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1068211163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18169,6 +18171,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1422611030}
+  - component: {fileID: 1422611031}
   m_Layer: 0
   m_Name: EnemySpawnerManager
   m_TagString: Untagged
@@ -18191,6 +18194,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1422611031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422611029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa4cd96497235b469f37ee818b2cf67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemies:
+  - {fileID: 11400000, guid: a0c458cb3ed84a048ae0c8675afa9657, type: 2}
 --- !u!1 &1440423249
 GameObject:
   m_ObjectHideFlags: 0
