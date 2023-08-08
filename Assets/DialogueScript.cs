@@ -1,81 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
 
 public class DialogueScript : MonoBehaviour
 {
     //Core TextBox stuff
     public TextMeshProUGUI textBox;
-    private string currentTextBoxInput;
-    private char[] currentTextBoxChar;
+    private string currentTextBoxInput = "";
+    private char[] currentTextBoxChar = new char[0];
     private int countChar = 0;
     private float typingTime = 0;
     private float skippingTime = 0;
     private bool startTyping = false;
-    private bool doneTyping = false;
     private bool canSkip = false;
-    private bool endTutorialChecker = false;
-    public bool canClick = false;
+    private bool endDialogue = false;
+    public bool canTouch = false;
 
-    //OptionalStrings
-    public string enemyName;
-    public string enemyActionInfo;
-    public string enemyNextAction;
-
-    public void ResetString(string enemyName, string actionInfo, string nextAction)
+    //Call this method to start the dialogue typing
+    public void ResetString(string text)
     {
-        this.enemyName = enemyName;
-        this.enemyActionInfo = actionInfo;
-    }
-
-    void OnMouseDown()
-    {
-        Debug.Log("Clicked");
-        if (Input.touchCount == 1 &&
-            Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began)
-        {
-            Debug.Log("Can Skip now");
-            canSkip = true;
-            canClick = false;
-        }
+        textBox = gameObject.GetComponent<TextMeshProUGUI>();
+        currentTextBoxChar = text.ToCharArray();
+        startTyping = true;
     }
 
     void Update()
     {
-        skippingTime += Time.deltaTime;
-        if (skippingTime >= 0.3f && canClick == false)
-        {
-            skippingTime = 0.0f;
-            canClick = true;
-        }
-
-        if (endTutorialChecker == true && canSkip)
+        Skipping();
+        Typing();
+        if (endDialogue && canSkip)
         {
             Destroy(this.gameObject);
         }
-        CheckDoneTyping();
-        Typing();
     }
 
-    public void CheckDoneTyping()
+    private void Skipping()
     {
-        if (doneTyping == true)
+        skippingTime += Time.deltaTime;
+        if (skippingTime >= 0.3f && canTouch)
         {
-            Debug.Log("DoneTyping");
-            
+            skippingTime = 0.0f;
+            canTouch = true;
+        }
+        if (Input.touchCount == 1 &&
+            Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began &&
+            canTouch)
+        {
+            canSkip = true;
         }
     }
 
-
-    public void Typing()
+    private void Typing()
     {
-        if (startTyping == true)
+        if (startTyping)
         {
             typingTime += Time.deltaTime;
 
-            if (typingTime >= 0.05f)
+            if (typingTime >= 0.01f)
             {
                 typingTime = 0.0f;
 
@@ -83,30 +63,20 @@ public class DialogueScript : MonoBehaviour
 
                 if (countChar >= currentTextBoxChar.Length - 1)
                 {
-                    countChar = 0;
                     startTyping = false;
-                    doneTyping = true;
                 }
                 else
                 {
                     countChar++;
                 }
 
-                UpdateTextBox();
+                textBox.text = currentTextBoxInput;
             }
         }
-        if (canSkip == true && startTyping == true)
+        if (canSkip && startTyping)
         {
-            Debug.Log("SkippedText");
             startTyping = false;
-            countChar = 0;
-            doneTyping = true;
             canSkip = false;
-            UpdateTextBox();
         }
-    }
-    public void UpdateTextBox()
-    {
-        textBox.text = currentTextBoxInput;
     }
 }

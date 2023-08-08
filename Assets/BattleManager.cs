@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+    //Hud GameObjects
+    public GameObject dialoguePrefab;
+    public GameObject dialogueHud;
     public GameObject defaultHud;
     public GameObject attackHud;
     public GameObject itemsHud;
     public GameObject escapeHud;
     public GameObject skillsHud;
-
     public List<GameObject> allHuds = new List<GameObject>();
+
+    //Enemy Scripts
+    public List<Enemy> enemies = new List<Enemy>();
 
     void Awake()
     {
@@ -19,6 +24,7 @@ public class BattleManager : MonoBehaviour
         allHuds.Add(itemsHud);
         allHuds.Add(escapeHud);
         allHuds.Add(skillsHud);
+        allHuds.Add(dialogueHud);
     }
 
     public void EnableCertainHud(string hudEnableOption)
@@ -44,6 +50,9 @@ public class BattleManager : MonoBehaviour
                 break;
             case "Skill":
                 skillsHud.SetActive(true);
+                break;
+            case "Dialogue":
+                dialogueHud.SetActive(true);
                 break;
             default:
                 defaultHud.SetActive(true);
