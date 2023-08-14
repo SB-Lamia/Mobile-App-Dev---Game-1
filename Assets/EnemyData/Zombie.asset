@@ -7,17 +7,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16923f6279966994c833a07e03459f75, type: 3}
-  m_Name: Bat
+  m_Name: Zombie
   m_EditorClassIdentifier: 
-  enemyName: Bat
-  enemySprite: {fileID: 21300000, guid: 1b72b07e16877144384c88129c24d02a, type: 3}
+  enemyName: Zombie
+  enemySprite: {fileID: -273501965, guid: 108303fc6d8c4224aaf23118c7341fe0, type: 3}
   startingHealth: 20
   currentHealth: 0
-  currentAttack: 2
-  currentDefense: 5
+  currentAttack: 5
+  currentDefense: 2
   averageEnemyLevelEncounter: 5
   currentEnemyState: 0
   currentDialogueAction: 

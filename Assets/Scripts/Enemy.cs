@@ -15,16 +15,16 @@ public class Enemy : ScriptableObject
 
     public EnemyState currentEnemyState;
 
-    public float lastDamageDealt;
+    public string currentDialogueAction;
+    public bool awaitingActionToResolve;
+
+    public bool playerDecicidingAttack;
 
     public enum EnemyState
     {
-        PreparedToAction,
-        DecidingAttack,
-        ChangingUserStats,
+        DoAction,
         UserFeedback,
-        ResolvingBattlePhase,
-        Idle
+        ResolvingBattlePhase
     }
 
     void Awake()
@@ -34,21 +34,23 @@ public class Enemy : ScriptableObject
         currentDefense  = currentDefense * (1 + (PlayerStatManager.instance.Level / 10));
         currentHealth = startingHealth;
 
-        currentEnemyState = EnemyState.Idle;
+        currentEnemyState = EnemyState.DoAction;
     }
 
     public void DealDamageToPlayer()
     {
-
+        StatBarManager.instance.UpdateHealth(currentAttack * -1);
+        currentDialogueAction = $"{enemyName} has dealt {Mathf.Round(currentAttack)} damage to you!";
+        awaitingActionToResolve = false;
     }
 
     public void ActivateSpecialAbility()
     {
-
+        awaitingActionToResolve = false;
     }
 
     public void Defend()
     {
-
+        awaitingActionToResolve = false;
     }
 }

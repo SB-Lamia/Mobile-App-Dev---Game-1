@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -21,16 +22,21 @@ public class DialogueScript : MonoBehaviour
     {
         textBox = gameObject.GetComponent<TextMeshProUGUI>();
         currentTextBoxChar = text.ToCharArray();
-        startTyping = true;
+        StartCoroutine(DialogueCoroutine());
     }
 
-    void Update()
+    public IEnumerator DialogueCoroutine()
     {
         Skipping();
         Typing();
         if (endDialogue && canSkip)
         {
             dialogueEnded = true;
+            yield return null;
+        }
+        else
+        {
+            yield return new WaitForSeconds(.01f);
         }
     }
 

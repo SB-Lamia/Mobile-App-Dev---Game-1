@@ -20,7 +20,7 @@ public class City : MonoBehaviour
         cityEvents = new int[MaximumEventCount];
         for (int i = 0; i < cityEvents.Length; i++)
         {
-            cityEvents[i] = Random.Range(0, 1);
+            cityEvents[i] = Random.Range(0, 2);
         }
     }
 
@@ -62,7 +62,7 @@ public class City : MonoBehaviour
 
     public void TriggerEnemyEvent()
     {
-        //To Be Implemented;
+        BattleManager.instance.StartCombat();
     }
 
     public void TriggerSpecialEvent()
