@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 public class SelectingEnemy : MonoBehaviour
 {
     public bool isIncreasingTransparent = true;
-    public SpriteRenderer currentSP;
+    public Image currentSP;
     public Color currentColor;
 
     public IEnumerator EnemyBlinker()
     {
         gameObject.SetActive(true);
-        currentSP = this.GetComponent<SpriteRenderer>();
+        currentSP = this.GetComponent<Image>();
         while (true)
         {
             Vector3 newScale;

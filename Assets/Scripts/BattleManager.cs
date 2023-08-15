@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
@@ -85,7 +86,7 @@ public class BattleManager : MonoBehaviour
             enemies[i].awaitingActionToResolve = true;
             currentlyUsedLocations.Add(allEnemyLocations[i]);
             currentlyUsedLocations[i].SetActive(true);
-            currentlyUsedLocations[i].GetComponent<SpriteRenderer>().sprite = enemies[i].enemySprite;
+            currentlyUsedLocations[i].GetComponent<Image>().sprite = enemies[i].enemySprite;
         }
         activeCombat = true;
     }
@@ -224,7 +225,8 @@ public class BattleManager : MonoBehaviour
 
     public void AttackingEnemy()
     {
-        switch (EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.name)
+        Debug.Log(EventSystem.current.currentSelectedGameObject.name);
+        switch (EventSystem.current.currentSelectedGameObject.name)
         {
             case "EnemyLocation1":
                 enemies[0].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance);
@@ -245,8 +247,8 @@ public class BattleManager : MonoBehaviour
 
         foreach (GameObject selectingObject in currentlyUsedLocations)
         {
-            selectingObject.transform.GetChild(0).gameObject.SetActive(false);
             StopCoroutine(selectingObject.GetComponentInChildren<SelectingEnemy>().EnemyBlinker());
+            selectingObject.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         awaitingPlayerDialogue = true;
