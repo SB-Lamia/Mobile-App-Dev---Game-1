@@ -73,6 +73,7 @@ public class SaveLoadManager : MonoBehaviour
             });
         }
 
+        Debug.Log(Helper.Serialize<SaveState>(state));
         PlayerPrefs.SetString("save", Helper.Serialize<SaveState>(state));
     }
 

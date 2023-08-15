@@ -27,11 +27,11 @@ public class Enemy : ScriptableObject
         ResolvingBattlePhase
     }
 
-    void Awake()
+    public void AdjustStatsToMatchPlayer()
     {
         startingHealth = startingHealth * (1 + (PlayerStatManager.instance.Level / 10));
         currentAttack = currentAttack * (1 + (PlayerStatManager.instance.Level / 10));
-        currentDefense  = currentDefense * (1 + (PlayerStatManager.instance.Level / 10));
+        currentDefense = currentDefense * (1 + (PlayerStatManager.instance.Level / 10));
         currentHealth = startingHealth;
 
         currentEnemyState = EnemyState.DoAction;
@@ -42,6 +42,12 @@ public class Enemy : ScriptableObject
         StatBarManager.instance.UpdateHealth(currentAttack * -1);
         currentDialogueAction = $"{enemyName} has dealt {Mathf.Round(currentAttack)} damage to you!";
         awaitingActionToResolve = false;
+    }
+
+    //Please send Negative Values
+    public void TakingDamageFromPlayer(float damage)
+    {
+        startingHealth += damage;
     }
 
     public void ActivateSpecialAbility()

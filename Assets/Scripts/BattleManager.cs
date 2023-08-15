@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BattleManager : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class BattleManager : MonoBehaviour
 
     public int enemyMaxCount;
     public int currentEnemyTurn;
+
+    public bool awaitingPlayerDialogue;
 
     public enum CurrentAttack
     {
@@ -102,10 +105,18 @@ public class BattleManager : MonoBehaviour
     {
         if (activeCombat)
         {
-            if (!playerTurn)
+            if (!awaitingPlayerDialogue)
             {
-                EnemyTurns();
+                if (!playerTurn)
+                {
+                    EnemyTurns();
+                    DialogueChecker();
+                }
+            }
+            else
+            {
                 DialogueChecker();
+                EndPlayerTurn();
             }
         }
     }
@@ -172,8 +183,11 @@ public class BattleManager : MonoBehaviour
     {
         if (playerTurn)
         {
-            foreach(GameObject selectingObject in currentlyUsedLocations)
+            Debug.Log("triggering selecting");
+            foreach (GameObject selectingObject in currentlyUsedLocations)
             {
+                Debug.Log("selecting added to a enemy");
+                selectingObject.transform.GetChild(0).gameObject.SetActive(true);
                 StartCoroutine(selectingObject.GetComponentInChildren<SelectingEnemy>().EnemyBlinker());
             }
         }
@@ -181,8 +195,10 @@ public class BattleManager : MonoBehaviour
 
     public void BasicAttack()
     {
+        Debug.Log("BasicAttack");
         if (playerTurn)
         {
+            Debug.Log("Player Turn Accepted");
             currentAttack = BattleManager.CurrentAttack.BasicAttack;
             TriggerSelectingAttack();
         }
@@ -204,6 +220,42 @@ public class BattleManager : MonoBehaviour
             currentAttack = BattleManager.CurrentAttack.SecondaryAttack;
             TriggerSelectingAttack();
         }
+    }
+
+    public void AttackingEnemy()
+    {
+        switch (EventSystem.current.currentSelectedGameObject.transform.parent.gameObject.name)
+        {
+            case "EnemyLocation1":
+                enemies[0].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance);
+                break;
+            case "EnemyLocation2":
+                enemies[1].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance);
+                break;
+            case "EnemyLocation3":
+                enemies[2].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance);
+                break;
+            case "EnemyLocation4":
+                enemies[3].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance);
+                break;
+            default:
+                Debug.Log("Fuck");
+                break;
+        }
+
+        foreach (GameObject selectingObject in currentlyUsedLocations)
+        {
+            selectingObject.transform.GetChild(0).gameObject.SetActive(false);
+            StopCoroutine(selectingObject.GetComponentInChildren<SelectingEnemy>().EnemyBlinker());
+        }
+
+        awaitingPlayerDialogue = true;
+        EnableCertainHud("Dialogue");
+        GameObject dialogueObject = Instantiate(dialoguePrefab);
+        dialogueObject.transform.parent = dialogueHud.transform;
+        dialogueObject.GetComponent<DialogueScript>().ResetString("Player Attacked " + enemies[0].enemyName + " for " + 
+                                                                    PlayerStatManager.instance.Endurance + " damage.");
+        currentDialogueGameObject = dialogueObject;
     }
 
     public void DoBasicAttack()
