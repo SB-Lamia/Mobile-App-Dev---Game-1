@@ -47,7 +47,7 @@ public class Enemy : ScriptableObject
     //Please send Negative Values
     public void TakingDamageFromPlayer(float damage)
     {
-        startingHealth += damage;
+        currentHealth += damage;
     }
 
     public void ActivateSpecialAbility()

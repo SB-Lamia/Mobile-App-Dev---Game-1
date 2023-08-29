@@ -21,8 +21,8 @@ public class DialogueScript : MonoBehaviour
     //Call this method to start the dialogue typing
     public void ResetString(string text)
     {
-        textBox = gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        currentTextBoxChar = text.ToCharArray();
+        textBox = gameObject.GetComponent<TextMeshProUGUI>();
+        currentTextBoxInput = "";
         // Reseting scale and settings of textbox incase it breaks
 
         RectTransform textGO = textBox.rectTransform;
@@ -32,25 +32,22 @@ public class DialogueScript : MonoBehaviour
         RectTransformExtensions.SetTop(textGO, 0f);
         RectTransformExtensions.SetBottom(textGO, 0f);
         textGO.localPosition = new Vector3(textGO.localPosition.x, textGO.localPosition.y, 0f);
+        currentTextBoxChar = text.ToCharArray();
         canType = true;
         startTyping = true;
+        countChar = 0;
+        Time.timeScale = 1f;
     }
 
     void Update()
     {
         if (canType)
         {
-            Debug.Log("Typing");
             Skipping();
             Typing();
             if (endDialogue && canSkip)
             {
-                Debug.Log("DialogueEnded");
                 dialogueEnded = true;
-            }
-            else
-            {
-                Debug.Log("Continuing Dialogue");
             }
         }
         
@@ -59,11 +56,9 @@ public class DialogueScript : MonoBehaviour
 
     private void Skipping()
     {
-        Debug.Log("Skipping");
         skippingTime += Time.deltaTime;
-        if (skippingTime >= 0.3f && canTouch)
+        if (skippingTime >= 3f)
         {
-            Debug.Log("Skipping Allowed");
             skippingTime = 0.0f;
             canTouch = true;
         }
@@ -71,22 +66,20 @@ public class DialogueScript : MonoBehaviour
             Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began &&
             canTouch)
         {
-            Debug.Log("Text Skipped");
             canSkip = true;
+            endDialogue = true;
         }
     }
 
     private void Typing()
     {
-        Debug.Log("IsTyping");
         if (startTyping)
         {
             typingTime += Time.deltaTime;
 
-            if (typingTime >= 0.01f)
+            if (typingTime >= 0.1f)
             {
                 typingTime = 0.0f;
-
                 currentTextBoxInput = currentTextBoxInput + currentTextBoxChar[countChar];
 
                 if (countChar >= currentTextBoxChar.Length - 1)

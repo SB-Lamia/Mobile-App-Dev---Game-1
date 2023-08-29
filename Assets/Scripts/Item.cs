@@ -12,4 +12,19 @@ public class Item : ScriptableObject
 
     public bool isStackable;
     public string rarity;
+
+    public ItemType itemType;
+
+    public bool isEquipped;
+
+    public enum ItemType
+    {
+        Weapon,
+        Helmet,
+        ChestPlate,
+        Leggings,
+        Feet,
+        Consumable,
+        Material
+    }
 }

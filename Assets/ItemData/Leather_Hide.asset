@@ -17,3 +17,5 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 919b1ef0c15009b43b03660eda9e8044, type: 3}
   isStackable: 1
   rarity: Common
+  itemType: 6
+  isEquipped: 0

@@ -75,18 +75,21 @@ public class BattleManager : MonoBehaviour
     public void StartCombat()
     {
         combatSystem.SetActive(true);
+        enemies = new List<Enemy>();
         playerTurn = true;
         isDialogueActive = false;
         currentEnemyTurn = 0;
         EnableCertainHud("Default");
         enemies = EnemySpawnerManager.instance.SpawnRandomEnemy(2);
         Debug.Log(enemies.Count);
+        enemyMaxCount = 2;
         for (int i = 0; i < enemies.Count; i++)
         {
             enemies[i].awaitingActionToResolve = true;
             currentlyUsedLocations.Add(allEnemyLocations[i]);
             currentlyUsedLocations[i].SetActive(true);
             currentlyUsedLocations[i].GetComponent<Image>().sprite = enemies[i].enemySprite;
+            enemies[i].AdjustStatsToMatchPlayer();
         }
         activeCombat = true;
     }
@@ -98,6 +101,7 @@ public class BattleManager : MonoBehaviour
             enemies[i].awaitingActionToResolve = true;
             allEnemyLocations[i].SetActive(false);
         }
+        combatSystem.SetActive(false);
         activeCombat = false;
     }
     // Player Enemy Swapper
@@ -124,12 +128,16 @@ public class BattleManager : MonoBehaviour
 
     public void DialogueChecker()
     {
-        if (currentDialogueGameObject.GetComponent<DialogueScript>().dialogueEnded)
+        if (isDialogueActive || awaitingPlayerDialogue)
         {
-            EnableCertainHud("Default");
-            enemies[currentEnemyTurn].awaitingActionToResolve = false;
-            isDialogueActive = false;
-            Destroy(currentDialogueGameObject);
+            if (currentDialogueGameObject.GetComponent<DialogueScript>().dialogueEnded)
+            {
+                EnableCertainHud("Default");
+                enemies[currentEnemyTurn].awaitingActionToResolve = false;
+                isDialogueActive = false;
+                awaitingPlayerDialogue = false;
+                Destroy(currentDialogueGameObject);
+            }
         }
     }
 
@@ -223,22 +231,58 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public void MoveEnemiesAfterDeath(int deadEnemyPosition)
+    {
+        for (int i = 0; i < enemies.Count-1; i++)
+        {
+            if (deadEnemyPosition <= i)
+            {
+                enemies[i] = enemies[i+1];
+                currentlyUsedLocations[i].GetComponent<Image>().sprite = enemies[i+1].enemySprite;
+            }
+        }
+        enemies.RemoveAt(enemyMaxCount-1);
+        currentlyUsedLocations[enemyMaxCount-1].SetActive(false);
+        currentlyUsedLocations.RemoveAt(enemyMaxCount-1);
+        enemyMaxCount--;
+        if (enemyMaxCount == 0)
+        {
+            EndCombat();
+        }
+    }
+
     public void AttackingEnemy()
     {
         Debug.Log(EventSystem.current.currentSelectedGameObject.name);
         switch (EventSystem.current.currentSelectedGameObject.name)
         {
             case "EnemyLocation1":
-                enemies[0].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance);
+                enemies[0].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
+                if (enemies[0].currentHealth <= 0)
+                {
+                    MoveEnemiesAfterDeath(0);
+                }
                 break;
             case "EnemyLocation2":
-                enemies[1].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance);
+                enemies[1].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
+                if (enemies[1].currentHealth <= 0)
+                {
+                    MoveEnemiesAfterDeath(1);
+                }
                 break;
             case "EnemyLocation3":
-                enemies[2].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance);
+                enemies[2].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
+                if (enemies[2].currentHealth <= 0)
+                {
+                    MoveEnemiesAfterDeath(2);
+                }
                 break;
             case "EnemyLocation4":
-                enemies[3].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance);
+                enemies[3].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
+                if (enemies[3].currentHealth <= 0)
+                {
+                    MoveEnemiesAfterDeath(3);
+                }
                 break;
             default:
                 Debug.Log("Fuck");
@@ -255,7 +299,7 @@ public class BattleManager : MonoBehaviour
         EnableCertainHud("Dialogue");
         GameObject dialogueObject = Instantiate(dialoguePrefab);
         dialogueObject.transform.parent = dialogueHud.transform;
-        dialogueObject.GetComponent<DialogueScript>().ResetString("Player Attacked " + enemies[0].enemyName + " for " + 
+        dialogueObject.GetComponent<DialogueScript>().ResetString("Player Attacked " + enemies[0].enemyName + " for " +
                                                                     PlayerStatManager.instance.Endurance + " damage.");
         currentDialogueGameObject = dialogueObject;
     }
@@ -316,6 +360,7 @@ public class BattleManager : MonoBehaviour
     {
         if (!enemies[currentEnemyTurn].awaitingActionToResolve)
         {
+            Debug.Log(enemies[currentEnemyTurn].enemyName);
             switch (enemies[currentEnemyTurn].currentEnemyState)
             {
                 case Enemy.EnemyState.DoAction:
@@ -326,6 +371,7 @@ public class BattleManager : MonoBehaviour
                 case Enemy.EnemyState.UserFeedback:
                     enemies[currentEnemyTurn].awaitingActionToResolve = true;
                     EnableCertainHud("Dialogue");
+                    isDialogueActive = true;
                     GameObject dialogueObject = Instantiate(dialoguePrefab);
                     dialogueObject.transform.parent = dialogueHud.transform;
                     dialogueObject.GetComponent<DialogueScript>().ResetString(enemies[currentEnemyTurn].currentDialogueAction);
@@ -333,13 +379,16 @@ public class BattleManager : MonoBehaviour
                     enemies[currentEnemyTurn].currentEnemyState = Enemy.EnemyState.ResolvingBattlePhase;
                     break;
                 case Enemy.EnemyState.ResolvingBattlePhase:
-                    enemies[currentEnemyTurn].awaitingActionToResolve = true;
+
+                    enemies[currentEnemyTurn].awaitingActionToResolve = false;
                     enemies[currentEnemyTurn].currentEnemyState = Enemy.EnemyState.DoAction;
                     currentEnemyTurn++;
                     if (currentEnemyTurn >= enemyMaxCount)
                     {
                         playerTurn = true;
+                        currentEnemyTurn = 0;
                     }
+
                     // ADD SOMETHING THAT CHECKS IF ENEMYS ARE KILLED
                     break;
                 default:
