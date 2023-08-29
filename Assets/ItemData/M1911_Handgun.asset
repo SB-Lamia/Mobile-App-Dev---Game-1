@@ -19,4 +19,5 @@ MonoBehaviour:
   isStackable: 0
   rarity: Rare
   itemType: 0
-  isEquipped: 0
+  isEquippedMain: 0
+  isEquippedSecondary: 0

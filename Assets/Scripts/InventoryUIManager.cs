@@ -10,7 +10,7 @@ public class InventoryUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        inventoryMenu.gameObject.SetActive(true);
+        inventoryMenu.gameObject.SetActive(false);
     }
 
     public void InventoryControl()

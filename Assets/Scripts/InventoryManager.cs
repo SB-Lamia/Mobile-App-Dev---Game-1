@@ -35,7 +35,6 @@ public class InventoryManager : MonoBehaviour
 
     public void ItemPressed(int slot)
     {
-        Debug.Log(slot);
         foreach (GameObject gameObject in selectedItemMenu)
         {
             gameObject.SetActive(true);
@@ -50,7 +49,8 @@ public class InventoryManager : MonoBehaviour
             case Item.ItemType.ChestPlate:
             case Item.ItemType.Leggings:
             case Item.ItemType.Feet:
-                if (currentlySelectedItem.isEquipped)
+                //To Be Added Later
+                if (currentlySelectedItem.isEquippedMain || currentlySelectedItem.isEquippedSecondary)
                 {
                     selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip Item";
                 }
@@ -58,6 +58,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Equip Item";
                 }
+                
                 break;
             case Item.ItemType.Consumable:
                 selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Consume Item";
@@ -71,42 +72,48 @@ public class InventoryManager : MonoBehaviour
         switch (currentlySelectedItem.itemType)
         {
             case Item.ItemType.Weapon:
-                if (currentlySelectedItem.isEquipped)
+                if (currentlySelectedItem.isEquippedMain || currentlySelectedItem.isEquippedSecondary)
                 {
-                    currentlySelectedItem.isEquipped = false;
-                    if (mainEquipped)
+                    if (mainEquipped && currentlySelectedItem.isEquippedMain)
                     {
                         mainEquipment.transform.GetChild(0).gameObject.SetActive(false);
                         mainEquipped = false;
+                        currentlySelectedItem.isEquippedMain = false;
+                        selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Equip Item";
                     }
-                    else if (!mainEquipment && secondaryEquipment)
+                    else if (secondaryEquipped && currentlySelectedItem.isEquippedSecondary)
                     {
-                        mainEquipment.transform.GetChild(0).gameObject.SetActive(false);
+                        secondaryEquipment.transform.GetChild(0).gameObject.SetActive(false);
                         secondaryEquipped = false;
+                        currentlySelectedItem.isEquippedSecondary = false;
+                        selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Equip Item";
                     }
                     else
                     {
-                        Debug.Log("Max Equiped Items already");
+                        Debug.Log("Cannot Unequip Item!");
                     }
                 }
                 else
                 {
-                    currentlySelectedItem.isEquipped = true;
                     if (!mainEquipped)
                     {
                         mainEquipment.transform.GetChild(0).gameObject.SetActive(true);
                         mainEquipment.transform.GetChild(0).GetComponent<Image>().sprite = currentlySelectedItem.itemSprite;
                         mainEquipped = true;
+                        currentlySelectedItem.isEquippedMain = true;
+                        selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip Item";
                     }
-                    else if (mainEquipment && !secondaryEquipment)
+                    else if (mainEquipped && !secondaryEquipped)
                     {
-                        mainEquipment.transform.GetChild(0).gameObject.SetActive(true);
+                        secondaryEquipment.transform.GetChild(0).gameObject.SetActive(true);
                         secondaryEquipment.transform.GetChild(0).GetComponent<Image>().sprite = currentlySelectedItem.itemSprite;
                         secondaryEquipped = true;
+                        currentlySelectedItem.isEquippedSecondary = true;
+                        selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip Item";
                     }
                     else
                     {
-                        Debug.Log("Max Equiped Items already");
+                        Debug.Log("Max Equip Items");
                     }
                 }
                 break;
@@ -122,28 +129,31 @@ public class InventoryManager : MonoBehaviour
                 selectedButton1.SetActive(false);
                 break;
         }
+        GameManager.instance.DisplayItems();
     }
 
     public void Button2_Pressed()
     {
-        if (currentlySelectedItem.isEquipped)
+        if (mainEquipped || secondaryEquipped)
         {
-            currentlySelectedItem.isEquipped = false;
-            if (mainEquipped)
+            if (mainEquipped && currentlySelectedItem.isEquippedMain)
             {
                 mainEquipment.transform.GetChild(0).gameObject.SetActive(false);
                 mainEquipped = false;
+                currentlySelectedItem.isEquippedMain = false;
             }
-            else if (!mainEquipment && secondaryEquipment)
+            else if (secondaryEquipped && currentlySelectedItem.isEquippedSecondary)
             {
-                mainEquipment.transform.GetChild(0).gameObject.SetActive(false);
+                secondaryEquipment.transform.GetChild(0).gameObject.SetActive(false);
                 secondaryEquipped = false;
+                currentlySelectedItem.isEquippedSecondary = false;
             }
             else
             {
-                Debug.Log("Max Equiped Items already");
+                Debug.Log("Max Equipped Items already");
             }
         }
         GameManager.instance.RemoveItem(currentlySelectedItem);
+        GameManager.instance.DisplayItems();
     }
 }

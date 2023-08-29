@@ -37,8 +37,6 @@ public class GameManager : MonoBehaviour
 
     public void DisplayItems()
     {
-
-        Debug.Log(parentSlots.transform.childCount);
         slots = new GameObject[parentSlots.transform.childCount];
         slots = GrabSlots();
         Debug.Log(slots.Length);

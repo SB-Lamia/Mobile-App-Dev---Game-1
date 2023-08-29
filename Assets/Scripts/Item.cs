@@ -15,7 +15,8 @@ public class Item : ScriptableObject
 
     public ItemType itemType;
 
-    public bool isEquipped;
+    public bool isEquippedMain;
+    public bool isEquippedSecondary;
 
     public enum ItemType
     {

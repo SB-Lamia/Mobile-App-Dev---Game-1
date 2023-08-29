@@ -132,7 +132,6 @@ public class BattleManager : MonoBehaviour
         {
             if (currentDialogueGameObject.GetComponent<DialogueScript>().dialogueEnded)
             {
-                EnableCertainHud("Default");
                 enemies[currentEnemyTurn].awaitingActionToResolve = false;
                 isDialogueActive = false;
                 awaitingPlayerDialogue = false;
@@ -253,11 +252,13 @@ public class BattleManager : MonoBehaviour
 
     public void AttackingEnemy()
     {
+        int enemyPositionDialgoue = 0;
         Debug.Log(EventSystem.current.currentSelectedGameObject.name);
         switch (EventSystem.current.currentSelectedGameObject.name)
         {
             case "EnemyLocation1":
                 enemies[0].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
+                enemyPositionDialgoue = 1;
                 if (enemies[0].currentHealth <= 0)
                 {
                     MoveEnemiesAfterDeath(0);
@@ -265,6 +266,7 @@ public class BattleManager : MonoBehaviour
                 break;
             case "EnemyLocation2":
                 enemies[1].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
+                enemyPositionDialgoue = 2;
                 if (enemies[1].currentHealth <= 0)
                 {
                     MoveEnemiesAfterDeath(1);
@@ -272,6 +274,7 @@ public class BattleManager : MonoBehaviour
                 break;
             case "EnemyLocation3":
                 enemies[2].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
+                enemyPositionDialgoue = 3;
                 if (enemies[2].currentHealth <= 0)
                 {
                     MoveEnemiesAfterDeath(2);
@@ -279,6 +282,7 @@ public class BattleManager : MonoBehaviour
                 break;
             case "EnemyLocation4":
                 enemies[3].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
+                enemyPositionDialgoue = 4;
                 if (enemies[3].currentHealth <= 0)
                 {
                     MoveEnemiesAfterDeath(3);
@@ -299,8 +303,8 @@ public class BattleManager : MonoBehaviour
         EnableCertainHud("Dialogue");
         GameObject dialogueObject = Instantiate(dialoguePrefab);
         dialogueObject.transform.parent = dialogueHud.transform;
-        dialogueObject.GetComponent<DialogueScript>().ResetString("Player Attacked " + enemies[0].enemyName + " for " +
-                                                                    PlayerStatManager.instance.Endurance + " damage.");
+        dialogueObject.GetComponent<DialogueScript>().ResetString("Player Attacked " + enemies[0].enemyName + " at position " + enemyPositionDialgoue 
+                                                                    + " for " + PlayerStatManager.instance.Endurance + " damage.");
         currentDialogueGameObject = dialogueObject;
     }
 
@@ -360,7 +364,6 @@ public class BattleManager : MonoBehaviour
     {
         if (!enemies[currentEnemyTurn].awaitingActionToResolve)
         {
-            Debug.Log(enemies[currentEnemyTurn].enemyName);
             switch (enemies[currentEnemyTurn].currentEnemyState)
             {
                 case Enemy.EnemyState.DoAction:
@@ -379,17 +382,15 @@ public class BattleManager : MonoBehaviour
                     enemies[currentEnemyTurn].currentEnemyState = Enemy.EnemyState.ResolvingBattlePhase;
                     break;
                 case Enemy.EnemyState.ResolvingBattlePhase:
-
                     enemies[currentEnemyTurn].awaitingActionToResolve = false;
                     enemies[currentEnemyTurn].currentEnemyState = Enemy.EnemyState.DoAction;
                     currentEnemyTurn++;
                     if (currentEnemyTurn >= enemyMaxCount)
                     {
+                        EnableCertainHud("Default");
                         playerTurn = true;
                         currentEnemyTurn = 0;
                     }
-
-                    // ADD SOMETHING THAT CHECKS IF ENEMYS ARE KILLED
                     break;
                 default:
                     Debug.Log("Incorrect Enemy State. Please check your Enemy State: " + enemies[currentEnemyTurn].currentEnemyState);
