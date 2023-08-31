@@ -118,7 +118,7 @@ public class SaveLoadManager : MonoBehaviour
     public void SetupGameForSave()
     {
         PlayerStatManager.instance.SetupStarterStats(1, 5, 10, 20, 5, 5, 5, 5, 5, 5);
-        CitySpawnerManager.instance.NewCityLoad(2000, 20000);
+        CitySpawnerManager.instance.NewCityLoad(2000, 100000);
         StatBarManager.instance.SetupBaseStats(100.0f, 100.0f, 100.0f);
         StatUpgraderUIManager.instance.OpenStatUpgradeMenu();
     }

@@ -14,6 +14,7 @@ public class MainMenuManager : MonoBehaviour
         {
             areYouSure.SetActive(true);
         }
+        areYouSure.SetActive(true);
     }
 
     public void CreateNewGame()
