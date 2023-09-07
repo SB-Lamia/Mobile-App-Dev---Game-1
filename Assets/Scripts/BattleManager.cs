@@ -140,7 +140,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // PLAYER INPUTS / SCRIPTS
+    // PLAYER INPUTS
 
     public void EnableCertainHud(string hudEnableOption)
     {
@@ -232,17 +232,17 @@ public class BattleManager : MonoBehaviour
 
     public void MoveEnemiesAfterDeath(int deadEnemyPosition)
     {
-        for (int i = 0; i < enemies.Count-1; i++)
+        for (int i = 0; i < enemies.Count - 1; i++)
         {
             if (deadEnemyPosition <= i)
             {
-                enemies[i] = enemies[i+1];
-                currentlyUsedLocations[i].GetComponent<Image>().sprite = enemies[i+1].enemySprite;
+                enemies[i] = enemies[i + 1];
+                currentlyUsedLocations[i].GetComponent<Image>().sprite = enemies[i + 1].enemySprite;
             }
         }
-        enemies.RemoveAt(enemyMaxCount-1);
-        currentlyUsedLocations[enemyMaxCount-1].SetActive(false);
-        currentlyUsedLocations.RemoveAt(enemyMaxCount-1);
+        enemies.RemoveAt(enemyMaxCount - 1);
+        currentlyUsedLocations[enemyMaxCount - 1].SetActive(false);
+        currentlyUsedLocations.RemoveAt(enemyMaxCount - 1);
         enemyMaxCount--;
         if (enemyMaxCount == 0)
         {
@@ -250,43 +250,25 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void AttackingEnemy()
+    public void EnemySelectionConfirmation()
     {
-        int enemyPositionDialgoue = 0;
-        Debug.Log(EventSystem.current.currentSelectedGameObject.name);
+        GameObject dialogueObject = Instantiate(dialoguePrefab);
+        dialogueObject.transform.parent = dialogueHud.transform;
+        currentDialogueGameObject = dialogueObject;
+        EnableCertainHud("Dialogue");
         switch (EventSystem.current.currentSelectedGameObject.name)
         {
             case "EnemyLocation1":
-                enemies[0].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
-                enemyPositionDialgoue = 1;
-                if (enemies[0].currentHealth <= 0)
-                {
-                    MoveEnemiesAfterDeath(0);
-                }
+                LaunchingAttackAgainstSelectedEnemy(0);
                 break;
             case "EnemyLocation2":
-                enemies[1].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
-                enemyPositionDialgoue = 2;
-                if (enemies[1].currentHealth <= 0)
-                {
-                    MoveEnemiesAfterDeath(1);
-                }
+                LaunchingAttackAgainstSelectedEnemy(1);
                 break;
             case "EnemyLocation3":
-                enemies[2].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
-                enemyPositionDialgoue = 3;
-                if (enemies[2].currentHealth <= 0)
-                {
-                    MoveEnemiesAfterDeath(2);
-                }
+                LaunchingAttackAgainstSelectedEnemy(2);
                 break;
             case "EnemyLocation4":
-                enemies[3].TakingDamageFromPlayer(PlayerStatManager.instance.Endurance * -1);
-                enemyPositionDialgoue = 4;
-                if (enemies[3].currentHealth <= 0)
-                {
-                    MoveEnemiesAfterDeath(3);
-                }
+                LaunchingAttackAgainstSelectedEnemy(3);
                 break;
             default:
                 Debug.Log("Fuck");
@@ -298,36 +280,63 @@ public class BattleManager : MonoBehaviour
             StopCoroutine(selectingObject.GetComponentInChildren<SelectingEnemy>().EnemyBlinker());
             selectingObject.transform.GetChild(0).gameObject.SetActive(false);
         }
-
+        
         awaitingPlayerDialogue = true;
-        EnableCertainHud("Dialogue");
-        GameObject dialogueObject = Instantiate(dialoguePrefab);
-        dialogueObject.transform.parent = dialogueHud.transform;
-        dialogueObject.GetComponent<DialogueScript>().ResetString("Player Attacked " + enemies[0].enemyName + " at position " + enemyPositionDialgoue 
-                                                                    + " for " + PlayerStatManager.instance.Endurance + " damage.");
-        currentDialogueGameObject = dialogueObject;
     }
 
-    public void DoBasicAttack()
+    public void LaunchingAttackAgainstSelectedEnemy(int enemyPositionDialogue)
     {
-
+        float currentDamageToEnemy = 0;
+        switch (currentAttack)
+        {
+            case CurrentAttack.BasicAttack:
+                currentDamageToEnemy = PlayerStatManager.instance.Endurance;
+                break;
+            case CurrentAttack.PrimaryAttack:
+                currentDamageToEnemy = CalculateWeaponDamage(true);
+                break;
+            case CurrentAttack.SecondaryAttack:
+                currentDamageToEnemy = CalculateWeaponDamage(false);
+                break;
+        }
+        enemies[enemyPositionDialogue].TakingDamageFromPlayer(currentDamageToEnemy * -1);
+        if (enemies[enemyPositionDialogue].currentHealth <= 0)
+        {
+            MoveEnemiesAfterDeath(0);
+        }
+        currentDialogueGameObject.GetComponent<DialogueScript>().ResetString(
+        "Player Attacked " + enemies[enemyPositionDialogue].enemyName
+        + " at position " + enemyPositionDialogue
+        + " for " + PlayerStatManager.instance.Endurance + " damage.");
     }
 
-    public void DoPrimaryAttack()
+    public float CalculateWeaponDamage(bool isPrimary)
     {
+        float calculatedWeaponDamage = 0;
+        Item currentWeapon = null;
+        if (isPrimary)
+        {
+            currentWeapon = InventoryManager.Instance.mainEquipedItem;
+        }
+        else
+        {
+            currentWeapon = InventoryManager.Instance.secondaryEquipedItem;
+        }
 
-    }
+        calculatedWeaponDamage = PlayerStatManager.instance.Perception * currentWeapon.damageMultiplier;
 
-    public void DoSecondaryAttack()
-    {
+        if (Random.Range(0, 101) < PlayerStatManager.instance.Luck)
+        {
+            calculatedWeaponDamage *= currentWeapon.critMultiplier;
+        }
 
+        return calculatedWeaponDamage;
     }
 
     public void Pass()
     {
         EndPlayerTurn();
     }
-
 
     public void ItemsButton()
     {

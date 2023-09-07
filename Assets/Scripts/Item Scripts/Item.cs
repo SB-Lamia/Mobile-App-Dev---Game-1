@@ -25,4 +25,45 @@ public class Item : ScriptableObject
         Consumable,
         Material
     }
+
+    [Header("Weapon Item")]
+    public bool isEquippedMain;
+    public bool isEquippedSecondary;
+
+    public float damageMultiplier;
+    public bool isRanged;
+    public enum RangeDistance
+    {
+        firstSlot,
+        secondSlot,
+        thirdSlot,
+        allSlots
+    }
+    public RangeDistance rangeDistance;
+    public enum WeaponSpread
+    {
+        Single,
+        adjacent,
+        All
+    }
+    public WeaponSpread weaponSpread;
+    public enum WeaponPenertration
+    {
+        None,
+        One,
+        Two,
+        All
+    }
+    public WeaponPenertration weaponPenertration;
+    
+    public float critMultiplier;
+
+    [Header("Consumable Item")]
+    public string somethingConsumable;
+
+    [Header("Armour Item")]
+    public string somethingArmour;
+
+    [Header("Material Item")]
+    public string somethingMaterial;
 }

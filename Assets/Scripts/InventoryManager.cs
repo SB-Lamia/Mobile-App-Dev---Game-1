@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class InventoryManager : MonoBehaviour
 {
+    public static InventoryManager Instance;
     public GameObject selectedItemImage;
     public GameObject selectedItemText;
     public GameObject selectedButton1;
@@ -16,6 +18,9 @@ public class InventoryManager : MonoBehaviour
     public GameObject wearableEquipment;
     public bool mainEquipped;
     public bool secondaryEquipped;
+
+    public Item mainEquipedItem;
+    public Item secondaryEquipedItem;
 
     public Item currentlySelectedItem;
 
@@ -30,6 +35,10 @@ public class InventoryManager : MonoBehaviour
         foreach(GameObject gameObject in selectedItemMenu)
         {
             gameObject.SetActive(false);
+        }
+        if (Instance == null)
+        {
+            Instance = this;
         }
     }
 
@@ -50,6 +59,7 @@ public class InventoryManager : MonoBehaviour
             case Item.ItemType.Leggings:
             case Item.ItemType.Feet:
                 //To Be Added Later
+
                 if (currentlySelectedItem.isEquippedMain || currentlySelectedItem.isEquippedSecondary)
                 {
                     selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip Item";
@@ -58,6 +68,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Equip Item";
                 }
+                
                 
                 break;
             case Item.ItemType.Consumable:
@@ -80,6 +91,7 @@ public class InventoryManager : MonoBehaviour
                         mainEquipped = false;
                         currentlySelectedItem.isEquippedMain = false;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Equip Item";
+                        mainEquipedItem = currentlySelectedItem;
                     }
                     else if (secondaryEquipped && currentlySelectedItem.isEquippedSecondary)
                     {
@@ -87,6 +99,7 @@ public class InventoryManager : MonoBehaviour
                         secondaryEquipped = false;
                         currentlySelectedItem.isEquippedSecondary = false;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Equip Item";
+                        secondaryEquipedItem = currentlySelectedItem;
                     }
                     else
                     {
@@ -102,6 +115,7 @@ public class InventoryManager : MonoBehaviour
                         mainEquipped = true;
                         currentlySelectedItem.isEquippedMain = true;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip Item";
+                        mainEquipedItem = null;
                     }
                     else if (mainEquipped && !secondaryEquipped)
                     {
@@ -110,6 +124,7 @@ public class InventoryManager : MonoBehaviour
                         secondaryEquipped = true;
                         currentlySelectedItem.isEquippedSecondary = true;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip Item";
+                        secondaryEquipedItem = null;
                     }
                     else
                     {
@@ -141,12 +156,14 @@ public class InventoryManager : MonoBehaviour
                 mainEquipment.transform.GetChild(0).gameObject.SetActive(false);
                 mainEquipped = false;
                 currentlySelectedItem.isEquippedMain = false;
+                mainEquipedItem = null;
             }
             else if (secondaryEquipped && currentlySelectedItem.isEquippedSecondary)
             {
                 secondaryEquipment.transform.GetChild(0).gameObject.SetActive(false);
                 secondaryEquipped = false;
                 currentlySelectedItem.isEquippedSecondary = false;
+                secondaryEquipedItem = null;
             }
             else
             {
