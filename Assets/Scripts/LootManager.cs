@@ -17,12 +17,12 @@ public class LootManager : MonoBehaviour
 
     public static LootManager instance;
 
-    public GameObject LootUIElement;
-    public GameObject LootVisualPrefab;
+    public GameObject cityUILootElement;
+    public GameObject lootVisualPrefab;
     public List<Item> recentlyAddedItems = new List<Item>();
 
     private int rowCount;
-
+    public Sprite XPIcon;
 
     void Awake()
     {
@@ -100,7 +100,7 @@ public class LootManager : MonoBehaviour
             }
         }
 
-        ShowUserLoot();
+        ShowUserLoot(cityUILootElement, recentlyAddedItems);
     }
 
     private void GiveItem(List<Item> rarityItemList)
@@ -111,20 +111,21 @@ public class LootManager : MonoBehaviour
         recentlyAddedItems.Add(randomNewItem);
     }
 
-    private void ShowUserLoot()
+    public void ShowUserLoot(GameObject LootUIElement, List<Item> ListedItems)
     {
         rowCount = 0;
         bool checkIfDuplicate;
         int getVisualItemCount = 0;
         LootUIElement.SetActive(true);
+        GameObject lootVisualGameObject;
 
-        for (int i = 0; i < recentlyAddedItems.Count; i++)
+        for (int i = 0; i < ListedItems.Count; i++)
         {
             checkIfDuplicate = true;
             int children = LootUIElement.transform.GetChild(1).transform.childCount;
             for (int k = 0; k < children; k++)
             {
-                if(LootUIElement.transform.GetChild(1).GetChild(k).GetComponentInChildren<Image>().sprite.name == recentlyAddedItems[i].itemSprite.name)
+                if(LootUIElement.transform.GetChild(1).GetChild(k).GetComponentInChildren<Image>().sprite.name == ListedItems[i].itemSprite.name)
                 {
                     int.TryParse(LootUIElement.transform.GetChild(1).GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text, out getVisualItemCount);
                     getVisualItemCount++;
@@ -134,23 +135,30 @@ public class LootManager : MonoBehaviour
             }
             if (checkIfDuplicate)
             {
-                GameObject lootVisualGameObject = Instantiate(LootVisualPrefab);
+                lootVisualGameObject = Instantiate(lootVisualPrefab);
                 
-                lootVisualGameObject.GetComponentInChildren<Image>().sprite = recentlyAddedItems[i].itemSprite;
-                lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = "1";
+                lootVisualGameObject.GetComponentInChildren<Image>().sprite = ListedItems[i].itemSprite;
+                lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = BattleManager.instance.XPGainAfterCombat.ToString();
                 lootVisualGameObject.transform.SetParent(LootUIElement.transform.GetChild(1).transform);
                 lootVisualGameObject.transform.localScale = new Vector3(1, 1, 1);
             }
         }
+
+        lootVisualGameObject = Instantiate(lootVisualPrefab);
+
+        lootVisualGameObject.GetComponentInChildren<Image>().sprite = XPIcon;
+        lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = "1";
+        lootVisualGameObject.transform.SetParent(LootUIElement.transform.GetChild(1).transform);
+        lootVisualGameObject.transform.localScale = new Vector3(1, 1, 1);
     }
 
-    public void CloseUserLootVisual()
+    public void CloseUserLootVisual(GameObject LootUIElement)
     {
         LootUIElement.SetActive(false);
-        int children = LootUIElement.transform.GetChild(0).transform.childCount;
+        int children = LootUIElement.transform.GetChild(1).transform.childCount;
         for (int i = 0; i < children; i++)
         {
-            Destroy(LootUIElement.transform.GetChild(0).transform.GetChild(i).gameObject);
+            Destroy(LootUIElement.transform.GetChild(1).transform.GetChild(i).gameObject);
         }
     }
 }

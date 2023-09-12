@@ -36,6 +36,10 @@ public class BattleManager : MonoBehaviour
 
     public bool awaitingPlayerDialogue;
 
+    public int XPGainAfterCombat;
+    public List<Item> droppedItems;
+    public GameObject combatUILootElement;
+
     public enum CurrentAttack
     {
         BasicAttack,
@@ -55,13 +59,6 @@ public class BattleManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-        }
-        else
-        {
-            if (instance != this)
-            {
-
-            }
         }
         allHuds.Add(defaultHud);
         allHuds.Add(attackHud);
@@ -91,6 +88,8 @@ public class BattleManager : MonoBehaviour
             currentlyUsedLocations[i].GetComponent<Image>().sprite = enemies[i].enemySprite;
             enemies[i].AdjustStatsToMatchPlayer();
         }
+        droppedItems = new List<Item>();
+        XPGainAfterCombat = 0;
         activeCombat = true;
     }
     public void EndCombat()
@@ -102,6 +101,7 @@ public class BattleManager : MonoBehaviour
             allEnemyLocations[i].SetActive(false);
         }
         combatSystem.SetActive(false);
+        LootManager.instance.ShowUserLoot(combatUILootElement, droppedItems);
         activeCombat = false;
     }
     // Player Enemy Swapper
@@ -295,15 +295,18 @@ public class BattleManager : MonoBehaviour
                 currentDamageToEnemy = CalculateWeaponDamage(false);
                 break;
         }
+        currentDialogueGameObject.GetComponent<DialogueScript>().ResetString(
+        "Player Attacked " + enemies[enemyPositionDialogue].enemyName
+        + " at position " + enemyPositionDialogue +1
+        + " for " + PlayerStatManager.instance.Endurance + " damage."); 
         enemies[enemyPositionDialogue].TakingDamageFromPlayer(currentDamageToEnemy * -1);
         if (enemies[enemyPositionDialogue].currentHealth <= 0)
         {
+            droppedItems.Add(enemies[enemyPositionDialogue].droppedItem);
+            XPGainAfterCombat += enemies[enemyPositionDialogue].enemyXP;
             MoveEnemiesAfterDeath(0);
         }
-        currentDialogueGameObject.GetComponent<DialogueScript>().ResetString(
-        "Player Attacked " + enemies[enemyPositionDialogue].enemyName
-        + " at position " + enemyPositionDialogue
-        + " for " + PlayerStatManager.instance.Endurance + " damage.");
+        
     }
 
     public float CalculateWeaponDamage(bool isPrimary)
@@ -349,8 +352,7 @@ public class BattleManager : MonoBehaviour
 
     public void Escape()
     {
-        //have a chance to escape
-        //percentage
+        EndCombat();
     }
 
     public void EndPlayerTurn()

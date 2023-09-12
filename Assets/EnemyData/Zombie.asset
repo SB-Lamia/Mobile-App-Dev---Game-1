@@ -23,3 +23,5 @@ MonoBehaviour:
   currentDialogueAction: 
   awaitingActionToResolve: 0
   playerDecicidingAttack: 0
+  enemyXP: 20
+  droppedItem: {fileID: 11400000, guid: eae97c5723a369042a6589ea6fab6788, type: 2}

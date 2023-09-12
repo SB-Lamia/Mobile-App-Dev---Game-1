@@ -20,6 +20,8 @@ public class Enemy : ScriptableObject
 
     public bool playerDecicidingAttack;
 
+    public int enemyXP;
+    public Item droppedItem;
     public enum EnemyState
     {
         DoAction,
