@@ -121,14 +121,14 @@ public class LootManager : MonoBehaviour
         for (int i = 0; i < recentlyAddedItems.Count; i++)
         {
             checkIfDuplicate = true;
-            int children = LootUIElement.transform.GetChild(0).transform.childCount;
+            int children = LootUIElement.transform.GetChild(1).transform.childCount;
             for (int k = 0; k < children; k++)
             {
-                if(LootUIElement.transform.GetChild(0).GetChild(k).GetComponentInChildren<Image>().sprite.name == recentlyAddedItems[i].itemSprite.name)
+                if(LootUIElement.transform.GetChild(1).GetChild(k).GetComponentInChildren<Image>().sprite.name == recentlyAddedItems[i].itemSprite.name)
                 {
-                    int.TryParse(LootUIElement.transform.GetChild(0).GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text, out getVisualItemCount);
+                    int.TryParse(LootUIElement.transform.GetChild(1).GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text, out getVisualItemCount);
                     getVisualItemCount++;
-                    LootUIElement.transform.GetChild(0).GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text = getVisualItemCount.ToString();
+                    LootUIElement.transform.GetChild(1).GetChild(k).GetComponentInChildren<TextMeshProUGUI>().text = getVisualItemCount.ToString();
                     checkIfDuplicate = false;
                 }
             }
@@ -138,7 +138,7 @@ public class LootManager : MonoBehaviour
                 
                 lootVisualGameObject.GetComponentInChildren<Image>().sprite = recentlyAddedItems[i].itemSprite;
                 lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = "1";
-                lootVisualGameObject.transform.SetParent(LootUIElement.transform.GetChild(0).transform);
+                lootVisualGameObject.transform.SetParent(LootUIElement.transform.GetChild(1).transform);
                 lootVisualGameObject.transform.localScale = new Vector3(1, 1, 1);
             }
         }

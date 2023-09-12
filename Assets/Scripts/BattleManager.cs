@@ -191,10 +191,8 @@ public class BattleManager : MonoBehaviour
     {
         if (playerTurn)
         {
-            Debug.Log("triggering selecting");
             foreach (GameObject selectingObject in currentlyUsedLocations)
             {
-                Debug.Log("selecting added to a enemy");
                 selectingObject.transform.GetChild(0).gameObject.SetActive(true);
                 StartCoroutine(selectingObject.GetComponentInChildren<SelectingEnemy>().EnemyBlinker());
             }
@@ -203,10 +201,8 @@ public class BattleManager : MonoBehaviour
 
     public void BasicAttack()
     {
-        Debug.Log("BasicAttack");
         if (playerTurn)
         {
-            Debug.Log("Player Turn Accepted");
             currentAttack = BattleManager.CurrentAttack.BasicAttack;
             TriggerSelectingAttack();
         }
@@ -313,7 +309,7 @@ public class BattleManager : MonoBehaviour
     public float CalculateWeaponDamage(bool isPrimary)
     {
         float calculatedWeaponDamage = 0;
-        Item currentWeapon = null;
+        Item currentWeapon;
         if (isPrimary)
         {
             currentWeapon = InventoryManager.Instance.mainEquipedItem;

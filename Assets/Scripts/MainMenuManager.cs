@@ -14,7 +14,10 @@ public class MainMenuManager : MonoBehaviour
         {
             areYouSure.SetActive(true);
         }
-        areYouSure.SetActive(true);
+        else
+        {
+            CreateNewGame();
+        }
     }
 
     public void CreateNewGame()
@@ -38,9 +41,11 @@ public class MainMenuManager : MonoBehaviour
         //PlayerPrefs.DeleteAll();
         if (PlayerPrefs.HasKey("save"))
         {
-            areYouSure.SetActive(true);
+            SceneManager.LoadScene("GameScene");
         }
-        else {
+        else 
+        {
+            areYouSure.SetActive(true);
             CheckIfNewGame.newGame = false;
             SceneManager.LoadScene("GameScene");
         }

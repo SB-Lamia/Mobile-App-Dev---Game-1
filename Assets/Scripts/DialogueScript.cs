@@ -31,6 +31,8 @@ public class DialogueScript : MonoBehaviour
         RectTransformExtensions.SetRight(textGO, 0f);
         RectTransformExtensions.SetTop(textGO, 0f);
         RectTransformExtensions.SetBottom(textGO, 0f);
+        textBox.horizontalAlignment = HorizontalAlignmentOptions.Center;    
+        textBox.verticalAlignment = VerticalAlignmentOptions.Middle;
         textGO.localPosition = new Vector3(textGO.localPosition.x, textGO.localPosition.y, 0f);
         currentTextBoxChar = text.ToCharArray();
         canType = true;

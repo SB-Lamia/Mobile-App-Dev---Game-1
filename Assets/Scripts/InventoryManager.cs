@@ -91,7 +91,7 @@ public class InventoryManager : MonoBehaviour
                         mainEquipped = false;
                         currentlySelectedItem.isEquippedMain = false;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Equip Item";
-                        mainEquipedItem = currentlySelectedItem;
+                        mainEquipedItem = null;
                     }
                     else if (secondaryEquipped && currentlySelectedItem.isEquippedSecondary)
                     {
@@ -99,7 +99,7 @@ public class InventoryManager : MonoBehaviour
                         secondaryEquipped = false;
                         currentlySelectedItem.isEquippedSecondary = false;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Equip Item";
-                        secondaryEquipedItem = currentlySelectedItem;
+                        
                     }
                     else
                     {
@@ -115,7 +115,8 @@ public class InventoryManager : MonoBehaviour
                         mainEquipped = true;
                         currentlySelectedItem.isEquippedMain = true;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip Item";
-                        mainEquipedItem = null;
+                        
+                        mainEquipedItem = currentlySelectedItem;
                     }
                     else if (mainEquipped && !secondaryEquipped)
                     {
@@ -124,7 +125,8 @@ public class InventoryManager : MonoBehaviour
                         secondaryEquipped = true;
                         currentlySelectedItem.isEquippedSecondary = true;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip Item";
-                        secondaryEquipedItem = null;
+                        
+                        secondaryEquipedItem = currentlySelectedItem;
                     }
                     else
                     {
