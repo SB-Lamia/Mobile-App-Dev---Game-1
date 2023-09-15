@@ -138,7 +138,7 @@ public class LootManager : MonoBehaviour
                 lootVisualGameObject = Instantiate(lootVisualPrefab);
                 
                 lootVisualGameObject.GetComponentInChildren<Image>().sprite = ListedItems[i].itemSprite;
-                lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = BattleManager.instance.XPGainAfterCombat.ToString();
+                lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = "1";
                 lootVisualGameObject.transform.SetParent(LootUIElement.transform.GetChild(1).transform);
                 lootVisualGameObject.transform.localScale = new Vector3(1, 1, 1);
             }
@@ -147,7 +147,7 @@ public class LootManager : MonoBehaviour
         lootVisualGameObject = Instantiate(lootVisualPrefab);
 
         lootVisualGameObject.GetComponentInChildren<Image>().sprite = XPIcon;
-        lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = "1";
+        lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = BattleManager.instance.XPGainAfterCombat.ToString();
         lootVisualGameObject.transform.SetParent(LootUIElement.transform.GetChild(1).transform);
         lootVisualGameObject.transform.localScale = new Vector3(1, 1, 1);
     }

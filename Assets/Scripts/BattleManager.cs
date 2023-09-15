@@ -297,7 +297,7 @@ public class BattleManager : MonoBehaviour
         }
         currentDialogueGameObject.GetComponent<DialogueScript>().ResetString(
         "Player Attacked " + enemies[enemyPositionDialogue].enemyName
-        + " at position " + enemyPositionDialogue +1
+        + " at position " + (enemyPositionDialogue + 1)
         + " for " + PlayerStatManager.instance.Endurance + " damage."); 
         enemies[enemyPositionDialogue].TakingDamageFromPlayer(currentDamageToEnemy * -1);
         if (enemies[enemyPositionDialogue].currentHealth <= 0)

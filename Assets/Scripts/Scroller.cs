@@ -20,7 +20,7 @@ public class Scroller : MonoBehaviour
     {
         if (isScrolling)
         {
-            backgroundImage.uvRect = new Re ct(backgroundImage.uvRect.position + new Vector2(xPosition, 0) * Time.deltaTime, backgroundImage.uvRect.size);
+            backgroundImage.uvRect = new Rect(backgroundImage.uvRect.position + new Vector2(xPosition, 0) * Time.deltaTime, backgroundImage.uvRect.size);
         }
     }
 }
