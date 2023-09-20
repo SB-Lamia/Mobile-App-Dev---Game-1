@@ -100,7 +100,9 @@ public class LootManager : MonoBehaviour
             }
         }
 
-        ShowUserLoot(cityUILootElement, recentlyAddedItems);
+        int cityXP = 10 * PlayerStatManager.instance.Level / 2;
+
+        ShowUserLoot(cityUILootElement, recentlyAddedItems, cityXP);
     }
 
     private void GiveItem(List<Item> rarityItemList)
@@ -111,7 +113,7 @@ public class LootManager : MonoBehaviour
         recentlyAddedItems.Add(randomNewItem);
     }
 
-    public void ShowUserLoot(GameObject LootUIElement, List<Item> ListedItems)
+    public void ShowUserLoot(GameObject LootUIElement, List<Item> ListedItems, int XPGiven)
     {
         rowCount = 0;
         bool checkIfDuplicate;
@@ -147,7 +149,7 @@ public class LootManager : MonoBehaviour
         lootVisualGameObject = Instantiate(lootVisualPrefab);
 
         lootVisualGameObject.GetComponentInChildren<Image>().sprite = XPIcon;
-        lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = BattleManager.instance.XPGainAfterCombat.ToString();
+        lootVisualGameObject.GetComponentInChildren<TextMeshProUGUI>().text = XPGiven.ToString();
         lootVisualGameObject.transform.SetParent(LootUIElement.transform.GetChild(1).transform);
         lootVisualGameObject.transform.localScale = new Vector3(1, 1, 1);
     }

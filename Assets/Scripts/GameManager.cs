@@ -20,6 +20,14 @@ public class GameManager : MonoBehaviour
     public List<Item> items = new List<Item>();
     public List<int> itemNumbers = new List<int>();
 
+    public TextMeshProUGUI shotgunAmmoText;
+    public TextMeshProUGUI pistolAmmoText;
+    public TextMeshProUGUI rifleAmmoText;
+
+    public int shotgunAmmo;
+    public int pistolAmmo;
+    public int rifleAmmo;
+
     private void Awake()
     {
         if (instance == null)
@@ -50,6 +58,10 @@ public class GameManager : MonoBehaviour
             slots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 1);
             slots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemNumbers[i].ToString();
         }
+
+        shotgunAmmoText.text = "x " + shotgunAmmo.ToString();
+        pistolAmmoText.text = "x " + pistolAmmo.ToString();
+        rifleAmmoText.text = "x " + rifleAmmo.ToString();
     }
 
     public GameObject[] GrabSlots()

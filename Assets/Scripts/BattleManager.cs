@@ -101,7 +101,7 @@ public class BattleManager : MonoBehaviour
             allEnemyLocations[i].SetActive(false);
         }
         combatSystem.SetActive(false);
-        LootManager.instance.ShowUserLoot(combatUILootElement, droppedItems);
+        LootManager.instance.ShowUserLoot(combatUILootElement, droppedItems, XPGainAfterCombat);
         activeCombat = false;
     }
     // Player Enemy Swapper

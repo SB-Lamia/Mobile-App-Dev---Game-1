@@ -99,7 +99,7 @@ public class DialogueScript : MonoBehaviour
         if (canSkip && startTyping)
         {
             startTyping = false;
-            canSkip = false;
+            
         }
     }
 }
