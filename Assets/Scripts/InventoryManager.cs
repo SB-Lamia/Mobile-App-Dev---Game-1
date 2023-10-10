@@ -28,6 +28,8 @@ public class InventoryManager : MonoBehaviour
 
     public void Awake()
     {
+        mainEquipedItem = null;
+        secondaryEquipedItem = null;
         selectedItemMenu.Add(selectedButton1);
         selectedItemMenu.Add(selectedButton2);
         selectedItemMenu.Add(selectedItemImage);
@@ -42,8 +44,10 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+
     public void ItemPressed(int slot)
     {
+        Debug.Log("slot:" + slot);
         foreach (GameObject gameObject in selectedItemMenu)
         {
             gameObject.SetActive(true);
@@ -87,7 +91,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     if (mainEquipped && currentlySelectedItem.isEquippedMain)
                     {
-                        mainEquipment.transform.GetChild(0).gameObject.SetActive(false);
+                        mainEquipment.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                         mainEquipped = false;
                         currentlySelectedItem.isEquippedMain = false;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Equip Item";
@@ -95,7 +99,7 @@ public class InventoryManager : MonoBehaviour
                     }
                     else if (secondaryEquipped && currentlySelectedItem.isEquippedSecondary)
                     {
-                        secondaryEquipment.transform.GetChild(0).gameObject.SetActive(false);
+                        secondaryEquipment.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                         secondaryEquipped = false;
                         currentlySelectedItem.isEquippedSecondary = false;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Equip Item";
@@ -110,8 +114,8 @@ public class InventoryManager : MonoBehaviour
                 {
                     if (!mainEquipped)
                     {
-                        mainEquipment.transform.GetChild(0).gameObject.SetActive(true);
-                        mainEquipment.transform.GetChild(0).GetComponent<Image>().sprite = currentlySelectedItem.itemSprite;
+                        mainEquipment.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+                        mainEquipment.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = currentlySelectedItem.itemSprite;
                         mainEquipped = true;
                         currentlySelectedItem.isEquippedMain = true;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip Item";
@@ -120,8 +124,8 @@ public class InventoryManager : MonoBehaviour
                     }
                     else if (mainEquipped && !secondaryEquipped)
                     {
-                        secondaryEquipment.transform.GetChild(0).gameObject.SetActive(true);
-                        secondaryEquipment.transform.GetChild(0).GetComponent<Image>().sprite = currentlySelectedItem.itemSprite;
+                        secondaryEquipment.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+                        secondaryEquipment.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = currentlySelectedItem.itemSprite;
                         secondaryEquipped = true;
                         currentlySelectedItem.isEquippedSecondary = true;
                         selectedButton1.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip Item";
@@ -146,7 +150,7 @@ public class InventoryManager : MonoBehaviour
                 selectedButton1.SetActive(false);
                 break;
         }
-        GameManager.instance.DisplayItems();
+        GameManager.instance.ClearSlots();
     }
 
     public void Button2_Pressed()
@@ -155,14 +159,14 @@ public class InventoryManager : MonoBehaviour
         {
             if (mainEquipped && currentlySelectedItem.isEquippedMain)
             {
-                mainEquipment.transform.GetChild(0).gameObject.SetActive(false);
+                mainEquipment.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                 mainEquipped = false;
                 currentlySelectedItem.isEquippedMain = false;
                 mainEquipedItem = null;
             }
             else if (secondaryEquipped && currentlySelectedItem.isEquippedSecondary)
             {
-                secondaryEquipment.transform.GetChild(0).gameObject.SetActive(false);
+                secondaryEquipment.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
                 secondaryEquipped = false;
                 currentlySelectedItem.isEquippedSecondary = false;
                 secondaryEquipedItem = null;
@@ -173,6 +177,6 @@ public class InventoryManager : MonoBehaviour
             }
         }
         GameManager.instance.RemoveItem(currentlySelectedItem);
-        GameManager.instance.DisplayItems();
+        GameManager.instance.ClearSlots();
     }
 }

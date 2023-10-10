@@ -7,10 +7,13 @@ public class GridContentScript : MonoBehaviour
 {
 	public int rows;
 	public int cols;
+	public InventoryUIManager inventoryUIManager;
 	public GameObject inputFieldPrefab;
+	public int childPosition;
 
 	void Start()
 	{
+		childPosition = 0;
 		RectTransform parentRect = gameObject.GetComponent<RectTransform>();
 		GridLayoutGroup gridLayout = gameObject.GetComponent<GridLayoutGroup>();
 		gridLayout.cellSize = new Vector2(parentRect.rect.width / cols, parentRect.rect.height / rows);
@@ -21,7 +24,11 @@ public class GridContentScript : MonoBehaviour
 			{
 				GameObject inputField = Instantiate(inputFieldPrefab);
 				inputField.transform.SetParent(gameObject.transform, false);
+				inputField.transform.GetComponent<InventorySlot>().childIndex = childPosition;
+				childPosition++;
 			}
 		}
+
+		inventoryUIManager.Resume();
 	}
 }

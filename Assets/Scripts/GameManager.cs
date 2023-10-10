@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -44,12 +45,10 @@ public class GameManager : MonoBehaviour
     public void DisplayItems()
     {
         inventorySlots = parentSlots.GetComponentsInChildren<InventorySlot>();
-
         for (int i = 0; i < items.Count; i++)
         {
             inventorySlots[i].transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             inventorySlots[i].transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-            inventorySlots[i].transform.GetChild(1).gameObject.SetActive(true);
             inventorySlots[i].AddItem(items[i]);
             inventorySlots[i].transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = itemNumbers[i].ToString();
         }
@@ -58,6 +57,17 @@ public class GameManager : MonoBehaviour
         pistolAmmoText.text = "x " + pistolAmmo.ToString();
         rifleAmmoText.text = "x " + rifleAmmo.ToString();
 
+    }
+
+
+    public void ClearSlots()
+    {
+        inventorySlots = parentSlots.GetComponentsInChildren<InventorySlot>();
+        for (int i = 0; i < inventorySlots.Count(); i++)
+        {
+            inventorySlots[i].ClearSlot();
+        }
+        DisplayItems();
     }
 
     public void AddItem(Item newItem)

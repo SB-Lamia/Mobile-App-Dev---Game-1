@@ -18,27 +18,21 @@ public class BattleManager : MonoBehaviour
     public GameObject skillsHud;
     public bool isDialogueActive;
     public List<GameObject> allHuds = new List<GameObject>();
-
+    public GameObject primaryEquippedAttackButton;
+    public GameObject secondaryEquippedAttackButton;
     public GameObject combatSystem;
-
     public List<GameObject> allEnemyLocations;
-
     public List<GameObject> currentlyUsedLocations;
-
     public static BattleManager instance;
-
     public bool playerTurn;
-
     public bool activeCombat;
-
     public int enemyMaxCount;
     public int currentEnemyTurn;
-
     public bool awaitingPlayerDialogue;
-
     public int XPGainAfterCombat;
     public List<Item> droppedItems;
     public GameObject combatUILootElement;
+    public Sprite unequipedIcon;
 
     public enum CurrentAttack
     {
@@ -88,6 +82,27 @@ public class BattleManager : MonoBehaviour
             currentlyUsedLocations[i].GetComponent<Image>().sprite = enemies[i].enemySprite;
             enemies[i].AdjustStatsToMatchPlayer();
         }
+        //Main Equipped Item
+        if (InventoryManager.Instance.mainEquipedItem != null)
+        {
+            primaryEquippedAttackButton.transform.GetChild(1).GetComponent<Image>().sprite = InventoryManager.Instance.mainEquipedItem.itemSprite;
+        }
+        else
+        {
+            primaryEquippedAttackButton.transform.GetChild(1).GetComponent<Image>().sprite = unequipedIcon;
+            primaryEquippedAttackButton.GetComponent<Button>().interactable = false;
+        }
+        //Secondary Equipped Item
+        if (InventoryManager.Instance.secondaryEquipedItem != null)
+        {
+            secondaryEquippedAttackButton.transform.GetChild(1).GetComponent<Image>().sprite = InventoryManager.Instance.secondaryEquipedItem.itemSprite;
+        }
+        else
+        {
+            secondaryEquippedAttackButton.transform.GetChild(1).GetComponent<Image>().sprite = unequipedIcon;
+            secondaryEquippedAttackButton.GetComponent<Button>().interactable = false;
+        }
+
         droppedItems = new List<Item>();
         XPGainAfterCombat = 0;
         activeCombat = true;

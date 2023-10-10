@@ -7,7 +7,7 @@ using TMPro;
 public class InventorySlot : MonoBehaviour
 {
     public Image icon;
-    public Button removeButton;
+    public int childIndex;
 
     Item item;
 
@@ -17,7 +17,6 @@ public class InventorySlot : MonoBehaviour
 
         icon.sprite = item.itemSprite;
         icon.enabled = true;
-        removeButton.interactable = true;
     }
 
     public void ClearSlot()
@@ -26,8 +25,8 @@ public class InventorySlot : MonoBehaviour
 
         icon.sprite = null;
         icon.enabled = false;
-        removeButton.interactable = false;
-
+        transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
     }
 
     public void OnRemoveButton()
@@ -37,7 +36,7 @@ public class InventorySlot : MonoBehaviour
 
     public void UserItem()
     {
-        //use item
+        InventoryManager.Instance.ItemPressed(childIndex);
     }
 
     // Start is called before the first frame update
