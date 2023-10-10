@@ -7,24 +7,13 @@ public class InventoryUIManager : MonoBehaviour
     public GameObject inventoryMenu;
     public List<GameObject> disabledHud;
 
+    public Transform itemsParent;
     // Start is called before the first frame update
     void Start()
     {
         inventoryMenu.gameObject.SetActive(false);
     }
-
-    public void InventoryControl()
-    {
-        if (GameManager.instance.isPaused)
-        {
-            Resume();
-        }
-        else
-        {
-            Pause();
-        }
-    }
-
+ 
     public void Resume()
     {
         inventoryMenu.gameObject.SetActive(false);

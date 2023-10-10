@@ -9,7 +9,7 @@ public class GridContentScript : MonoBehaviour
 	public int cols;
 	public GameObject inputFieldPrefab;
 
-	void Awake()
+	void Start()
 	{
 		RectTransform parentRect = gameObject.GetComponent<RectTransform>();
 		GridLayoutGroup gridLayout = gameObject.GetComponent<GridLayoutGroup>();
@@ -23,7 +23,5 @@ public class GridContentScript : MonoBehaviour
 				inputField.transform.SetParent(gameObject.transform, false);
 			}
 		}
-
-		transform.parent.gameObject.SetActive(false);
 	}
 }

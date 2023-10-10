@@ -11,10 +11,8 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> disabledHud;
 
-    public GameObject[] slots;
-
     public GameObject parentSlots;
-
+    public InventorySlot[] inventorySlots;
     //public Dictionary<Item, int> itemDict = new Dictionary<Item, int>();
 
     public List<Item> items = new List<Item>();
@@ -45,37 +43,21 @@ public class GameManager : MonoBehaviour
 
     public void DisplayItems()
     {
-        slots = new GameObject[parentSlots.transform.childCount];
-        slots = GrabSlots();
-        Debug.Log(slots.Length);
-
+        inventorySlots = parentSlots.GetComponentsInChildren<InventorySlot>();
 
         for (int i = 0; i < items.Count; i++)
         {
-            slots[i].transform.GetChild(0).GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            slots[i].transform.GetChild(0).GetComponent<Image>().sprite = items[i].itemSprite;
-
-            slots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, 1);
-            slots[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemNumbers[i].ToString();
+            inventorySlots[i].transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+            inventorySlots[i].transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+            inventorySlots[i].transform.GetChild(1).gameObject.SetActive(true);
+            inventorySlots[i].AddItem(items[i]);
+            inventorySlots[i].transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = itemNumbers[i].ToString();
         }
 
         shotgunAmmoText.text = "x " + shotgunAmmo.ToString();
         pistolAmmoText.text = "x " + pistolAmmo.ToString();
         rifleAmmoText.text = "x " + rifleAmmo.ToString();
-    }
 
-    public GameObject[] GrabSlots()
-    {
-        Debug.Log("Grabbing Slots");
-        GameObject[] slotsHolder = new GameObject[parentSlots.transform.childCount];
-
-        int children = parentSlots.transform.childCount;
-        for (int i = 0; i < children; ++i)
-        {
-            slotsHolder[i] = parentSlots.transform.GetChild(i).gameObject;
-        }
-
-        return slotsHolder;
     }
 
     public void AddItem(Item newItem)
@@ -104,15 +86,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    public void AddItemMultiple(List<Item> newItems)
-    {
-        foreach(Item newItem in newItems)
-        {
-            AddItem(newItem);
-        }
-    }
-
 
     public void RemoveItem(Item oldItem)
     {
