@@ -27,6 +27,12 @@ public class GameManager : MonoBehaviour
     public int pistolAmmo;
     public int rifleAmmo;
 
+    // Slot 1: stat affect 0-6
+    // Slot 2: buff/debuff given
+    // Slot 3: time left
+    List<List<int>> tempStatusEffects = new List<List<int>>();
+
+
     private void Awake()
     {
         if (instance == null)
@@ -59,6 +65,74 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // Slot 1: stat affect 0-6
+    // Slot 2: buff/debuff given
+    // Slot 3: time left
+    public void CheckTempStatBuffs()
+    {
+        for (int i = 0; i < tempStatusEffects.Count; i++)
+        {
+            if (tempStatusEffects[i][2] == 0)
+            {
+                //Remove Status Effect
+                switch (tempStatusEffects[i][0])
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                }
+            }
+            else
+            {
+                tempStatusEffects[i][2]--;
+            }
+        }
+    }
+
+    // Slot 1: stat affect 0-6
+    // Slot 2: buff/debuff given
+    // Slot 3: time left
+    public void AddBuff(int statAffected, int statValueChange, int duration)
+    {
+        List<int> storeStatChange = new List<int>(3);
+
+        storeStatChange[0] = statAffected;
+        storeStatChange[1] = statValueChange;
+        storeStatChange[2] = duration;
+
+        tempStatusEffects.Add(storeStatChange);
+
+        for (int i = 0; i < tempStatusEffects.Count; i++)
+        {
+            //Remove Status Effect
+            switch (tempStatusEffects[i][0])
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+            }
+        }
+    }
 
     public void ClearSlots()
     {
@@ -81,7 +155,7 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < items.Count; i++)
             {
-                if(newItem == items[i])
+                if (newItem == items[i])
                 {
                     if (items[i].isStackable == true)
                     {

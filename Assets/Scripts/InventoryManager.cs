@@ -57,11 +57,7 @@ public class InventoryManager : MonoBehaviour
         currentlySelectedItem = GameManager.instance.items[slot];
         switch (currentlySelectedItem.itemType)
         {
-            case Item.ItemType.Weapon:
-            case Item.ItemType.Helmet:
-            case Item.ItemType.ChestPlate:
-            case Item.ItemType.Leggings:
-            case Item.ItemType.Feet:
+            case Item.ItemType.Equippable:
                 //To Be Added Later
 
                 if (currentlySelectedItem.isEquippedMain || currentlySelectedItem.isEquippedSecondary)
@@ -86,7 +82,7 @@ public class InventoryManager : MonoBehaviour
     {
         switch (currentlySelectedItem.itemType)
         {
-            case Item.ItemType.Weapon:
+            case Item.ItemType.Equippable:
                 if (currentlySelectedItem.isEquippedMain || currentlySelectedItem.isEquippedSecondary)
                 {
                     if (mainEquipped && currentlySelectedItem.isEquippedMain)
@@ -138,12 +134,9 @@ public class InventoryManager : MonoBehaviour
                     }
                 }
                 break;
-            case Item.ItemType.Helmet:
-            case Item.ItemType.ChestPlate:
-            case Item.ItemType.Leggings:
-            case Item.ItemType.Feet:
                 break;
             case Item.ItemType.Consumable:
+                currentlySelectedItem.UseConsumableItem();
                 GameManager.instance.RemoveItem(currentlySelectedItem);
                 break;
             case Item.ItemType.Material:

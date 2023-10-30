@@ -10,13 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b1529f30af4b5c4695fb6fc37a7f787, type: 3}
-  m_Name: Purified_Drinking_Water
+  m_Name: Divinity Elixir
   m_EditorClassIdentifier: 
-  itemName: Purified Drinking Water
-  itemDesc: 'Bottled and purified drinking water, essential for survival in the wasteland. '
-  itemSprite: {fileID: 21300000, guid: c74c8454c337b2f488d367b82842ad74, type: 3}
+  itemName: 
+  itemDesc: 
+  itemSprite: {fileID: 0}
   isStackable: 1
-  rarity: Uncommon
-  itemType: 5
+  rarity: 
+  itemType: 1
   isEquippedMain: 0
   isEquippedSecondary: 0
+  damageMultiplier: 0
+  isRanged: 0
+  rangeDistance: 0
+  weaponSpread: 0
+  weaponPenertration: 0
+  critMultiplier: 0
+  somethingConsumable: []
+  plusHealth: 0
+  plusHunger: 0
+  plusWater: 0
+  plusEnd: 0
+  plusPer: 0
+  plusChar: 0
+  plusLuck: 0
+  plusInt: 0
+  plusAgil: 0
+  duration: 0
+  somethingEquippable: []
+  somethingMaterial: []

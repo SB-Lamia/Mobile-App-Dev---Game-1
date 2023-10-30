@@ -17,11 +17,7 @@ public class Item : ScriptableObject
 
     public enum ItemType
     {
-        Weapon,
-        Helmet,
-        ChestPlate,
-        Leggings,
-        Feet,
+        Equippable,
         Consumable,
         Material
     }
@@ -59,11 +55,41 @@ public class Item : ScriptableObject
     public float critMultiplier;
 
     [Header("Consumable Item")]
-    public string somethingConsumable;
+    public string[] somethingConsumable;
+    public int plusHealth;
+    public int plusHunger;
+    public int plusWater;
+    public int plusEnd;     //0
+    public int plusPer;     //1
+    public int plusChar;    //2
+    public int plusLuck;    //3
+    public int plusInt;     //4
+    public int plusAgil;    //5
+    public int duration;    
 
-    [Header("Armour Item")]
-    public string somethingArmour;
+    public void UseConsumableItem()
+    {
+        ConsumableItemChecker(0, plusEnd);
+        ConsumableItemChecker(1, plusPer);
+        ConsumableItemChecker(2, plusChar);
+        ConsumableItemChecker(3, plusLuck);
+        ConsumableItemChecker(4, plusInt);
+        ConsumableItemChecker(5, plusAgil);
+    }
+
+    private void ConsumableItemChecker(int status, int buff)
+    {
+        if (buff != 0)
+        {
+            GameManager.instance.AddBuff(status, buff, duration);
+        }
+    }
+
+    [Header("Equippable Item")]
+    public string[] somethingEquippable;
+
 
     [Header("Material Item")]
-    public string somethingMaterial;
+    public string[] somethingMaterial;
+
 }

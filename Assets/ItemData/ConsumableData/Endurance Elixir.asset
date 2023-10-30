@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b1529f30af4b5c4695fb6fc37a7f787, type: 3}
-  m_Name: Bread
+  m_Name: Endurance Elixir
   m_EditorClassIdentifier: 
-  itemName: Bread
-  itemDesc: A loaf of stale bread to consume with any meal.
-  itemSprite: {fileID: 1632986486, guid: 7faa05e8a1c826b40a09adaba469838c, type: 3}
+  itemName: Endurance Elixir
+  itemDesc: An elixir that enhances your physical endurance.
+  itemSprite: {fileID: 0}
   isStackable: 1
-  rarity: Uncommon
+  rarity: Rare
   itemType: 1
   isEquippedMain: 0
   isEquippedSecondary: 0
@@ -26,16 +26,18 @@ MonoBehaviour:
   weaponSpread: 0
   weaponPenertration: 0
   critMultiplier: 0
-  somethingConsumable: []
+  somethingConsumable:
+  - +15 Endurance
+  - +10 Agility
   plusHealth: 0
   plusHunger: 0
   plusWater: 0
-  plusEnd: 0
+  plusEnd: 15
   plusPer: 0
   plusChar: 0
   plusLuck: 0
   plusInt: 0
-  plusAgil: 0
-  duration: 0
+  plusAgil: 10
+  duration: 5
   somethingEquippable: []
   somethingMaterial: []

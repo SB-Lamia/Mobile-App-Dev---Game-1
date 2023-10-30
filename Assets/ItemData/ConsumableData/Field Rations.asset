@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b1529f30af4b5c4695fb6fc37a7f787, type: 3}
-  m_Name: Bread
+  m_Name: Field Rations
   m_EditorClassIdentifier: 
-  itemName: Bread
-  itemDesc: A loaf of stale bread to consume with any meal.
-  itemSprite: {fileID: 1632986486, guid: 7faa05e8a1c826b40a09adaba469838c, type: 3}
+  itemName: Field Rations
+  itemDesc: A military-grade meal that provides balanced nutrition.
+  itemSprite: {fileID: 0}
   isStackable: 1
   rarity: Uncommon
   itemType: 1
@@ -26,10 +26,12 @@ MonoBehaviour:
   weaponSpread: 0
   weaponPenertration: 0
   critMultiplier: 0
-  somethingConsumable: []
+  somethingConsumable:
+  - +20 Hunger
+  - +10 Water
   plusHealth: 0
-  plusHunger: 0
-  plusWater: 0
+  plusHunger: 20
+  plusWater: 10
   plusEnd: 0
   plusPer: 0
   plusChar: 0
