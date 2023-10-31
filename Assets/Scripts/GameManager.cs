@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     // Slot 3: time left
     List<List<int>> tempStatusEffects = new List<List<int>>();
 
+    public GameObject CurrentLocation;
 
     private void Awake()
     {

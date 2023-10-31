@@ -35,6 +35,7 @@ public class TradingSystemManager : MonoBehaviour
         {
             Instance = this;
         }
+        gameObject.SetActive(false);
     }
 
     public void OnTraderOpen()
@@ -47,8 +48,10 @@ public class TradingSystemManager : MonoBehaviour
     public void SpawnInventory(GameObject parentSlots, List<Item> items, List<int> itemCount)
     {
         InventorySlot[] inventorySlots = parentSlots.GetComponentsInChildren<InventorySlot>();
-        for (int i = 0; i < items.Count; i++)
+        Debug.Log(inventorySlots.Length);
+        for (int i = 0; i < items.Count-1; i++)
         {
+            Debug.Log(inventorySlots[i].gameObject.name);
             inventorySlots[i].transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             inventorySlots[i].transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
             inventorySlots[i].AddItem(items[i]);

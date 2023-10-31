@@ -43,6 +43,7 @@ public class InventoryManager : MonoBehaviour
         {
             Instance = this;
         }
+        GameObject.Find("Inventory system Hud").SetActive(false);
     }
 
 

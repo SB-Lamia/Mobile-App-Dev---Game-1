@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject backgroundScroller;
 
+
     private void Awake()
     {
         layerUI = LayerMask.NameToLayer("UI");
@@ -124,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
             default:
                 break;
         }
-        
+        GameManager.instance.CurrentLocation = touchedObject;
         popupMenu.SetActive(false);
         popupMenuOpen = false;
         SetupBackgroundScroler();

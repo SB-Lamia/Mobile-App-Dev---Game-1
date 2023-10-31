@@ -9,11 +9,11 @@ public class LocationManager : MonoBehaviour
 
     public void DecideLocation()
     {
-        if (true)
+        if (GameManager.instance.CurrentLocation.name == "City(Clone)")
         {
             cityManager.Pause();
         }
-        else if (true)
+        else if (GameManager.instance.CurrentLocation.name == "Trader(Clone)")
         {
             tradingSystemManager.Pause();
         }
