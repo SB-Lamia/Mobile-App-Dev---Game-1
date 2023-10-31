@@ -24,6 +24,9 @@ public class LootManager : MonoBehaviour
     private int rowCount;
     public Sprite XPIcon;
 
+    List<Item> itemsForTrader;
+    List<int> itemNumbersTrader;
+
     void Awake()
     {
         if (instance == null)
@@ -64,18 +67,67 @@ public class LootManager : MonoBehaviour
         }
     }
 
-    public void LuckCalculationRarity(int baseNumberOfNewLoot)
+    public (List<Item>, List<int>) GenerateTraderLootTables(int baseNumberOfNewLoot, int LuckValue)
+    {
+        itemsForTrader = new List<Item>();
+        itemNumbersTrader = new List<int>();
+        List<Item> tempCommons = commons;
+        List<Item> tempUncommons = uncommons;
+        List<Item> tempRares = rares;
+        List<Item> tempEpics = epics;
+        List<Item> tempLegendarys = legendarys;
+
+        for (int i = 0; i < baseNumberOfNewLoot; i++)
+        {
+            int luckPercentage = Random.Range(0, LuckValue);
+            switch (luckPercentage)
+            {
+                case <= 20:
+                    AddingTraderItemsCount(6, ref tempCommons);
+                    break;
+                case >= 21 and <= 40:
+                    AddingTraderItemsCount(5, ref tempUncommons);
+                    break;
+                case >= 41 and <= 60:
+                    AddingTraderItemsCount(4, ref tempRares);
+                    break;
+                case >= 61 and <= 80:
+                    AddingTraderItemsCount(3, ref tempEpics);
+                    break;
+                case >= 81 and <= 100:
+                    AddingTraderItemsCount(2, ref tempLegendarys);
+                    break;
+                default:
+                    Debug.Log("Error: invalid rarity please check luck percentage inputed: " + luckPercentage);
+                    break;
+            }
+        }
+
+        return (itemsForTrader, itemNumbersTrader);
+    }
+
+    private void AddingTraderItemsCount(int MaxItemCount, ref List<Item> rarityItems)
+    {
+        if (rarityItems.Count > 0)
+        {
+            Debug.Log(rarityItems[0]);
+            int randomItem = Random.Range(0, rarityItems.Count - 1);
+            itemsForTrader.Add(rarityItems[randomItem]);
+            rarityItems.Remove(rarityItems[randomItem]);
+            itemNumbersTrader.Add(Random.Range(1, MaxItemCount));
+        }
+       
+    }
+
+    public List<Item> LuckCalculationRarity(int baseNumberOfNewLoot, int LuckValue)
     {
         recentlyAddedItems = new List<Item>();
 
-        int currentLuck = PlayerStatManager.instance.Luck;
-
-        int maxLootCount = baseNumberOfNewLoot + Mathf.FloorToInt(currentLuck / 20);
+        int maxLootCount = baseNumberOfNewLoot + Mathf.FloorToInt(LuckValue / 20);
 
         for (int i = 0; i < maxLootCount; i++)
         {
-
-            int luckPercentage = Random.Range(0, currentLuck);
+            int luckPercentage = Random.Range(0, LuckValue);
 
             switch (luckPercentage)
             {
@@ -100,9 +152,7 @@ public class LootManager : MonoBehaviour
             }
         }
 
-        int cityXP = 10 * PlayerStatManager.instance.Level / 2;
-
-        ShowUserLoot(cityUILootElement, recentlyAddedItems, cityXP);
+        return recentlyAddedItems;
     }
 
     private void GiveItem(List<Item> rarityItemList)

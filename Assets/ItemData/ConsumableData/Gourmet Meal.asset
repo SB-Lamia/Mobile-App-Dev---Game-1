@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Gourmet Meal
   itemDesc: A luxurious feast fit for royalty, prepared by a master chef.
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: ac80fd77f8d16244e8b3f121fe8641a2, type: 3}
   isStackable: 1
-  rarity: 
+  rarity: Epic
   itemType: 1
   isEquippedMain: 0
   isEquippedSecondary: 0
@@ -26,11 +26,12 @@ MonoBehaviour:
   weaponSpread: 0
   weaponPenertration: 0
   critMultiplier: 0
-  somethingConsumable:
+  ConsumableDescription:
+  - +15 Health
   - +40 Hunger
   - +25 Water
-  - +15 Health
   - +15 Charisma
+  - 'Duration: 7 Actions'
   plusHealth: 15
   plusHunger: 40
   plusWater: 25

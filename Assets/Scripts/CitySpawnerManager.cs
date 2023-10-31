@@ -5,10 +5,14 @@ using UnityEngine;
 
 public class CitySpawnerManager : MonoBehaviour
 {
-    public GameObject City;
+    public GameObject city;
+    public GameObject trader;
     public GameObject parentCity;
     public List<GameObject> cityGenerated;
+    public List<GameObject> traderGenerated;
     public static CitySpawnerManager instance;
+    public Sprite cityIcon;
+    public Sprite traderIcon;
 
     void Awake()
     {
@@ -30,7 +34,7 @@ public class CitySpawnerManager : MonoBehaviour
        
         List<Vector2> placedBoxes = new List<Vector2>();
         int count = 0;
-
+        GameObject newLocation = null;
         while (count < maxTries && placedBoxes.Count < numberOfBoxes)
         {
             float xPos = Random.Range(minXPos, maxXPos);
@@ -49,11 +53,30 @@ public class CitySpawnerManager : MonoBehaviour
             }
             if (isGood)
             {
+                
                 placedBoxes.Add(new Vector2(xPos, yPos));
-                GameObject newCity = Instantiate(City, new Vector2(xPos, yPos), Quaternion.identity);
-                newCity.transform.parent = parentCity.transform;
-                newCity.GetComponent<City>().GenerateRandomCity();
-                cityGenerated.Add(newCity);
+                switch (Random.Range(0,5))
+                {
+                    //City Location
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                        newLocation = Instantiate(city, new Vector2(xPos, yPos), Quaternion.identity);
+                        newLocation.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = cityIcon;
+                        newLocation.GetComponent<City>().GenerateRandomCity();
+                        cityGenerated.Add(newLocation);
+                        break;
+                    //Trader Location
+                    case 4:
+                        newLocation = Instantiate(trader, new Vector2(xPos, yPos), Quaternion.identity);
+                        newLocation.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = traderIcon;
+                        newLocation.GetComponent<Trader>().GenerateItemsForTrade();
+                        traderGenerated.Add(newLocation);
+                        break;
+                }
+
+                newLocation.transform.parent = parentCity.transform;
             }
             count++;
         }
@@ -63,7 +86,7 @@ public class CitySpawnerManager : MonoBehaviour
     {
         foreach(CityStorageInformation cityData in CityData)
         {
-            GameObject newCity = Instantiate(City, new Vector2(cityData.xPosition, cityData.yPosition), Quaternion.identity);
+            GameObject newCity = Instantiate(city, new Vector2(cityData.xPosition, cityData.yPosition), Quaternion.identity);
             newCity.transform.parent = parentCity.transform;
             newCity.GetComponent<City>().cityEvents = cityData.cityEvents;
             newCity.GetComponent<City>().eventCount = cityData.cityEventCount;

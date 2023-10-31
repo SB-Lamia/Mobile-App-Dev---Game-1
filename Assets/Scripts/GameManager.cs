@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public List<Item> items = new List<Item>();
     public List<int> itemNumbers = new List<int>();
 
+    public int Money = 50;
+
     public TextMeshProUGUI shotgunAmmoText;
     public TextMeshProUGUI pistolAmmoText;
     public TextMeshProUGUI rifleAmmoText;
@@ -113,24 +115,27 @@ public class GameManager : MonoBehaviour
 
         tempStatusEffects.Add(storeStatChange);
 
-        for (int i = 0; i < tempStatusEffects.Count; i++)
+        //Remove Status Effect
+        switch (statAffected)
         {
-            //Remove Status Effect
-            switch (tempStatusEffects[i][0])
-            {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-            }
+            case 0:
+                PlayerStatManager.instance.Endurance += statValueChange;
+                break;
+            case 1:
+                PlayerStatManager.instance.Perception += statValueChange;
+                break;
+            case 2:
+                PlayerStatManager.instance.Charisma += statValueChange;
+                break;
+            case 3:
+                PlayerStatManager.instance.Luck += statValueChange;
+                break;
+            case 4:
+                PlayerStatManager.instance.Intelligence += statValueChange;
+                break;
+            case 5:
+                PlayerStatManager.instance.Agility += statValueChange;
+                break;
         }
     }
 

@@ -11,6 +11,7 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager Instance;
     public GameObject selectedItemImage;
     public GameObject selectedItemText;
+    public GameObject selectedItemBuffInfo;
     public GameObject selectedButton1;
     public GameObject selectedButton2;
     public GameObject mainEquipment;
@@ -54,6 +55,14 @@ public class InventoryManager : MonoBehaviour
         }
         selectedItemImage.GetComponentInChildren<Image>().sprite = GameManager.instance.items[slot].itemSprite;
         selectedItemText.GetComponentInChildren<TextMeshProUGUI>().text = GameManager.instance.items[slot].itemDesc;
+        
+        string FullBuffInfo = "";
+        foreach (string buffInfo in GameManager.instance.items[slot].ConsumableDescription)
+        {
+            FullBuffInfo += buffInfo + "\n";
+        }
+        Debug.Log(FullBuffInfo);
+        selectedItemBuffInfo.GetComponentInChildren<TextMeshProUGUI>().text = FullBuffInfo;
         currentlySelectedItem = GameManager.instance.items[slot];
         switch (currentlySelectedItem.itemType)
         {

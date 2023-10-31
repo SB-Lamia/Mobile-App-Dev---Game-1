@@ -79,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
         switch (touchedObject.name)
         {
             case "City(Clone)":
+            case "Trader(Clone)":
                 askPlayerIfMoving();
                 break;
             default:
@@ -108,10 +109,22 @@ public class PlayerMovement : MonoBehaviour
     {
         firstMovement = false;
         TriggerMovement();
-        StatBarManager.instance.UpdateHunger(movementCost);
-        StatBarManager.instance.UpdateWater(movementCost);
-        CityManager.instance.currentCity = touchedObject;
-        CityManager.instance.openCityButton.interactable = false;
+        PlayerStatManager.instance.UpdateHunger(movementCost);
+        PlayerStatManager.instance.UpdateWater(movementCost);
+        switch (touchedObject.name)
+        {
+            case "City(Clone)":
+                CityManager.instance.currentCity = touchedObject;
+                CityManager.instance.openCityButton.interactable = false;
+                break;
+            case "Trader(Clone)":
+                CityManager.instance.openCityButton.interactable = false;
+                TradingSystemManager.Instance.currentTrader = touchedObject.GetComponent<Trader>();
+                break;
+            default:
+                break;
+        }
+        
         popupMenu.SetActive(false);
         popupMenuOpen = false;
         SetupBackgroundScroler();

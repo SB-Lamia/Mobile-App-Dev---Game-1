@@ -10,6 +10,13 @@ public class InventorySlot : MonoBehaviour
     public int childIndex;
 
     Item item;
+    public enum InventoryLocation
+    {
+        Trader,
+        InventorySystem
+    }
+
+    public InventoryLocation inventoryLocation;
 
     public void AddItem(Item newItem)
     {
@@ -36,7 +43,15 @@ public class InventorySlot : MonoBehaviour
 
     public void UserItem()
     {
-        InventoryManager.Instance.ItemPressed(childIndex);
+        if (inventoryLocation == InventoryLocation.InventorySystem)
+        {
+            InventoryManager.Instance.ItemPressed(childIndex);
+        }
+        else if (inventoryLocation == InventoryLocation.Trader)
+        {
+            TradingSystemManager.Instance.ItemPressed(childIndex);
+        }
+
     }
 
     // Start is called before the first frame update

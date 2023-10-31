@@ -55,7 +55,7 @@ public class Item : ScriptableObject
     public float critMultiplier;
 
     [Header("Consumable Item")]
-    public string[] somethingConsumable;
+    public string[] ConsumableDescription;
     public int plusHealth;
     public int plusHunger;
     public int plusWater;
@@ -75,6 +75,10 @@ public class Item : ScriptableObject
         ConsumableItemChecker(3, plusLuck);
         ConsumableItemChecker(4, plusInt);
         ConsumableItemChecker(5, plusAgil);
+
+        PlayerStatManager.instance.UpdateHealth(plusHealth);
+        PlayerStatManager.instance.UpdateHunger(plusHunger);
+        PlayerStatManager.instance.UpdateWater(plusWater);
     }
 
     private void ConsumableItemChecker(int status, int buff)

@@ -6,6 +6,10 @@ public class PlayerStatManager : MonoBehaviour
 {
     public static PlayerStatManager instance;
 
+    public float currentHealth;
+    public float currentHunger;
+    public float currentWater;
+
     public int Level;
     public int Experience;
     public int Endurance;
@@ -38,6 +42,58 @@ public class PlayerStatManager : MonoBehaviour
             {
 
             }
+        }
+    }
+
+    public void SetupBaseStats(
+        float defaultHunger,
+        float defaultWater,
+        float defaultHealth)
+    {
+        currentHealth = defaultHealth;
+        currentHunger = defaultHunger;
+        currentWater = defaultWater;
+        StatBarManager.instance.SetupHuds();
+    }
+
+    public void UpdateHealth(float valueChange)
+    {
+        currentHealth += valueChange;
+
+        MaxMinValueChecker(ref currentHealth, valueChange);
+
+        StatBarManager.instance.UpdateBar();
+    }
+
+    public void UpdateHunger(float valueChange)
+    {
+        currentHunger += valueChange;
+
+        MaxMinValueChecker(ref currentHunger, valueChange);
+
+        StatBarManager.instance.UpdateBar();
+    }
+
+    public void UpdateWater(float valueChange)
+    {
+        currentWater += valueChange;
+
+        MaxMinValueChecker(ref currentWater, valueChange);
+
+        StatBarManager.instance.UpdateBar();
+    }
+
+    public void MaxMinValueChecker(ref float currentStat, float valueChange)
+    {
+        if (currentStat <= 0)
+        {
+            currentStat = 0;
+            return;
+        }
+        if (currentStat >= 100)
+        {
+            currentStat = 100;
+            return;
         }
     }
 

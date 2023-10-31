@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class BattleManager : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class BattleManager : MonoBehaviour
     public List<Item> droppedItems;
     public GameObject combatUILootElement;
     public Sprite unequipedIcon;
+    public RectTransform playerHealthBar;
+    public TextMeshProUGUI playerHealthText;
 
     public enum CurrentAttack
     {
@@ -63,16 +66,23 @@ public class BattleManager : MonoBehaviour
         activeCombat = false;
     }
 
+    public void UpdateBattleHealth(RectTransform healthBar, float currentHealth, float MaxHealth, TextMeshProUGUI healthText, bool isPlayer)
+    {
+        if(isPlayer) healthText.text = Mathf.Round(currentHealth) + " / 100";
+        float calculatedCurrentStatPercentage = MaxHealth - (MaxHealth / 100 * currentHealth);
+        RectTransformExtensions.SetRight(healthBar, calculatedCurrentStatPercentage);
+    }
+
     public void StartCombat()
     {
         combatSystem.SetActive(true);
         enemies = new List<Enemy>();
         playerTurn = true;
         isDialogueActive = false;
+        UpdateBattleHealth(playerHealthBar, PlayerStatManager.instance.currentHealth, 100f, playerHealthText, true);
         currentEnemyTurn = 0;
         EnableCertainHud("Default");
         enemies = EnemySpawnerManager.instance.SpawnRandomEnemy(2);
-        Debug.Log(enemies.Count);
         enemyMaxCount = 2;
         for (int i = 0; i < enemies.Count; i++)
         {
@@ -310,6 +320,11 @@ public class BattleManager : MonoBehaviour
                 currentDamageToEnemy = CalculateWeaponDamage(false);
                 break;
         }
+        UpdateBattleHealth(currentlyUsedLocations[enemyPositionDialogue].transform.GetChild(1).GetChild(0).GetComponent<RectTransform>(),
+                           enemies[enemyPositionDialogue].currentHealth,
+                           enemies[enemyPositionDialogue].startingHealth,
+                           null,
+                           false);
         currentDialogueGameObject.GetComponent<DialogueScript>().ResetString(
         "Player Attacked " + enemies[enemyPositionDialogue].enemyName
         + " at position " + (enemyPositionDialogue + 1)
@@ -404,6 +419,7 @@ public class BattleManager : MonoBehaviour
                     enemies[currentEnemyTurn].currentEnemyState = Enemy.EnemyState.ResolvingBattlePhase;
                     break;
                 case Enemy.EnemyState.ResolvingBattlePhase:
+                    UpdateBattleHealth(playerHealthBar, PlayerStatManager.instance.currentHealth, 100f, playerHealthText, true);
                     enemies[currentEnemyTurn].awaitingActionToResolve = false;
                     enemies[currentEnemyTurn].currentEnemyState = Enemy.EnemyState.DoAction;
                     currentEnemyTurn++;

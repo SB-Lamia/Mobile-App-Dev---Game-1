@@ -48,9 +48,9 @@ public class SaveLoadManager : MonoBehaviour
         state.Charisma = PlayerStatManager.instance.Charisma;
 
         //Player Food, Water and Health
-        state.currentHealth = StatBarManager.instance.currentHealth;
-        state.currentHunger = StatBarManager.instance.currentHunger;
-        state.currentWater = StatBarManager.instance.currentWater;
+        state.currentHealth = PlayerStatManager.instance.currentHealth;
+        state.currentHunger = PlayerStatManager.instance.currentHunger;
+        state.currentWater = PlayerStatManager.instance.currentWater;
 
         //Player Position
         state.playerPosition = GameObject.Find("Player").transform.position;
@@ -96,7 +96,7 @@ public class SaveLoadManager : MonoBehaviour
                 state.Luck,
                 state.Intelligence);
 
-            StatBarManager.instance.SetupBaseStats(
+            PlayerStatManager.instance.SetupBaseStats(
                 state.currentHunger,
                 state.currentWater,
                 state.currentHealth
@@ -119,7 +119,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         PlayerStatManager.instance.SetupStarterStats(1, 5, 10, 20, 5, 5, 5, 5, 5, 5);
         CitySpawnerManager.instance.NewCityLoad(2000, 100000);
-        StatBarManager.instance.SetupBaseStats(100.0f, 100.0f, 100.0f);
+        PlayerStatManager.instance.SetupBaseStats(100.0f, 100.0f, 100.0f);
         StatUpgraderUIManager.instance.OpenStatUpgradeMenu();
     }
 }

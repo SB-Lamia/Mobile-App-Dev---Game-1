@@ -26,6 +26,14 @@ public class GridContentScript : MonoBehaviour
 				inputField.transform.SetParent(gameObject.transform, false);
 				inputField.transform.GetComponent<InventorySlot>().childIndex = childPosition;
 				childPosition++;
+                if (this.gameObject.transform.parent.name == "TraderItems" || this.gameObject.transform.parent.name == "PlayerItems")
+                {
+					inputField.transform.GetComponent<InventorySlot>().inventoryLocation = InventorySlot.InventoryLocation.Trader;
+                }
+                else
+                {
+					inputField.transform.GetComponent<InventorySlot>().inventoryLocation = InventorySlot.InventoryLocation.InventorySystem;
+				}
 			}
 		}
 

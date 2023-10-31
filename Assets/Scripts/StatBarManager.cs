@@ -10,10 +10,6 @@ public class StatBarManager : MonoBehaviour
 
     public static StatBarManager instance;
 
-    public float currentHealth;
-    public float currentHunger;
-    public float currentWater;
-
     public RectTransform healthBar;
     public RectTransform hungerBar;
     public RectTransform waterBar;
@@ -43,72 +39,26 @@ public class StatBarManager : MonoBehaviour
         }
     }
 
-    public void SetupBaseStats(
-        float defaultHunger,
-        float defaultWater,
-        float defaultHealth)
-    {
-        currentHealth = defaultHealth;
-        currentHunger = defaultHunger;
-        currentWater = defaultWater;
-        SetupHuds();
-    }
-
     public void SetupHuds()
     {
-        UpdateBar(healthBar, currentHealth, healthStatText);
-        UpdateBar(hungerBar, currentHunger, hungerStatText);
-        UpdateBar(waterBar, currentWater, waterStatText);
+        UpdateBar();
+        UpdateBar();
+        UpdateBar();
 
         UpdateXPBar();
     }
 
-    public void UpdateHealth(float valueChange)
+    public void UpdateBar()
     {
-        currentHealth += valueChange;
-
-        MaxMinValueChecker(ref currentHealth, valueChange);
-
-        UpdateBar(healthBar, currentHealth, healthStatText);
-    }
-
-    public void UpdateHunger(float valueChange)
-    {
-        currentHunger += valueChange;
-
-        MaxMinValueChecker(ref currentHunger, valueChange);
-
-        UpdateBar(hungerBar, currentHunger, hungerStatText);
-    }
-
-    public void UpdateWater(float valueChange)
-    {
-        currentWater += valueChange;
-
-        MaxMinValueChecker(ref currentWater, valueChange);
-
-        UpdateBar(waterBar, currentWater, waterStatText);
-    }
-
-    public void MaxMinValueChecker(ref float currentStat, float valueChange)
-    {
-        if (currentStat <= 0)
-        {
-            currentStat = 0;
-            return;
-        }
-        if (currentStat >= 100)
-        {
-            currentStat = 100;
-            return;
-        }
-    }
-
-    public void UpdateBar(RectTransform currentBar, float currentStat, TextMeshProUGUI currentTextStat)
-    {
-        currentTextStat.text = Mathf.Round(currentStat) + " / 100";
-        calculatedCurrentStatPercentage = maxValueBar - (maxValueBar / 100 * currentStat);
-        RectTransformExtensions.SetRight(currentBar, calculatedCurrentStatPercentage);
+        healthStatText.text = Mathf.Round(PlayerStatManager.instance.currentHealth) + " / 100";
+        calculatedCurrentStatPercentage = maxValueBar - (maxValueBar / 100 * PlayerStatManager.instance.currentHealth);
+        RectTransformExtensions.SetRight(healthBar, calculatedCurrentStatPercentage);
+        hungerStatText.text = Mathf.Round(PlayerStatManager.instance.currentHunger) + " / 100";
+        calculatedCurrentStatPercentage = maxValueBar - (maxValueBar / 100 * PlayerStatManager.instance.currentHunger);
+        RectTransformExtensions.SetRight(hungerBar, calculatedCurrentStatPercentage);
+        waterStatText.text = Mathf.Round(PlayerStatManager.instance.currentWater) + " / 100";
+        calculatedCurrentStatPercentage = maxValueBar - (maxValueBar / 100 * PlayerStatManager.instance.currentWater);
+        RectTransformExtensions.SetRight(waterBar, calculatedCurrentStatPercentage);
     }
 
     public void UpdateXPBar()

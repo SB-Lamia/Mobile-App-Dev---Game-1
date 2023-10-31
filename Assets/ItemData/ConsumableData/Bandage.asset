@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Bandage
   itemDesc: A basic medical bandage for treating minor injuries.
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: ac80fd77f8d16244e8b3f121fe8641a2, type: 3}
   isStackable: 1
   rarity: Common
   itemType: 1
@@ -26,8 +26,8 @@ MonoBehaviour:
   weaponSpread: 0
   weaponPenertration: 0
   critMultiplier: 0
-  somethingConsumable:
-  - +10
+  ConsumableDescription:
+  - +10 Health
   plusHealth: 10
   plusHunger: 0
   plusWater: 0

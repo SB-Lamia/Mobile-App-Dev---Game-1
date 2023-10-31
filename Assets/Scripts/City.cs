@@ -56,8 +56,9 @@ public class City : MonoBehaviour
 
     public void TriggerLootingEvent()
     {
-        LootManager.instance.LuckCalculationRarity(3);
-        PlayerStatManager.instance.IncreaseEXP(15);
+        int cityXP = 10 * PlayerStatManager.instance.Level / 2;
+        LootManager.instance.ShowUserLoot(LootManager.instance.cityUILootElement, LootManager.instance.LuckCalculationRarity(3, PlayerStatManager.instance.Luck), cityXP);
+        PlayerStatManager.instance.IncreaseEXP(cityXP);
     }
 
     public void TriggerEnemyEvent()

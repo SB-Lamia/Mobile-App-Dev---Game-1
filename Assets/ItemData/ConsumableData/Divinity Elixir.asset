@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b1529f30af4b5c4695fb6fc37a7f787, type: 3}
   m_Name: Divinity Elixir
   m_EditorClassIdentifier: 
-  itemName: 
-  itemDesc: 
-  itemSprite: {fileID: 0}
+  itemName: Divinity Elixir
+  itemDesc: An elixir said to bestow divine attributes upon the drinker.
+  itemSprite: {fileID: 21300000, guid: ac80fd77f8d16244e8b3f121fe8641a2, type: 3}
   isStackable: 1
-  rarity: 
+  rarity: Legendary
   itemType: 1
   isEquippedMain: 0
   isEquippedSecondary: 0
@@ -26,16 +26,21 @@ MonoBehaviour:
   weaponSpread: 0
   weaponPenertration: 0
   critMultiplier: 0
-  somethingConsumable: []
+  ConsumableDescription:
+  - +40 Perception
+  - +40 Charisma
+  - +40 Luck
+  - +40 Intelligence
+  - 'Duration: 9 Actions'
   plusHealth: 0
   plusHunger: 0
   plusWater: 0
   plusEnd: 0
-  plusPer: 0
-  plusChar: 0
-  plusLuck: 0
-  plusInt: 0
+  plusPer: 40
+  plusChar: 40
+  plusLuck: 40
+  plusInt: 40
   plusAgil: 0
-  duration: 0
+  duration: 9
   somethingEquippable: []
   somethingMaterial: []

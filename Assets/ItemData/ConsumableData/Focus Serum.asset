@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Focus Serum
   itemDesc: A serum that enhances your focus and perception.
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: ac80fd77f8d16244e8b3f121fe8641a2, type: 3}
   isStackable: 1
   rarity: Uncommon
   itemType: 1
@@ -26,8 +26,9 @@ MonoBehaviour:
   weaponSpread: 0
   weaponPenertration: 0
   critMultiplier: 0
-  somethingConsumable:
+  ConsumableDescription:
   - +10 Perception
+  - 'Duration: 5 Actions'
   plusHealth: 0
   plusHunger: 0
   plusWater: 0

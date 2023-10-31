@@ -41,7 +41,7 @@ public class Enemy : ScriptableObject
 
     public void DealDamageToPlayer()
     {
-        StatBarManager.instance.UpdateHealth(currentAttack * -1);
+        PlayerStatManager.instance.UpdateHealth(currentAttack * -1);
         currentDialogueAction = $"{enemyName} has dealt {Mathf.Round(currentAttack)} damage to you!";
         awaitingActionToResolve = false;
     }
