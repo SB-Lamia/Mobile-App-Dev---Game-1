@@ -11,7 +11,7 @@ public class Trader : MonoBehaviour
 
     public void GenerateItemsForTrade()
     {
-        int traderLevel = Random.Range(0, 100);
+        int traderLevel = Random.Range(1, 100);
         int traderItemCount = Random.Range(4, 10);
 
 

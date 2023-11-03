@@ -20,6 +20,8 @@ public class InventoryManager : MonoBehaviour
     public bool mainEquipped;
     public bool secondaryEquipped;
 
+    public GameObject inventoryHud;
+
     public Item mainEquipedItem;
     public Item secondaryEquipedItem;
 
@@ -43,7 +45,7 @@ public class InventoryManager : MonoBehaviour
         {
             Instance = this;
         }
-        GameObject.Find("Inventory system Hud").SetActive(false);
+        inventoryHud.SetActive(false);
     }
 
 

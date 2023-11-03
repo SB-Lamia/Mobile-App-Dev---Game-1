@@ -7,7 +7,6 @@ public class GridContentScript : MonoBehaviour
 {
 	public int rows;
 	public int cols;
-	public InventoryUIManager inventoryUIManager;
 	public GameObject inputFieldPrefab;
 	public int childPosition;
 
@@ -36,7 +35,5 @@ public class GridContentScript : MonoBehaviour
 				}
 			}
 		}
-
-		inventoryUIManager.Resume();
 	}
 }

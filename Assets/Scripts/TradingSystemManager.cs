@@ -48,14 +48,20 @@ public class TradingSystemManager : MonoBehaviour
     public void SpawnInventory(GameObject parentSlots, List<Item> items, List<int> itemCount)
     {
         InventorySlot[] inventorySlots = parentSlots.GetComponentsInChildren<InventorySlot>();
-        Debug.Log(inventorySlots.Length);
-        for (int i = 0; i < items.Count-1; i++)
+        for (int i = 0; i < inventorySlots.Length; i++)
         {
-            Debug.Log(inventorySlots[i].gameObject.name);
-            inventorySlots[i].transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-            inventorySlots[i].transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-            inventorySlots[i].AddItem(items[i]);
-            inventorySlots[i].transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = itemCount[i].ToString();
+            if (i < items.Count)
+            {
+                inventorySlots[i].transform.GetChild(0).GetComponent<Button>().interactable = true;
+                inventorySlots[i].transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+                inventorySlots[i].transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+                inventorySlots[i].AddItem(items[i]);
+                inventorySlots[i].transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = itemCount[i].ToString();
+            }
+            else
+            {
+                inventorySlots[i].transform.GetChild(0).GetComponent<Button>().interactable = false;
+            }
         }
     }
 
@@ -69,18 +75,18 @@ public class TradingSystemManager : MonoBehaviour
             gameObject.SetActive(true);
         }
         
-        if (EventSystem.current.currentSelectedGameObject.transform.parent.parent.name == "TraderItems")
+        if (EventSystem.current.currentSelectedGameObject.transform.parent.parent.parent.name == "TraderItems")
         {
             currentlySelectedItem = currentTrader.itemsForTrader[slot];
         }
-        else if (EventSystem.current.currentSelectedGameObject.transform.parent.parent.name == "PlayerItems")
+        else if (EventSystem.current.currentSelectedGameObject.transform.parent.parent.parent.name == "PlayerItems")
         {
             currentlySelectedItem = GameManager.instance.items[slot];
         }
         
-        selectedItemImage.GetComponentInChildren<Image>().sprite = GameManager.instance.items[slot].itemSprite;
-        selectedItemText.GetComponentInChildren<TextMeshProUGUI>().text = GameManager.instance.items[slot].itemDesc;
-        foreach (string buffInfo in GameManager.instance.items[slot].ConsumableDescription)
+        selectedItemImage.GetComponentInChildren<Image>().sprite = currentlySelectedItem.itemSprite;
+        selectedItemText.GetComponentInChildren<TextMeshProUGUI>().text = currentlySelectedItem.itemDesc;
+        foreach (string buffInfo in currentlySelectedItem.ConsumableDescription)
         {
             FullBuffInfo += buffInfo + "\n";
         }

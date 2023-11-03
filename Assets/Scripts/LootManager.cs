@@ -24,9 +24,6 @@ public class LootManager : MonoBehaviour
     private int rowCount;
     public Sprite XPIcon;
 
-    List<Item> itemsForTrader;
-    List<int> itemNumbersTrader;
-
     void Awake()
     {
         if (instance == null)
@@ -69,13 +66,8 @@ public class LootManager : MonoBehaviour
 
     public (List<Item>, List<int>) GenerateTraderLootTables(int baseNumberOfNewLoot, int LuckValue)
     {
-        itemsForTrader = new List<Item>();
-        itemNumbersTrader = new List<int>();
-        List<Item> tempCommons = commons;
-        List<Item> tempUncommons = uncommons;
-        List<Item> tempRares = rares;
-        List<Item> tempEpics = epics;
-        List<Item> tempLegendarys = legendarys;
+        List<Item> itemsForTrader = new List<Item>();
+        List<int> itemNumbersTrader = new List<int>();
 
         for (int i = 0; i < baseNumberOfNewLoot; i++)
         {
@@ -83,19 +75,19 @@ public class LootManager : MonoBehaviour
             switch (luckPercentage)
             {
                 case <= 20:
-                    AddingTraderItemsCount(6, ref tempCommons);
+                    AddingTraderItemsCount(6, commons, ref itemsForTrader, ref itemNumbersTrader);
                     break;
                 case >= 21 and <= 40:
-                    AddingTraderItemsCount(5, ref tempUncommons);
+                    AddingTraderItemsCount(5, uncommons, ref itemsForTrader, ref itemNumbersTrader);
                     break;
                 case >= 41 and <= 60:
-                    AddingTraderItemsCount(4, ref tempRares);
+                    AddingTraderItemsCount(4, rares, ref itemsForTrader, ref itemNumbersTrader);
                     break;
                 case >= 61 and <= 80:
-                    AddingTraderItemsCount(3, ref tempEpics);
+                    AddingTraderItemsCount(3, epics, ref itemsForTrader, ref itemNumbersTrader);
                     break;
                 case >= 81 and <= 100:
-                    AddingTraderItemsCount(2, ref tempLegendarys);
+                    AddingTraderItemsCount(2, legendarys, ref itemsForTrader, ref itemNumbersTrader);
                     break;
                 default:
                     Debug.Log("Error: invalid rarity please check luck percentage inputed: " + luckPercentage);
@@ -106,17 +98,32 @@ public class LootManager : MonoBehaviour
         return (itemsForTrader, itemNumbersTrader);
     }
 
-    private void AddingTraderItemsCount(int MaxItemCount, ref List<Item> rarityItems)
+    private void AddingTraderItemsCount(int MaxItemCount, List<Item> rarityItems, ref List<Item> itemsForTrader, ref List<int> itemNumbersTrader)
     {
+
         if (rarityItems.Count > 0)
         {
-            Debug.Log(rarityItems[0]);
             int randomItem = Random.Range(0, rarityItems.Count - 1);
-            itemsForTrader.Add(rarityItems[randomItem]);
-            rarityItems.Remove(rarityItems[randomItem]);
-            itemNumbersTrader.Add(Random.Range(1, MaxItemCount));
+            if (!CheckDuplicateItem(rarityItems[randomItem], ref itemsForTrader))
+            {
+                itemsForTrader.Add(rarityItems[randomItem]);
+                rarityItems.Remove(rarityItems[randomItem]);
+                itemNumbersTrader.Add(Random.Range(1, MaxItemCount));
+            }
         }
        
+    }
+
+    private bool CheckDuplicateItem(Item newItem, ref List<Item> itemsForTrader)
+    {
+        foreach(Item item in itemsForTrader)
+        {
+            if (newItem == item)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Item> LuckCalculationRarity(int baseNumberOfNewLoot, int LuckValue)

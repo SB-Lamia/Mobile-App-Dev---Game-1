@@ -10,7 +10,6 @@ public class SaveLoadManager : MonoBehaviour
     public bool ResetInUnityEditor;
     void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
         if (instance == null)
         {
             instance = this;
