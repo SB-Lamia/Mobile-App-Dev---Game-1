@@ -11,8 +11,8 @@ public class Trader : MonoBehaviour
 
     public void GenerateItemsForTrade()
     {
-        int traderLevel = Random.Range(1, 100);
-        int traderItemCount = Random.Range(4, 10);
+        traderLevel = Random.Range(1, 100);
+        traderItemCount = Random.Range(4, 10);
 
 
         (itemsForTrader, itemCount) = LootManager.instance.GenerateTraderLootTables(traderItemCount, traderLevel);

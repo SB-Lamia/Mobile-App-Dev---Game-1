@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class TradingSystemManager : MonoBehaviour
 {
     public static TradingSystemManager Instance;
+    public GameObject selectedItemTitle;
     public GameObject selectedItemImage;
     public GameObject selectedItemText;
     public GameObject selectedItemBuffInfo;
@@ -15,6 +16,11 @@ public class TradingSystemManager : MonoBehaviour
     public GameObject selectedButton2;
     public GameObject tradingHudMenu;
     public Item currentlySelectedItem;
+
+
+    //If false trader is buying from player
+    //If true trader is selling to player
+    public bool traderSelling;
 
     public List<GameObject> selectedItemMenu = new List<GameObject>();
 
@@ -83,7 +89,7 @@ public class TradingSystemManager : MonoBehaviour
         {
             currentlySelectedItem = GameManager.instance.items[slot];
         }
-        
+        selectedItemText.GetComponent<TextMeshProUGUI>().text = currentlySelectedItem.name;
         selectedItemImage.GetComponentInChildren<Image>().sprite = currentlySelectedItem.itemSprite;
         selectedItemText.GetComponentInChildren<TextMeshProUGUI>().text = currentlySelectedItem.itemDesc;
         foreach (string buffInfo in currentlySelectedItem.ConsumableDescription)
@@ -91,17 +97,46 @@ public class TradingSystemManager : MonoBehaviour
             FullBuffInfo += buffInfo + "\n";
         }
         selectedItemBuffInfo.GetComponentInChildren<TextMeshProUGUI>().text = FullBuffInfo;
+
+        if (traderSelling)
+        {
+            buttonBuySell.GetComponentInChildren<TextMeshProUGUI>().text = "Buy";
+        }
+        else
+        {
+            buttonBuySell.GetComponentInChildren<TextMeshProUGUI>().text = "Sell";
+        }
         
     }
 
+    public GameObject buttonBuySell;
+
     public void Button1_Pressed()
     {
-        GameManager.instance.ClearSlots();
+        if (traderSelling)
+        {
+            if (GameManager.instance.Money >= currentlySelectedItem.value)
+            {
+
+            }
+            GameManager.instance.Money -= currentlySelectedItem.value;
+            GameManager.instance.AddItem(currentlySelectedItem);
+        }
+        else
+        {
+            GameManager.instance.Money += currentlySelectedItem.value;
+            GameManager.instance.RemoveItem(currentlySelectedItem);
+        }
     }
 
     public void Button2_Pressed()
     {
         GameManager.instance.RemoveItem(currentlySelectedItem);
+        GameManager.instance.ClearSlots();
+    }
+
+    public void Button3_Pressed()
+    {
         GameManager.instance.ClearSlots();
     }
 

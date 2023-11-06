@@ -15,6 +15,8 @@ public class Item : ScriptableObject
 
     public ItemType itemType;
 
+    public int value;
+
     public enum ItemType
     {
         Equippable,

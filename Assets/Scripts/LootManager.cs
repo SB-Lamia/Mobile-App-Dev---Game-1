@@ -107,7 +107,6 @@ public class LootManager : MonoBehaviour
             if (!CheckDuplicateItem(rarityItems[randomItem], ref itemsForTrader))
             {
                 itemsForTrader.Add(rarityItems[randomItem]);
-                rarityItems.Remove(rarityItems[randomItem]);
                 itemNumbersTrader.Add(Random.Range(1, MaxItemCount));
             }
         }
