@@ -10,7 +10,7 @@ public class GridContentScript : MonoBehaviour
 	public GameObject inputFieldPrefab;
 	public int childPosition;
 
-	void Start()
+	void Awake()
 	{
 		childPosition = 0;
 		RectTransform parentRect = gameObject.GetComponent<RectTransform>();

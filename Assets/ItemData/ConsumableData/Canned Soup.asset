@@ -18,6 +18,7 @@ MonoBehaviour:
   isStackable: 1
   rarity: Common
   itemType: 1
+  value: 10
   isEquippedMain: 0
   isEquippedSecondary: 0
   damageMultiplier: 0
@@ -29,6 +30,7 @@ MonoBehaviour:
   ConsumableDescription:
   - +10 Hunger
   - +5 Water
+  - 'Value: 10$'
   plusHealth: 0
   plusHunger: 10
   plusWater: 5

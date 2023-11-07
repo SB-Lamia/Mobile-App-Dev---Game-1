@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LocationManager : MonoBehaviour
 {
+    //used to decided if the location is a city or a trader.
     public CityManager cityManager;
     public TradingSystemManager tradingSystemManager;
 

@@ -18,6 +18,7 @@ MonoBehaviour:
   isStackable: 1
   rarity: Rare
   itemType: 1
+  value: 180
   isEquippedMain: 0
   isEquippedSecondary: 0
   damageMultiplier: 0
@@ -30,6 +31,7 @@ MonoBehaviour:
   - +15 Endurance
   - +10 Agility
   - 'Duration: 5 Actions'
+  - 'Value: 180$'
   plusHealth: 0
   plusHunger: 0
   plusWater: 0

@@ -19,6 +19,7 @@ MonoBehaviour:
   isStackable: 0
   rarity: Rare
   itemType: 0
+  value: 250
   isEquippedMain: 0
   isEquippedSecondary: 0
   damageMultiplier: 2
@@ -27,6 +28,22 @@ MonoBehaviour:
   weaponSpread: 0
   weaponPenertration: 0
   critMultiplier: 2
-  somethingConsumable: 
-  somethingArmour: 
-  somethingMaterial: 
+  ConsumableDescription:
+  - 'Damage Multiplier: x2'
+  - 'Range: 3'
+  - 'Crit Multiplier: x2'
+  - 'Weapon Spread: Single Target'
+  - 'Penertration: 0'
+  - 'Value: 250$'
+  plusHealth: 0
+  plusHunger: 0
+  plusWater: 0
+  plusEnd: 0
+  plusPer: 0
+  plusChar: 0
+  plusLuck: 0
+  plusInt: 0
+  plusAgil: 0
+  duration: 0
+  somethingEquippable: []
+  somethingMaterial: []

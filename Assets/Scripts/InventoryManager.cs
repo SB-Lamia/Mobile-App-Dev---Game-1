@@ -51,20 +51,18 @@ public class InventoryManager : MonoBehaviour
 
     public void ItemPressed(int slot)
     {
-        Debug.Log("slot:" + slot);
         foreach (GameObject gameObject in selectedItemMenu)
         {
             gameObject.SetActive(true);
         }
         selectedItemImage.GetComponentInChildren<Image>().sprite = GameManager.instance.items[slot].itemSprite;
         selectedItemText.GetComponentInChildren<TextMeshProUGUI>().text = GameManager.instance.items[slot].itemDesc;
-        
         string FullBuffInfo = "";
         foreach (string buffInfo in GameManager.instance.items[slot].ConsumableDescription)
         {
             FullBuffInfo += buffInfo + "\n";
         }
-        Debug.Log(FullBuffInfo);
+        FullBuffInfo += "\n";
         selectedItemBuffInfo.GetComponentInChildren<TextMeshProUGUI>().text = FullBuffInfo;
         currentlySelectedItem = GameManager.instance.items[slot];
         switch (currentlySelectedItem.itemType)

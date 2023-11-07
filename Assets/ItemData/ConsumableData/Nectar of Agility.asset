@@ -18,6 +18,7 @@ MonoBehaviour:
   isStackable: 1
   rarity: Epic
   itemType: 1
+  value: 500
   isEquippedMain: 0
   isEquippedSecondary: 0
   damageMultiplier: 0
@@ -30,6 +31,7 @@ MonoBehaviour:
   - +20 Luck
   - +20 Agility
   - 'Duration: 6 Actions'
+  - 'Value: 500$'
   plusHealth: 0
   plusHunger: 0
   plusWater: 0

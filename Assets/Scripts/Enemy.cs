@@ -22,6 +22,13 @@ public class Enemy : ScriptableObject
 
     public int enemyXP;
     public Item droppedItem;
+
+    public Enemy(float startingHealth)
+    {
+        this.startingHealth = startingHealth;
+        currentHealth = startingHealth;
+    }
+
     public enum EnemyState
     {
         DoAction,

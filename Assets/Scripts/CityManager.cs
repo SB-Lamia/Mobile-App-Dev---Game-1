@@ -9,15 +9,10 @@ public class CityManager : MonoBehaviour
     public GameObject currentCity;
     public GameObject locations;
     public const int locationMaxCount = 5;
-
     public Button openCityButton;
-
     public GameObject cityHudMenu;
-
     public static CityManager instance;
-
     public List<GameObject> crossedOutLocation;
-
     public Sprite unknownLocation;
 
     private void Awake()
@@ -26,29 +21,26 @@ public class CityManager : MonoBehaviour
         {
             instance = this;
         }
-        else
-        {
-            if (instance != this)
-            {
-
-            }
-        }
 
         openCityButton.interactable = false;
     }
 
+    //Sets up the visuals once a city is entered.
     public void SetupVisualCity()
     {
         for (int i = 0; i < locationMaxCount; i++)
         {
+            //Checks if a player can see future locations.
             if (PlayerStatManager.instance.Perception > i * 20)
             {
                 locations.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = locationImages[currentCity.GetComponent<City>().cityEvents[i]];
             }
+            //Otherwise hides them as an unknown location
             else
             {
                 locations.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = unknownLocation;
             }
+            //checks if the locations have already been explored.
             if (currentCity.GetComponent<City>().eventCount > i)
             {
                 locations.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = locationImages[currentCity.GetComponent<City>().cityEvents[i]];
@@ -57,6 +49,7 @@ public class CityManager : MonoBehaviour
         }
     }
 
+    //Closes all crossed out locations to setup next city.
     public void CloseVisualCity()
     {
         foreach(GameObject cross in crossedOutLocation)
@@ -65,6 +58,7 @@ public class CityManager : MonoBehaviour
         }
     }
 
+    //Used to open and close the city.
     public void Resume()
     {
         cityHudMenu.gameObject.SetActive(false);
@@ -73,7 +67,6 @@ public class CityManager : MonoBehaviour
         GameManager.instance.isPaused = false;
         CloseVisualCity();
     }
-
     public void Pause()
     {
         cityHudMenu.gameObject.SetActive(true);
@@ -83,6 +76,7 @@ public class CityManager : MonoBehaviour
         SetupVisualCity();
     }
 
+    //Triggers the city event when exploring.
     public void TriggerCityEvent()
     {
         currentCity.GetComponent<City>().TriggerNextExplore();

@@ -18,5 +18,26 @@ MonoBehaviour:
   isStackable: 1
   rarity: Common
   itemType: 6
+  value: 10
   isEquippedMain: 0
   isEquippedSecondary: 0
+  damageMultiplier: 0
+  isRanged: 0
+  rangeDistance: 0
+  weaponSpread: 0
+  weaponPenertration: 0
+  critMultiplier: 0
+  ConsumableDescription:
+  - 'Value: 10$'
+  plusHealth: 0
+  plusHunger: 0
+  plusWater: 0
+  plusEnd: 0
+  plusPer: 0
+  plusChar: 0
+  plusLuck: 0
+  plusInt: 0
+  plusAgil: 0
+  duration: 0
+  somethingEquippable: []
+  somethingMaterial: []

@@ -20,16 +20,33 @@ MonoBehaviour:
     for its unmated accuracy and longrange lethality
   itemSprite: {fileID: 21300000, guid: c2c4d13b447bd534aa5bf5f69f53d7b2, type: 3}
   isStackable: 0
-  rarity: 
+  rarity: Legendary
   itemType: 0
+  value: 2100
   isEquippedMain: 0
   isEquippedSecondary: 0
-  damageMultiplier: 0
+  damageMultiplier: 5
   isRanged: 0
   rangeDistance: 3
   weaponSpread: 0
   weaponPenertration: 3
-  critMultiplier: 4
-  somethingConsumable: 
-  somethingArmour: 
-  somethingMaterial: 
+  critMultiplier: 10
+  ConsumableDescription:
+  - 'Damage Multiplier: x5'
+  - 'Range: Max'
+  - 'Crit Multiplier: x10'
+  - 'Weapon Spread: Single Target'
+  - 'Penertration: Max'
+  - 'Value: 2100$'
+  plusHealth: 0
+  plusHunger: 0
+  plusWater: 0
+  plusEnd: 0
+  plusPer: 0
+  plusChar: 0
+  plusLuck: 0
+  plusInt: 0
+  plusAgil: 0
+  duration: 0
+  somethingEquippable: []
+  somethingMaterial: []

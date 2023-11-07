@@ -18,6 +18,7 @@ MonoBehaviour:
   isStackable: 1
   rarity: Legendary
   itemType: 1
+  value: 2250
   isEquippedMain: 0
   isEquippedSecondary: 0
   damageMultiplier: 0
@@ -32,6 +33,7 @@ MonoBehaviour:
   - +40 Luck
   - +40 Intelligence
   - 'Duration: 9 Actions'
+  - 'Value: 2250$'
   plusHealth: 0
   plusHunger: 0
   plusWater: 0

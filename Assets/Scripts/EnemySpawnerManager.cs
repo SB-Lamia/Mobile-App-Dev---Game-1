@@ -13,25 +13,16 @@ public class EnemySpawnerManager : MonoBehaviour
         {
             instance = this;
         }
-        else
-        {
-            if (instance != this)
-            {
-
-            }
-        }
     }
 
     public List<Enemy> SpawnRandomEnemy(int enemyCount)
     {
-        int playerLevel;
-
         List<Enemy> selectedEnemies = new List<Enemy>();
         List<Enemy> possibleEnemies = SortPossibleEnemies();
 
         for (int i = 0; i < enemyCount; i++)
         {
-            Enemy newEnemy = possibleEnemies[Random.Range(0, possibleEnemies.Count)];
+            Enemy newEnemy = new Enemy(possibleEnemies[Random.Range(0, possibleEnemies.Count)].startingHealth);
             selectedEnemies.Add(newEnemy);
         }
 

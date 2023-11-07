@@ -18,14 +18,31 @@ MonoBehaviour:
   isStackable: 0
   rarity: Epic
   itemType: 0
+  value: 750
   isEquippedMain: 0
   isEquippedSecondary: 0
-  damageMultiplier: 4
+  damageMultiplier: 2
   isRanged: 0
   rangeDistance: 0
   weaponSpread: 0
   weaponPenertration: 0
   critMultiplier: 2
-  somethingConsumable: 
-  somethingArmour: 
-  somethingMaterial: 
+  ConsumableDescription:
+  - 'Damage Multiplier: x2'
+  - 'Range: 1'
+  - 'Crit Multiplier: x2'
+  - 'Weapon Spread: None'
+  - 'Penertration: None'
+  - 'Value: 750$'
+  plusHealth: 0
+  plusHunger: 0
+  plusWater: 0
+  plusEnd: 0
+  plusPer: 0
+  plusChar: 0
+  plusLuck: 0
+  plusInt: 0
+  plusAgil: 0
+  duration: 0
+  somethingEquippable: []
+  somethingMaterial: []

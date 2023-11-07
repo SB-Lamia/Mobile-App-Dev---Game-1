@@ -19,11 +19,13 @@ public class GameManager : MonoBehaviour
     public List<Item> items = new List<Item>();
     public List<int> itemNumbers = new List<int>();
 
-    public int Money = 50;
+    public int money = 50;
 
     public TextMeshProUGUI shotgunAmmoText;
     public TextMeshProUGUI pistolAmmoText;
     public TextMeshProUGUI rifleAmmoText;
+
+    public TextMeshProUGUI moneyVisual;
 
     public int shotgunAmmo;
     public int pistolAmmo;
@@ -42,13 +44,6 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-        else
-        {
-            if (instance != this)
-            {
-
-            }
-        }
     }
 
     public void DisplayItems()
@@ -65,6 +60,7 @@ public class GameManager : MonoBehaviour
         shotgunAmmoText.text = "x " + shotgunAmmo.ToString();
         pistolAmmoText.text = "x " + pistolAmmo.ToString();
         rifleAmmoText.text = "x " + rifleAmmo.ToString();
+        moneyVisual.text = "x " + money.ToString();
 
     }
 

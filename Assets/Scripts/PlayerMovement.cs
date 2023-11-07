@@ -169,20 +169,20 @@ public class PlayerMovement : MonoBehaviour
 
             if (isIncreasingScale == true)
             {
-                newScale = new Vector3(cityBorderBlinker.localScale.x + 0.05f, cityBorderBlinker.localScale.y + 0.05f, 1);
+                newScale = new Vector3(cityBorderBlinker.localScale.x + 0.4f, cityBorderBlinker.localScale.y + 0.4f, 1);
             }
             else
             {
-                newScale = new Vector3(cityBorderBlinker.localScale.x - 0.05f, cityBorderBlinker.localScale.y - 0.05f, 1);
+                newScale = new Vector3(cityBorderBlinker.localScale.x - 0.4f, cityBorderBlinker.localScale.y - 0.4f, 1);
             }
 
             cityBorderBlinker.localScale = newScale;
 
-            if (cityBorderBlinker.localScale.x >= 1.2f)
+            if (cityBorderBlinker.localScale.x >= 7.75f)
             {
                 isIncreasingScale = false;
             }
-            else if (cityBorderBlinker.localScale.x <= 1.15f)
+            else if (cityBorderBlinker.localScale.x <= 7.25f)
             {
                 isIncreasingScale = true;
             }

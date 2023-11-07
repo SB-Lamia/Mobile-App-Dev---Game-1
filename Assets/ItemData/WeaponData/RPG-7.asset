@@ -20,16 +20,33 @@ MonoBehaviour:
     choice for taking down armored vehicles and fortified positions.
   itemSprite: {fileID: 0}
   isStackable: 0
-  rarity: 
+  rarity: Legendary
   itemType: 0
+  value: 3200
   isEquippedMain: 0
   isEquippedSecondary: 0
-  damageMultiplier: 10
+  damageMultiplier: 15
   isRanged: 0
   rangeDistance: 3
   weaponSpread: 2
   weaponPenertration: 3
-  critMultiplier: 20
-  somethingConsumable: 
-  somethingArmour: 
-  somethingMaterial: 
+  critMultiplier: 2
+  ConsumableDescription:
+  - 'Damage Multiplier: x15'
+  - 'Range: Max'
+  - 'Crit Multiplier: x2'
+  - 'Weapon Spread: Max'
+  - 'Penertration: Max'
+  - Value 3200$
+  plusHealth: 0
+  plusHunger: 0
+  plusWater: 0
+  plusEnd: 0
+  plusPer: 0
+  plusChar: 0
+  plusLuck: 0
+  plusInt: 0
+  plusAgil: 0
+  duration: 0
+  somethingEquippable: []
+  somethingMaterial: []

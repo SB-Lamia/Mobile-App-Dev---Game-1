@@ -7,17 +7,20 @@ using TMPro;
 public class InventorySlot : MonoBehaviour
 {
     public Image icon;
+    //Knows which slot it is in in the inventory.
     public int childIndex;
 
     Item item;
+
+    //Checks if it is in the players inventory or the traders inventory
     public enum InventoryLocation
     {
         Trader,
         InventorySystem
     }
-
     public InventoryLocation inventoryLocation;
 
+    //Sets the inventory slot to be an item
     public void AddItem(Item newItem)
     {
         item = newItem;
@@ -26,6 +29,7 @@ public class InventorySlot : MonoBehaviour
         icon.enabled = true;
     }
 
+    //Clears the inventory slot back to its default state.
     public void ClearSlot()
     {
         item = null;
@@ -36,11 +40,8 @@ public class InventorySlot : MonoBehaviour
         transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
     }
 
-    public void OnRemoveButton()
-    {
-        // remove stuffs?
-    }
 
+    //Tells the inventory and trading managers that the inventory slot has been pressed.
     public void UserItem()
     {
         if (inventoryLocation == InventoryLocation.InventorySystem)
@@ -52,17 +53,5 @@ public class InventorySlot : MonoBehaviour
             TradingSystemManager.Instance.ItemPressed(childIndex);
         }
 
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

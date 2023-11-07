@@ -18,6 +18,7 @@ MonoBehaviour:
   isStackable: 1
   rarity: Uncommon
   itemType: 1
+  value: 45
   isEquippedMain: 0
   isEquippedSecondary: 0
   damageMultiplier: 0
@@ -29,6 +30,7 @@ MonoBehaviour:
   ConsumableDescription:
   - +10 Endurance
   - 'Duration: 4 Actions'
+  - 'Value: 45$'
   plusHealth: 0
   plusHunger: 0
   plusWater: 0

@@ -19,14 +19,31 @@ MonoBehaviour:
   isStackable: 0
   rarity: Legendary
   itemType: 0
+  value: 1500
   isEquippedMain: 0
   isEquippedSecondary: 0
-  damageMultiplier: 4
+  damageMultiplier: 5
   isRanged: 1
   rangeDistance: 1
   weaponSpread: 1
   weaponPenertration: 0
   critMultiplier: 2
-  somethingConsumable: 
-  somethingArmour: 
-  somethingMaterial: 
+  ConsumableDescription:
+  - 'Damage Multiplier: x5'
+  - 'Range: 2'
+  - 'Crit Multiplier: x2'
+  - 'Weapon Spread: Adjacent Zones'
+  - 'Penertration: None'
+  - 'Value: 1500$'
+  plusHealth: 0
+  plusHunger: 0
+  plusWater: 0
+  plusEnd: 0
+  plusPer: 0
+  plusChar: 0
+  plusLuck: 0
+  plusInt: 0
+  plusAgil: 0
+  duration: 0
+  somethingEquippable: []
+  somethingMaterial: []

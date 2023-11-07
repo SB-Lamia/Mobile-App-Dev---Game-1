@@ -22,7 +22,7 @@ public class ScaleGrid : MonoBehaviour
     float lHeightPercentage = 0;
     Vector2 viewSize = Vector2.zero;
 
-    void Start()
+    void Awake()
     {
         Fix();
     }

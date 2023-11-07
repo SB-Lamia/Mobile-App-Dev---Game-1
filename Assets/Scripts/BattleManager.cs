@@ -147,6 +147,7 @@ public class BattleManager : MonoBehaviour
             {
                 DialogueChecker();
                 EndPlayerTurn();
+                Debug.Log("Player Turn Ended");
             }
         }
     }
@@ -276,7 +277,6 @@ public class BattleManager : MonoBehaviour
         GameObject dialogueObject = Instantiate(dialoguePrefab);
         dialogueObject.transform.parent = dialogueHud.transform;
         currentDialogueGameObject = dialogueObject;
-        EnableCertainHud("Dialogue");
         switch (EventSystem.current.currentSelectedGameObject.name)
         {
             case "EnemyLocation1":
@@ -303,6 +303,7 @@ public class BattleManager : MonoBehaviour
         }
         
         awaitingPlayerDialogue = true;
+        Debug.Log("Enemy SelectionConfirmation completed");
     }
 
     public void LaunchingAttackAgainstSelectedEnemy(int enemyPositionDialogue)
@@ -393,6 +394,7 @@ public class BattleManager : MonoBehaviour
         {
             enemy.awaitingActionToResolve = false;
         }
+        Debug.Log("EndPlayerTurn");
     }
 
     // ENEMY INPUTS / SCRIPTS
@@ -401,12 +403,14 @@ public class BattleManager : MonoBehaviour
     {
         if (!enemies[currentEnemyTurn].awaitingActionToResolve)
         {
+            Debug.Log("Enemy Turns Started");
             switch (enemies[currentEnemyTurn].currentEnemyState)
             {
                 case Enemy.EnemyState.DoAction:
                     enemies[currentEnemyTurn].awaitingActionToResolve = true;
                     DecideEnemyAttack(enemies[currentEnemyTurn]);
                     enemies[currentEnemyTurn].currentEnemyState = Enemy.EnemyState.UserFeedback;
+                    Debug.Log("EnemyDoingAction");
                     break;
                 case Enemy.EnemyState.UserFeedback:
                     enemies[currentEnemyTurn].awaitingActionToResolve = true;

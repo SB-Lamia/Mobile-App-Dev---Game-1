@@ -17,10 +17,11 @@ public class TradingSystemManager : MonoBehaviour
     public GameObject tradingHudMenu;
     public Item currentlySelectedItem;
 
+    public TextMeshProUGUI moneyVisual;
 
     //If false trader is buying from player
     //If true trader is selling to player
-    public bool traderSelling;
+    public bool traderSelling = false;
 
     public List<GameObject> selectedItemMenu = new List<GameObject>();
 
@@ -69,6 +70,8 @@ public class TradingSystemManager : MonoBehaviour
                 inventorySlots[i].transform.GetChild(0).GetComponent<Button>().interactable = false;
             }
         }
+        buttonBuySell.GetComponentInChildren<TextMeshProUGUI>().text = "Pick Trader/Player";
+        moneyVisual.text = GameManager.instance.money.ToString();
     }
 
 
@@ -89,13 +92,14 @@ public class TradingSystemManager : MonoBehaviour
         {
             currentlySelectedItem = GameManager.instance.items[slot];
         }
-        selectedItemText.GetComponent<TextMeshProUGUI>().text = currentlySelectedItem.name;
+        selectedItemTitle.GetComponent<TextMeshProUGUI>().text = currentlySelectedItem.name;
         selectedItemImage.GetComponentInChildren<Image>().sprite = currentlySelectedItem.itemSprite;
         selectedItemText.GetComponentInChildren<TextMeshProUGUI>().text = currentlySelectedItem.itemDesc;
         foreach (string buffInfo in currentlySelectedItem.ConsumableDescription)
         {
             FullBuffInfo += buffInfo + "\n";
         }
+        FullBuffInfo += "\n";
         selectedItemBuffInfo.GetComponentInChildren<TextMeshProUGUI>().text = FullBuffInfo;
 
         if (traderSelling)
@@ -109,35 +113,39 @@ public class TradingSystemManager : MonoBehaviour
         
     }
 
+    public void SwapActiveTraderPlayer(bool newState)
+    {
+        traderSelling = newState;
+        buttonBuySell.GetComponentInChildren<TextMeshProUGUI>().text = "Pick Item";
+    }
+
     public GameObject buttonBuySell;
 
     public void Button1_Pressed()
     {
         if (traderSelling)
         {
-            if (GameManager.instance.Money >= currentlySelectedItem.value)
+            if (GameManager.instance.money >= currentlySelectedItem.value)
             {
-
+                GameManager.instance.money -= currentlySelectedItem.value;
+                GameManager.instance.AddItem(currentlySelectedItem);
             }
-            GameManager.instance.Money -= currentlySelectedItem.value;
-            GameManager.instance.AddItem(currentlySelectedItem);
         }
         else
         {
-            GameManager.instance.Money += currentlySelectedItem.value;
+            GameManager.instance.money += currentlySelectedItem.value;
             GameManager.instance.RemoveItem(currentlySelectedItem);
         }
     }
 
     public void Button2_Pressed()
     {
-        GameManager.instance.RemoveItem(currentlySelectedItem);
-        GameManager.instance.ClearSlots();
+        
     }
 
     public void Button3_Pressed()
     {
-        GameManager.instance.ClearSlots();
+        
     }
 
     public void Resume()
