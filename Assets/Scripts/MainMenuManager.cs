@@ -38,7 +38,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadGameButton()
     {
-        //PlayerPrefs.DeleteAll();
+        
         if (PlayerPrefs.HasKey("save"))
         {
             SceneManager.LoadScene("GameScene");
@@ -49,11 +49,6 @@ public class MainMenuManager : MonoBehaviour
             CheckIfNewGame.newGame = false;
             SceneManager.LoadScene("GameScene");
         }
-    }
-
-    public void SettingsButton()
-    {
-
     }
 
     public void ExitButton()

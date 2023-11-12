@@ -99,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            movementCost = (Vector2.Distance(CityManager.instance.currentCity.transform.position, touchedObject.transform.position) / 2) * -1;
+            movementCost = (Vector2.Distance(CityManager.instance.currentCity.transform.position, touchedObject.transform.position) / (1+PlayerStatManager.instance.Agility/100)) * -1;
         }
         touchPositionBackground = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
         popupMenu.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Food / Water Cost: " + Mathf.Round(movementCost * -1);

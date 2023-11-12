@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,12 +23,6 @@ public class Enemy : ScriptableObject
     public int enemyXP;
     public Item droppedItem;
 
-    public Enemy(float startingHealth)
-    {
-        this.startingHealth = startingHealth;
-        currentHealth = startingHealth;
-    }
-
     public enum EnemyState
     {
         DoAction,
@@ -48,8 +42,15 @@ public class Enemy : ScriptableObject
 
     public void DealDamageToPlayer()
     {
-        PlayerStatManager.instance.UpdateHealth(currentAttack * -1);
-        currentDialogueAction = $"{enemyName} has dealt {Mathf.Round(currentAttack)} damage to you!";
+        if (Random.Range(0,100) >= PlayerStatManager.instance.Agility / 2)
+        {
+            currentDialogueAction = $"{enemyName} attempted to hit you, but you dodged out of the way!";
+        }
+        else
+        {
+            PlayerStatManager.instance.UpdateHealth(currentAttack * -1);
+            currentDialogueAction = $"{enemyName} has dealt {Mathf.Round(currentAttack)} damage to you!";
+        }
         awaitingActionToResolve = false;
     }
 

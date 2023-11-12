@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16923f6279966994c833a07e03459f75, type: 3}
+  m_Name: Advanced Golem
+  m_EditorClassIdentifier: 
+  enemyName: 
+  enemySprite: {fileID: -1827506606, guid: f9007a6a67272f146bfc1d0e4b0f8e6f, type: 3}
+  startingHealth: 250
+  currentHealth: 0
+  currentAttack: 100
+  currentDefense: 50
+  averageEnemyLevelEncounter: 50
+  currentEnemyState: 0
+  currentDialogueAction: 
+  awaitingActionToResolve: 0
+  playerDecicidingAttack: 0
+  enemyXP: 500
+  droppedItem: {fileID: 11400000, guid: b3885716a41646546b482714e9ac7755, type: 2}

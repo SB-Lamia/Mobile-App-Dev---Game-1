@@ -1,7 +1,5 @@
-public class CityStorageInformation
+public class CityStorageInformation : Location
 {
-    public float xPosition;
-    public float yPosition;
     public int cityEventCount;
     public int[] cityEvents;
 }

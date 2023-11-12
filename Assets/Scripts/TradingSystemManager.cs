@@ -47,6 +47,7 @@ public class TradingSystemManager : MonoBehaviour
 
     public void OnTraderOpen()
     {
+        moneyVisual.text = GameManager.instance.money.ToString();
         SpawnInventory(playerParentSlot, GameManager.instance.items, GameManager.instance.itemNumbers);
         SpawnInventory(traderParentSlot, currentTrader.itemsForTrader, currentTrader.itemCount);
 
@@ -55,6 +56,10 @@ public class TradingSystemManager : MonoBehaviour
     public void SpawnInventory(GameObject parentSlots, List<Item> items, List<int> itemCount)
     {
         InventorySlot[] inventorySlots = parentSlots.GetComponentsInChildren<InventorySlot>();
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            inventorySlots[i].ClearSlot();
+        }
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             if (i < items.Count)
@@ -71,7 +76,7 @@ public class TradingSystemManager : MonoBehaviour
             }
         }
         buttonBuySell.GetComponentInChildren<TextMeshProUGUI>().text = "Pick Trader/Player";
-        moneyVisual.text = GameManager.instance.money.ToString();
+
     }
 
 
@@ -95,22 +100,28 @@ public class TradingSystemManager : MonoBehaviour
         selectedItemTitle.GetComponent<TextMeshProUGUI>().text = currentlySelectedItem.name;
         selectedItemImage.GetComponentInChildren<Image>().sprite = currentlySelectedItem.itemSprite;
         selectedItemText.GetComponentInChildren<TextMeshProUGUI>().text = currentlySelectedItem.itemDesc;
-        foreach (string buffInfo in currentlySelectedItem.ConsumableDescription)
+        for(int i = 0; i < currentlySelectedItem.ConsumableDescription.Length; i++)
         {
-            FullBuffInfo += buffInfo + "\n";
+            if (i < currentlySelectedItem.ConsumableDescription.Length-1)
+            {
+                FullBuffInfo += currentlySelectedItem.ConsumableDescription[i] + "\n";
+            }
+            else
+            {
+                if (traderSelling)
+                {
+                    FullBuffInfo += "Value: " + (Mathf.RoundToInt((float)currentlySelectedItem.value * (float)1.25)).ToString() + "$";
+                    buttonBuySell.GetComponentInChildren<TextMeshProUGUI>().text = "Buy";
+                }
+                else
+                {
+                    FullBuffInfo += "Value: " + (Mathf.RoundToInt((float)currentlySelectedItem.value * (float)(1 + PlayerStatManager.instance.Charisma / 100))).ToString() + "$";
+                    buttonBuySell.GetComponentInChildren<TextMeshProUGUI>().text = "Sell";
+                }
+            }
         }
         FullBuffInfo += "\n";
         selectedItemBuffInfo.GetComponentInChildren<TextMeshProUGUI>().text = FullBuffInfo;
-
-        if (traderSelling)
-        {
-            buttonBuySell.GetComponentInChildren<TextMeshProUGUI>().text = "Buy";
-        }
-        else
-        {
-            buttonBuySell.GetComponentInChildren<TextMeshProUGUI>().text = "Sell";
-        }
-        
     }
 
     public void SwapActiveTraderPlayer(bool newState)
@@ -129,23 +140,16 @@ public class TradingSystemManager : MonoBehaviour
             {
                 GameManager.instance.money -= currentlySelectedItem.value;
                 GameManager.instance.AddItem(currentlySelectedItem);
+                currentTrader.RemoveItem(currentlySelectedItem);
             }
         }
         else
         {
             GameManager.instance.money += currentlySelectedItem.value;
             GameManager.instance.RemoveItem(currentlySelectedItem);
+            currentTrader.AddItem(currentlySelectedItem);
         }
-    }
-
-    public void Button2_Pressed()
-    {
-        
-    }
-
-    public void Button3_Pressed()
-    {
-        
+        OnTraderOpen();
     }
 
     public void Resume()

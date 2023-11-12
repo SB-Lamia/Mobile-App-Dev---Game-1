@@ -57,6 +57,9 @@ public class SaveLoadManager : MonoBehaviour
         //City Locations
         state.cityList = new List<CityStorageInformation>();
 
+        //Trader Locations
+        state.traderList = new List<TraderStorageInformation>();
+
         //Saving Inventory System
         state.items = GameManager.instance.items;
         state.itemNumbers = GameManager.instance.itemNumbers;
@@ -71,8 +74,22 @@ public class SaveLoadManager : MonoBehaviour
                 cityEvents = city.GetComponent<City>().cityEvents
             });
         }
-
-        Debug.Log(Helper.Serialize<SaveState>(state));
+        foreach (GameObject trader in CitySpawnerManager.instance.traderGenerated)
+        {
+            List<int> itemIDs = new List<int>();
+            foreach (Item item in trader.GetComponent<Trader>().itemsForTrader)
+            {
+                itemIDs.Add(item.ID);
+            }
+            state.traderList.Add(new TraderStorageInformation()
+            {
+                xPosition = trader.transform.position.x,
+                yPosition = trader.transform.position.y,
+                traderItems = itemIDs,
+                traderItemNumbers = trader.GetComponent<Trader>().itemCount
+            });
+        }
+        Debug.Log("Saved");
         PlayerPrefs.SetString("save", Helper.Serialize<SaveState>(state));
     }
 
@@ -82,7 +99,7 @@ public class SaveLoadManager : MonoBehaviour
         {
             state = Helper.Deserialize<SaveState>(PlayerPrefs.GetString("save"));
 
-            CitySpawnerManager.instance.ReplaceCityLoad(state.cityList);
+            CitySpawnerManager.instance.ReplaceCityLoad(state.cityList, state.traderList);
             PlayerStatManager.instance.SetupStarterStats(
                 state.Level,
                 state.Experience,
@@ -105,19 +122,12 @@ public class SaveLoadManager : MonoBehaviour
             GameManager.instance.items = state.items;
             GameManager.instance.itemNumbers = state.itemNumbers;
         }
-        else
-        {
-            state = new SaveState();
-            SetupGameForSave();
-            Save();
-            Debug.Log("No Save State Found");
-        }
     }
 
     public void SetupGameForSave()
     {
         PlayerStatManager.instance.SetupStarterStats(1, 5, 10, 20, 5, 5, 5, 5, 5, 5);
-        CitySpawnerManager.instance.NewCityLoad(2000, 100000);
+        CitySpawnerManager.instance.NewCityLoad(2000, 20000);
         PlayerStatManager.instance.SetupBaseStats(100.0f, 100.0f, 100.0f);
         StatUpgraderUIManager.instance.OpenStatUpgradeMenu();
     }

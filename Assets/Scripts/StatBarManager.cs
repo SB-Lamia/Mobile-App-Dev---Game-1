@@ -30,21 +30,11 @@ public class StatBarManager : MonoBehaviour
         {
             instance = this;
         }
-        else
-        {
-            if (instance != this)
-            {
-
-            }
-        }
     }
 
     public void SetupHuds()
     {
         UpdateBar();
-        UpdateBar();
-        UpdateBar();
-
         UpdateXPBar();
     }
 

@@ -68,8 +68,18 @@ public class BattleManager : MonoBehaviour
 
     public void UpdateBattleHealth(RectTransform healthBar, float currentHealth, float MaxHealth, TextMeshProUGUI healthText, bool isPlayer)
     {
-        if(isPlayer) healthText.text = Mathf.Round(currentHealth) + " / 100";
-        float calculatedCurrentStatPercentage = MaxHealth - (MaxHealth / 100 * currentHealth);
+        
+        float calculatedCurrentStatPercentage = currentHealth / MaxHealth * 100;
+        if (isPlayer)
+        {
+            healthText.text = Mathf.Round(currentHealth) + " / 100";
+            calculatedCurrentStatPercentage = 400 - calculatedCurrentStatPercentage * 4;
+        }
+        else
+        {
+            calculatedCurrentStatPercentage = 550 - calculatedCurrentStatPercentage * (float)5.5;
+        }
+        Debug.Log(calculatedCurrentStatPercentage);
         RectTransformExtensions.SetRight(healthBar, calculatedCurrentStatPercentage);
     }
 
@@ -120,6 +130,10 @@ public class BattleManager : MonoBehaviour
     public void EndCombat()
     {
         EnableCertainHud("EndCombat");
+        if (currentDialogueGameObject != null)
+        {
+            Destroy(currentDialogueGameObject);
+        }
         for (int i = 0; i > enemies.Count; i++)
         {
             enemies[i].awaitingActionToResolve = true;
@@ -277,6 +291,11 @@ public class BattleManager : MonoBehaviour
         GameObject dialogueObject = Instantiate(dialoguePrefab);
         dialogueObject.transform.parent = dialogueHud.transform;
         currentDialogueGameObject = dialogueObject;
+        foreach (GameObject selectingObject in currentlyUsedLocations)
+        {
+            StopCoroutine(selectingObject.GetComponentInChildren<SelectingEnemy>().EnemyBlinker());
+            selectingObject.transform.GetChild(0).gameObject.SetActive(false);
+        }
         switch (EventSystem.current.currentSelectedGameObject.name)
         {
             case "EnemyLocation1":
@@ -291,19 +310,7 @@ public class BattleManager : MonoBehaviour
             case "EnemyLocation4":
                 LaunchingAttackAgainstSelectedEnemy(3);
                 break;
-            default:
-                Debug.Log("Fuck");
-                break;
         }
-
-        foreach (GameObject selectingObject in currentlyUsedLocations)
-        {
-            StopCoroutine(selectingObject.GetComponentInChildren<SelectingEnemy>().EnemyBlinker());
-            selectingObject.transform.GetChild(0).gameObject.SetActive(false);
-        }
-        
-        awaitingPlayerDialogue = true;
-        Debug.Log("Enemy SelectionConfirmation completed");
     }
 
     public void LaunchingAttackAgainstSelectedEnemy(int enemyPositionDialogue)
@@ -321,6 +328,7 @@ public class BattleManager : MonoBehaviour
                 currentDamageToEnemy = CalculateWeaponDamage(false);
                 break;
         }
+        enemies[enemyPositionDialogue].TakingDamageFromPlayer(currentDamageToEnemy * -1);
         UpdateBattleHealth(currentlyUsedLocations[enemyPositionDialogue].transform.GetChild(1).GetChild(0).GetComponent<RectTransform>(),
                            enemies[enemyPositionDialogue].currentHealth,
                            enemies[enemyPositionDialogue].startingHealth,
@@ -329,8 +337,9 @@ public class BattleManager : MonoBehaviour
         currentDialogueGameObject.GetComponent<DialogueScript>().ResetString(
         "Player Attacked " + enemies[enemyPositionDialogue].enemyName
         + " at position " + (enemyPositionDialogue + 1)
-        + " for " + PlayerStatManager.instance.Endurance + " damage."); 
-        enemies[enemyPositionDialogue].TakingDamageFromPlayer(currentDamageToEnemy * -1);
+        + " for " + PlayerStatManager.instance.Endurance + " damage.");
+        awaitingPlayerDialogue = true;
+        EnableCertainHud("Dialogue");
         if (enemies[enemyPositionDialogue].currentHealth <= 0)
         {
             droppedItems.Add(enemies[enemyPositionDialogue].droppedItem);
@@ -342,7 +351,7 @@ public class BattleManager : MonoBehaviour
 
     public float CalculateWeaponDamage(bool isPrimary)
     {
-        float calculatedWeaponDamage = 0;
+        float calculatedWeaponDamage;
         Item currentWeapon;
         if (isPrimary)
         {
@@ -366,19 +375,6 @@ public class BattleManager : MonoBehaviour
     public void Pass()
     {
         EndPlayerTurn();
-    }
-
-    public void ItemsButton()
-    {
-        //Open Items Options?
-        //Go to Inventory?
-        //After use return and pass turn.
-    }
-
-    public void Skills()
-    {
-        //trigger skills from a list
-        //added MUCH later on
     }
 
     public void Escape()
@@ -408,7 +404,7 @@ public class BattleManager : MonoBehaviour
             {
                 case Enemy.EnemyState.DoAction:
                     enemies[currentEnemyTurn].awaitingActionToResolve = true;
-                    DecideEnemyAttack(enemies[currentEnemyTurn]);
+                    enemies[currentEnemyTurn].DealDamageToPlayer();
                     enemies[currentEnemyTurn].currentEnemyState = Enemy.EnemyState.UserFeedback;
                     Debug.Log("EnemyDoingAction");
                     break;
@@ -438,30 +434,6 @@ public class BattleManager : MonoBehaviour
                     Debug.Log("Incorrect Enemy State. Please check your Enemy State: " + enemies[currentEnemyTurn].currentEnemyState);
                     break;
             }
-        }
-    }
-
-    public void DecideEnemyAttack(Enemy currentEnemy)
-    {
-        //Attack
-        //SpecialAbility
-        //Defend
-
-        //CHANGE TO DO SPECIAL ABILITIES (1) AND DEFENSE (2)
-        switch (Random.Range(0, 1))
-        {
-            case 0:
-                currentEnemy.DealDamageToPlayer();
-                break;
-            case 1:
-                currentEnemy.ActivateSpecialAbility();
-                break;
-            case 2:
-                currentEnemy.Defend();
-                break;
-            default:
-                Debug.Log("How?");
-                break;
         }
     }
 }

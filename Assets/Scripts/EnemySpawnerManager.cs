@@ -22,7 +22,7 @@ public class EnemySpawnerManager : MonoBehaviour
 
         for (int i = 0; i < enemyCount; i++)
         {
-            Enemy newEnemy = new Enemy(possibleEnemies[Random.Range(0, possibleEnemies.Count)].startingHealth);
+            Enemy newEnemy = possibleEnemies[Random.Range(0, possibleEnemies.Count)];
             selectedEnemies.Add(newEnemy);
         }
 

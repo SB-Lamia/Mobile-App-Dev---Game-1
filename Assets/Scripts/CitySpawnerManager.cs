@@ -82,7 +82,7 @@ public class CitySpawnerManager : MonoBehaviour
         }
     }
 
-    public void ReplaceCityLoad(List<CityStorageInformation> CityData)
+    public void ReplaceCityLoad(List<CityStorageInformation> CityData, List<TraderStorageInformation> TraderData)
     {
         foreach(CityStorageInformation cityData in CityData)
         {
@@ -91,6 +91,23 @@ public class CitySpawnerManager : MonoBehaviour
             newCity.GetComponent<City>().cityEvents = cityData.cityEvents;
             newCity.GetComponent<City>().eventCount = cityData.cityEventCount;
             cityGenerated.Add(newCity);
+        }
+
+        foreach (TraderStorageInformation traderdata in TraderData)
+        {
+            GameObject newTrader = Instantiate(trader, new Vector2(traderdata.xPosition, traderdata.yPosition), Quaternion.identity);
+            newTrader.transform.parent = parentCity.transform;
+            newTrader.GetComponent<Trader>().itemCount = traderdata.traderItemNumbers;
+            for (int i = 0; i < traderdata.traderItems.Count; i++)
+            {
+                for (int k = 0; k < LootManager.instance.allItems.Count; k++)
+                {
+                    if (LootManager.instance.allItems[k].ID == traderdata.traderItems[i])
+                    {
+                        newTrader.GetComponent<Trader>().itemsForTrader.Add(LootManager.instance.allItems[k]);
+                    }
+                }
+            }
         }
     }
 }

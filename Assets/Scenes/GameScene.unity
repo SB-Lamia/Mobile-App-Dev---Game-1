@@ -7354,8 +7354,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488872025}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4.0934663}
-  m_LocalScale: {x: 0.049065337, y: 0.049065337, z: 0.049065337}
+  m_LocalPosition: {x: 0, y: 0, z: -4.0933948}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 992268245}
@@ -7365,8 +7365,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1170, y: -540}
-  m_SizeDelta: {x: -220.37744, y: -101.712585}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &494437426
 GameObject:
@@ -8987,7 +8987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &615408266
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13315,7 +13315,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 947847418}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 163657658}
+        m_TargetAssemblyTypeName: TradingSystemManager, Assembly-CSharp
+        m_MethodName: Button3_Pressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &947847418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14046,7 +14058,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992268244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0000014305115}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19612,7 +19624,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies:
+  - {fileID: 11400000, guid: aba2615afb6642c40920952e86a7e75e, type: 2}
   - {fileID: 11400000, guid: a0c458cb3ed84a048ae0c8675afa9657, type: 2}
+  - {fileID: 11400000, guid: f5bb649f647177c4f9703ba99595c770, type: 2}
+  - {fileID: 11400000, guid: a0aee5491dabb264a928132501000044, type: 2}
+  - {fileID: 11400000, guid: 3a74b80890dee244bb6f2561ee350a43, type: 2}
   - {fileID: 11400000, guid: 9c527fe2fa316094d857dc66c2d05e56, type: 2}
 --- !u!1 &1437778297
 GameObject:
@@ -24097,7 +24113,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1807943913}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 163657658}
+        m_TargetAssemblyTypeName: TradingSystemManager, Assembly-CSharp
+        m_MethodName: Button1_Pressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1807943913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24543,9 +24571,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 196135183}
-        m_TargetAssemblyTypeName: CityManager, Assembly-CSharp
-        m_MethodName: TriggerCityEvent
+      - m_Target: {fileID: 163657658}
+        m_TargetAssemblyTypeName: TradingSystemManager, Assembly-CSharp
+        m_MethodName: Button2_Pressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -26340,7 +26368,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DASGFSGSADGSAGSAGFASDGFDASG
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -26370,7 +26398,7 @@ MonoBehaviour:
   m_fontSize: 30
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 50
   m_fontStyle: 0
@@ -30423,9 +30451,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1280485987}
+      - m_Target: {fileID: 1280485984}
         m_TargetAssemblyTypeName: PauseMenuManager, Assembly-CSharp
-        m_MethodName: SaveGame
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -19,6 +19,7 @@ public class SaveState
     public float currentHunger;
     public float currentWater;
     public List<CityStorageInformation> cityList;
+    public List<TraderStorageInformation> traderList;
     public List<Item> items;
     public List<int> itemNumbers;
 }
