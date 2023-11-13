@@ -4,7 +4,6 @@ Mobile Application Development Game 1 Repo
 First Project (Larger Project) – Survival Game
 
 The game is a 2D open world survival experience set in a post-apocalyptic world with zombies. Most of the game world consists of forest, with scattered city locations to explore. There is a chance to encounter enemies when searching or entering locations, as well as a lower chance while moving around. Players need to manager hunger, water, and energy levels, which can be replenished by finding food water items. Movement is touch-based. Additionally, the game features an XP and levelling system, rewarding XP for battles, searching, movement, and crafting. As Players level up, their stats such as health and attack increase, while traits provide bonus effects at certain level milestones.
-
 Elements
 -	RPG stats and levelling system where you gain xp based on actions
 -	Open World movement system to let the play roam around the map
@@ -16,6 +15,29 @@ Elements
 -	Battle system that gives XP
 -	Searching location mechanic.
 
+## How to Run the Game
+
+In order to run the game you will have to email me my personal email with your google play account email.
+shaunb@outlook.co.nz
+
+Then I will add you to the internal testers for the application.
+once that has occured you can then access the app via this link:
+https://play.google.com/store/apps/details?id=com.Shaun_Blaauwbroek.PlagueBorn_Survival&hl=en-US&ah=V8xvcr1UqvZhtDe46Be2tzYlK20
+
+## Contributions
+
+If you'd like to contribute to the game's development, feel free to submit pull requests or open issues.
+
+## License
+
+Specify the license under which the game is distributed. For example, you might use an open-source license like MIT.
+
+---
+
+Feel free to customize this template to fit the specific details of your game. Include any screenshots, GIFs, or additional sections that would enhance the README and provide a comprehensive overview of your game.
+
+
+PLAN
 Week 1 
 -	Setup Movement system around the map to work with the touch
 -	Setup Main Menu
@@ -68,3 +90,6 @@ Week 9
 Week 10
 -	Implement features that were suggested or bugs found in testing.
 -	Release build? Work on it abit longer? Unsure on when final due date will be.
+
+
+
