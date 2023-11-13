@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class SaveState
 {
     public int Level;
@@ -18,8 +19,16 @@ public class SaveState
     public float currentHealth;
     public float currentHunger;
     public float currentWater;
-    public List<CityStorageInformation> cityList;
-    public List<TraderStorageInformation> traderList;
-    public List<Item> items;
     public List<int> itemNumbers;
+    public string cityJson;
+    public string traderJson;
+    public string itemJson;
+
+
+    public void ConvertToJson(List<Item> items, List<CityStorageInformation> cityList, List<TraderStorageInformation> traderList)
+    {
+        cityJson = JsonUtility.ToJson(cityList);
+        traderJson = JsonUtility.ToJson(traderJson);
+        itemJson = JsonUtility.ToJson(items);
+    }
 }

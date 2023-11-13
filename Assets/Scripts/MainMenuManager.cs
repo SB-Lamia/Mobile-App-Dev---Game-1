@@ -10,7 +10,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void NewGameButton()
     {
-        if (PlayerPrefs.HasKey("save"))
+        PlayerPrefs.DeleteAll();
+        if (PlayerPrefs.HasKey("player save"))
         {
             areYouSure.SetActive(true);
         }
@@ -38,15 +39,16 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadGameButton()
     {
-        Debug.Log(PlayerPrefs.HasKey("save"));
-        if (PlayerPrefs.HasKey("save"))
+        Debug.Log(PlayerPrefs.HasKey("player save"));
+        if (PlayerPrefs.HasKey("player save"))
         {
+            CheckIfNewGame.newGame = false;
             SceneManager.LoadScene("GameScene");
         }
         else 
         {
             areYouSure.SetActive(true);
-            CheckIfNewGame.newGame = false;
+            CheckIfNewGame.newGame = true;
             SceneManager.LoadScene("GameScene");
         }
     }
