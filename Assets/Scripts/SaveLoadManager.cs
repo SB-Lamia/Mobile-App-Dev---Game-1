@@ -90,14 +90,14 @@ public class SaveLoadManager : MonoBehaviour
             });
         }
         Debug.Log("Saved");
-        PlayerPrefs.SetString("save", Helper.Serialize<SaveState>(state));
+        PlayerPrefs.SetString("save", JsonUtility.ToJson(state));
     }
 
     public void Load()
     {
         if (PlayerPrefs.HasKey("save"))
         {
-            state = Helper.Deserialize<SaveState>(PlayerPrefs.GetString("save"));
+            state = JsonUtility.FromJson<SaveState>(PlayerPrefs.GetString("save"));
 
             CitySpawnerManager.instance.ReplaceCityLoad(state.cityList, state.traderList);
             PlayerStatManager.instance.SetupStarterStats(

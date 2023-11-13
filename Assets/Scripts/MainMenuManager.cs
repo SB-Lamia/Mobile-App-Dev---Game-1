@@ -38,7 +38,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadGameButton()
     {
-        
+        Debug.Log(PlayerPrefs.HasKey("save"));
         if (PlayerPrefs.HasKey("save"))
         {
             SceneManager.LoadScene("GameScene");
