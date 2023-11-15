@@ -48,7 +48,6 @@ public class CitySpawnerManager : MonoBehaviour
                     placedBoxes[i].y < yPos + sideLength && placedBoxes[i].y + sideLength > yPos)
                 {
                     isGood = false;
-                    Debug.Log("failed");
                 }
             }
             if (isGood)
@@ -80,6 +79,15 @@ public class CitySpawnerManager : MonoBehaviour
             }
             count++;
         }
+    }
+
+    public GameObject SpawnCity(float x, float y)
+    {
+        GameObject newCity;
+        newCity = Instantiate(city, new Vector2(x, y), Quaternion.identity);
+        newCity.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = cityIcon;
+        newCity.GetComponent<City>().GenerateRandomCity();
+        return newCity;
     }
 
     public void ReplaceCityLoad(List<CityStorageInformation> CityData, List<TraderStorageInformation> TraderData)

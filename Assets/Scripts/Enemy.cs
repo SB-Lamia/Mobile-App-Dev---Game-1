@@ -42,7 +42,7 @@ public class Enemy : ScriptableObject
 
     public void DealDamageToPlayer()
     {
-        if (Random.Range(0,100) >= PlayerStatManager.instance.Agility / 2)
+        if (Random.Range(0,100) <= PlayerStatManager.instance.Agility / 2)
         {
             currentDialogueAction = $"{enemyName} attempted to hit you, but you dodged out of the way!";
         }

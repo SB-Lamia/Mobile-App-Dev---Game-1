@@ -11,8 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 touchPositionBackground;
 
     private GameObject CurrentCityMovement;
-    private bool isMoving = false;
-    private GameObject touchedObject;
+    public bool isMoving = false;
+    public GameObject touchedObject;
     private bool popupMenuOpen = false;
 
     private bool isIncreasingScale = true;
@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
                     if (GameManager.instance.isPaused == false)
                     {
-                        CheckObjectTouched();
+                        CheckObjectTouched(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position));
                     }
                     else
                     {
@@ -75,12 +75,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void CheckObjectTouched()
+    public void CheckObjectTouched(Vector2 touchPosition)
     {
         switch (touchedObject.name)
         {
             case "City(Clone)":
             case "Trader(Clone)":
+                touchPositionBackground = touchPosition;
                 askPlayerIfMoving();
                 break;
             default:
@@ -95,13 +96,15 @@ public class PlayerMovement : MonoBehaviour
         cityBorderBlinker = touchedObject.transform.GetChild(1).transform;
         if (firstMovement)
         {
+            movementCost = Vector2.Distance(GameObject.Find("Player").transform.position, touchedObject.transform.position);
+            Debug.Log(movementCost);
             movementCost = -15;
         }
         else
         {
-            movementCost = (Vector2.Distance(CityManager.instance.currentCity.transform.position, touchedObject.transform.position) / (1+PlayerStatManager.instance.Agility/100)) * -1;
+            movementCost = (Vector2.Distance(GameObject.Find("Player").transform.position, touchedObject.transform.position) / (1+PlayerStatManager.instance.Agility/100)) * -1;
+            Debug.Log(movementCost);
         }
-        touchPositionBackground = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
         popupMenu.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Food / Water Cost: " + Mathf.Round(movementCost * -1);
         StartCoroutine("cityBlinker");
     }

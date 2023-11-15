@@ -91,12 +91,16 @@ public class StatUpgraderUIManager : MonoBehaviour
 
     public void TemporaryStatIncrease()
     {
-        TemporaryChangeStat(1, false);
+        int.TryParse(EventSystem.current.currentSelectedGameObject.transform.parent.GetChild(2).GetComponent<TextMeshProUGUI>().text, out getVisualItemCount);
+        TemporaryChangeStat(1, false, EventSystem.current.currentSelectedGameObject.transform.parent.parent.gameObject.name);
+        EventSystem.current.currentSelectedGameObject.transform.parent.GetChild(2).GetComponent<TextMeshProUGUI>().text = getVisualItemCount.ToString();
     }
 
     public void TemporaryStatDecrease()
     {
-        TemporaryChangeStat(-1, true);
+        int.TryParse(EventSystem.current.currentSelectedGameObject.transform.parent.GetChild(2).GetComponent<TextMeshProUGUI>().text, out getVisualItemCount);
+        TemporaryChangeStat(-1, true, EventSystem.current.currentSelectedGameObject.transform.parent.parent.gameObject.name);
+        EventSystem.current.currentSelectedGameObject.transform.parent.GetChild(2).GetComponent<TextMeshProUGUI>().text = getVisualItemCount.ToString();
     }
 
     public void BringUpDescription()
@@ -127,12 +131,10 @@ public class StatUpgraderUIManager : MonoBehaviour
         }
     }
 
-    public void TemporaryChangeStat(int valueChange, bool statPointChangeChecker)
+    public void TemporaryChangeStat(int valueChange, bool statPointChangeChecker, string GameObjectName)
     {
-        GameObject statGameObject = EventSystem.current.currentSelectedGameObject;
-        int.TryParse(statGameObject.transform.parent.GetChild(2).GetComponent<TextMeshProUGUI>().text, out getVisualItemCount);
         int currentStatValue = 0;
-        switch (statGameObject.transform.parent.parent.gameObject.name)
+        switch (GameObjectName)
         {
             case "Endurance":
                 currentStatValue = PlayerStatManager.instance.Endurance;
@@ -169,7 +171,6 @@ public class StatUpgraderUIManager : MonoBehaviour
             getVisualItemCount += valueChange;
             PlayerStatManager.instance.PointsToAssign += statPointChange;
             PointsToAssign.text = PlayerStatManager.instance.PointsToAssign.ToString();
-            statGameObject.transform.parent.GetChild(2).GetComponent<TextMeshProUGUI>().text = getVisualItemCount.ToString();
         }
     }
 }

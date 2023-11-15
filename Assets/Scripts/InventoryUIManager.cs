@@ -5,15 +5,17 @@ using UnityEngine;
 public class InventoryUIManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
-    public List<GameObject> disabledHud;
-
+    public List<GameObject> disabledHud; 
+    public static InventoryUIManager instance;
     public Transform itemsParent;
-    // Start is called before the first frame update
-    void Start()
+    public void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
- 
+
     public void Resume()
     {
         inventoryMenu.gameObject.SetActive(false);

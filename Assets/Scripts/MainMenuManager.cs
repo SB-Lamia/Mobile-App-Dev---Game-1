@@ -10,7 +10,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void NewGameButton()
     {
-        PlayerPrefs.DeleteAll();
         if (PlayerPrefs.HasKey("player save"))
         {
             areYouSure.SetActive(true);

@@ -92,8 +92,8 @@ public class BattleManager : MonoBehaviour
         UpdateBattleHealth(playerHealthBar, PlayerStatManager.instance.currentHealth, 100f, playerHealthText, true);
         currentEnemyTurn = 0;
         EnableCertainHud("Default");
-        enemies = EnemySpawnerManager.instance.SpawnRandomEnemy(2);
-        enemyMaxCount = 2;
+        enemies = EnemySpawnerManager.instance.SpawnRandomEnemy(3);
+        enemyMaxCount = 3;
         for (int i = 0; i < enemies.Count; i++)
         {
             enemies[i].awaitingActionToResolve = true;
@@ -338,8 +338,8 @@ public class BattleManager : MonoBehaviour
         "Player Attacked " + enemies[enemyPositionDialogue].enemyName
         + " at position " + (enemyPositionDialogue + 1)
         + " for " + PlayerStatManager.instance.Endurance + " damage.");
+        EnableCertainHud("Dialogue"); 
         awaitingPlayerDialogue = true;
-        EnableCertainHud("Dialogue");
         if (enemies[enemyPositionDialogue].currentHealth <= 0)
         {
             droppedItems.Add(enemies[enemyPositionDialogue].droppedItem);
