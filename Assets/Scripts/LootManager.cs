@@ -30,6 +30,10 @@ public class LootManager : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+    public void SetupItems()
+    {
         int count = 0;
         foreach (Item item in allItems)
         {
