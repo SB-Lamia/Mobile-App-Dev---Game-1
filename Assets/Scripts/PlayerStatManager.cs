@@ -126,7 +126,7 @@ public class PlayerStatManager : MonoBehaviour
         if (Level < 100)
         {
             Level++;
-            PlayerStatManager.instance.PointsToAssign += (5 + Level);
+            PointsToAssign += (5 + Level);
         }
     }
 
@@ -142,7 +142,7 @@ public class PlayerStatManager : MonoBehaviour
             currentXPNeeded = Mathf.RoundToInt((float)currentXPNeeded * 1.5f);
         }
 
-        StatBarManager.instance.UpdateXPBar();
+        //StatBarManager.instance.UpdateXPBar();
     }
 
 }

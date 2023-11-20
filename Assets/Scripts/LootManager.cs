@@ -30,6 +30,7 @@ public class LootManager : MonoBehaviour
         {
             instance = this;
         }
+        SetupItems();
     }
 
     public void SetupItems()

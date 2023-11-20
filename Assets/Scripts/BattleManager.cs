@@ -100,7 +100,7 @@ public class BattleManager : MonoBehaviour
             currentlyUsedLocations.Add(allEnemyLocations[i]);
             currentlyUsedLocations[i].SetActive(true);
             currentlyUsedLocations[i].GetComponent<Image>().sprite = enemies[i].enemySprite;
-            enemies[i].AdjustStatsToMatchPlayer();
+            enemies[i].AdjustStatsToMatchPlayer(PlayerStatManager.instance.Level);
         }
         //Main Equipped Item
         if (InventoryManager.Instance.mainEquipedItem != null)

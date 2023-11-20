@@ -13,6 +13,7 @@ public class CitySpawnerManager : MonoBehaviour
     public static CitySpawnerManager instance;
     public Sprite cityIcon;
     public Sprite traderIcon;
+    public List<Vector2> placedBoxes;
 
     void Awake()
     {
@@ -25,14 +26,14 @@ public class CitySpawnerManager : MonoBehaviour
 
     public void NewCityLoad(int numberOfBoxes, int maxTries)
     {
-        float minXPos = -500;
-        float maxXPos = 500;
-        float minYPos = -500;
-        float maxYPos = 500;
+        float minXPos = -1000;
+        float maxXPos = 1000;
+        float minYPos = -1000;
+        float maxYPos = 1000;
 
         float sideLength = 20;
        
-        List<Vector2> placedBoxes = new List<Vector2>();
+        placedBoxes = new List<Vector2>();
         int count = 0;
         GameObject newLocation = null;
         while (count < maxTries && placedBoxes.Count < numberOfBoxes)
@@ -52,8 +53,12 @@ public class CitySpawnerManager : MonoBehaviour
             }
             if (isGood)
             {
-                
                 placedBoxes.Add(new Vector2(xPos, yPos));
+            }
+            //isGood = false;
+            if (isGood)
+            {
+                
                 switch (Random.Range(0,5))
                 {
                     //City Location

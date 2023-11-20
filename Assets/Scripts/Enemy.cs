@@ -30,11 +30,11 @@ public class Enemy : ScriptableObject
         ResolvingBattlePhase
     }
 
-    public void AdjustStatsToMatchPlayer()
+    public void AdjustStatsToMatchPlayer(int playerLevel)
     {
-        startingHealth = startingHealth * (1 + (PlayerStatManager.instance.Level / 10));
-        currentAttack = currentAttack * (1 + (PlayerStatManager.instance.Level / 10));
-        currentDefense = currentDefense * (1 + (PlayerStatManager.instance.Level / 10));
+        startingHealth = startingHealth * (1 + (playerLevel / 10));
+        currentAttack = currentAttack * (1 + (playerLevel / 10));
+        currentDefense = currentDefense * (1 + (playerLevel / 10));
         currentHealth = startingHealth;
 
         currentEnemyState = EnemyState.DoAction;
